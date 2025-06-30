@@ -9,7 +9,6 @@ export default function Home() {
         <meta name="description" content="Výkopové a zemní práce minibagrem Hitachi – Praha a okolí." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-  return (
     <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
       <header className="bg-black text-white py-6 px-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
