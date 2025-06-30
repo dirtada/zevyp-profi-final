@@ -10,7 +10,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
     <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
-      <header className="bg-[#f9c600] text-black py-6 px-4 flex justify-between items-center shadow-md border-b border-yellow-400">
+      <header className="bg-[#f9c600] text-black py-6 px-4 flex justify-between items-center shadow-md">
         <div className="flex items-center gap-3">
           <Image src="/images/logo.png" alt="Zevyp logo" width={60} height={60} className="h-16 w-auto" />
           <h1 className="text-2xl font-extrabold">ZEVYP.CZ</h1>
