@@ -1,7 +1,9 @@
 import Head from "next/head";
 import Image from "next/image";
 
-export default function Home() {    <>
+export default function Home() {
+  return (
+    <>
       <Head>
         <title>Zemní a výkopové práce – Zevyp.cz</title>
         <meta name="description" content="Výkopové a zemní práce minibagrem Hitachi – Praha a okolí." />
