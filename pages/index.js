@@ -24,19 +24,23 @@ export default function Home() {
         </nav>
       </header>
 
-      <main className="bg-black text-white px-4 py-12 text-center">
-        <h2 className="text-5xl font-extrabold mb-4">ZEMNÍ A VÝKOPOVÉ PRÁCE</h2>
-        <p className="text-lg mb-6">Provádíme zemní a výkopové práce pomocí pásového rypadla.</p>
-        <div className="flex justify-center">
-          <Image
-            src="/images/bagr-hero.png"
-            alt="Bagr"
-            width={600}
-            height={400}
-            className="rounded"
-          />
-        </div>
-      </main>
+      <main className="bg-black text-white px-4 py-12">
+  <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+    <div className="md:w-1/2 text-left mb-8 md:mb-0">
+      <h2 className="text-5xl font-extrabold mb-4 leading-tight">ZEMNÍ A VÝKOPOVÉ PRÁCE</h2>
+      <p className="text-lg">Provádíme zemní a výkopové práce pomocí pásového rypadla.</p>
+    </div>
+    <div className="md:w-1/2 flex justify-center">
+      <Image
+        src="/images/bagr-hero.png"
+        alt="Bagr"
+        width={600}
+        height={400}
+        className="object-contain"
+      />
+    </div>
+  </div>
+</main>
 
       <section id="sluzby" className="bg-[#f9c600] text-black px-6 py-12">
         <h3 className="text-3xl font-bold mb-6 text-center">NAŠE SLUŽBY</h3>
