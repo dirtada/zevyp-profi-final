@@ -10,7 +10,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
     <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
-      <header className="bg-black text-white py-6 px-4 flex justify-between items-center">
+      <header className="bg-[#f9c600] text-black py-6 px-4 flex justify-between items-center shadow-md">
         <div className="flex items-center gap-3">
           <Image src="/images/logo.png" alt="Zevyp logo" width={40} height={40} />
           <h1 className="text-2xl font-extrabold">ZEVYP.CZ</h1>
@@ -42,7 +42,7 @@ export default function Home() {
 </main>
 
       <section id="sluzby" className="bg-[#f9c600] text-black px-6 py-12">
-        <h3 className="text-3xl font-bold mb-6 text-center">NAŠE SLUŽBY</h3>
+        <h3 className="text-3xl font-bold mb-6 text-left pl-4 text-[#1e1e1e] drop-shadow">NAŠE SLUŽBY</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xl max-w-3xl mx-auto">
           <div className="flex items-center gap-2">
             <span>✔️</span>
@@ -60,7 +60,7 @@ export default function Home() {
       </section>
 
       <section id="technika" className="bg-white text-black px-6 py-12">
-        <h3 className="text-3xl font-bold mb-6 text-center">TECHNIKA</h3>
+        <h3 className="text-3xl font-bold mb-6 text-left pl-4 text-[#1e1e1e] drop-shadow">TECHNIKA</h3>
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-4xl mx-auto">
           <Image src="/images/bagr-technik.png" alt="Bagr Technika" width={400} height={300} />
           <div className="text-left text-lg">
@@ -87,7 +87,7 @@ export default function Home() {
       </section>
 
       <section id="kontakt" className="bg-black text-white px-6 py-12">
-        <h3 className="text-3xl font-bold mb-6 text-center">KONTAKT</h3>
+        <h3 className="text-3xl font-bold mb-6 text-left pl-4 text-[#1e1e1e] drop-shadow">KONTAKT</h3>
         <form className="max-w-md mx-auto space-y-4 text-black">
           <input type="text" placeholder="Jméno" className="w-full px-4 py-2 rounded" />
           <input type="email" placeholder="E-mail" className="w-full px-4 py-2 rounded" />
