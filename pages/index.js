@@ -1,6 +1,12 @@
+import Head from "next/head";
 import Image from "next/image";
 
-export default function Home() {
+export default function Home() {    <>
+      <Head>
+        <title>Zemní a výkopové práce – Zevyp.cz</title>
+        <meta name="description" content="Výkopové a zemní práce minibagrem Hitachi – Praha a okolí." />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
   return (
     <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
       <header className="bg-black text-white py-6 px-4 flex justify-between items-center">
@@ -87,7 +93,7 @@ export default function Home() {
 
       <footer className="bg-black text-white text-center py-4 text-sm">
         Zemní a Výkopové práce • IČO: 12345678 • info@zevyp.cz • Heraní 123, 100 70 Praha
-      </footer>
-    </div>
+      </footer>      </div>
+    </>
   );
 }
