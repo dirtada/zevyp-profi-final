@@ -37,7 +37,7 @@ export default function Home() {
         alt="Bagr"
         width={600}
         height={400}
-        className="object-contain"
+        className="object-contain -mb-12 md:-mb-24"
       />
     </div>
   </div>
