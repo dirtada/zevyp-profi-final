@@ -88,7 +88,7 @@ export default function Home() {
         <p className="text-sm text-gray-700 mt-4">*Konečnou cenu předanastavíme e-mailem podle vzdálenosti a požadavků.</p>
       </section>
 
-      <section id="kontakt" className="bg-black text-white px-6 py-12">
+      <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
         <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:mx-auto md:pl-12 text-[#2f3237] drop-shadow">KONTAKT</h3>
         <form className="max-w-md mx-auto space-y-4 text-black">
           <input type="text" placeholder="Jméno" className="w-full px-4 py-2 rounded" />
