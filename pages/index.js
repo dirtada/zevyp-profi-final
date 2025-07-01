@@ -98,7 +98,7 @@ export default function Home() {
         </form>
       </section>
 
-      <footer className="bg-black text-white text-center py-4 text-sm">
+      <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
         Zemní a Výkopové práce • IČO:73377619 • info@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
       </footer>      </div>
     </>
