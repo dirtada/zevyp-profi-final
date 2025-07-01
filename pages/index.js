@@ -15,7 +15,7 @@ export default function Home() {
     <Image src="/images/logo.png" alt="Zevyp logo" width={60} height={60} className="h-16 w-auto" />
     <h1 className="text-2xl font-extrabold">ZEVYP.CZ</h1>
   </div>
-  <nav className="space-x-4 text-lg">
+  <nav className="flex flex-wrap gap-2 md:space-x-4 text-base md:text-lg mt-4 md:mt-0">
     <a href="#sluzby" className="hover:underline">NAŠE SLUŽBY</a>
     <a href="#technika" className="hover:underline">TECHNIKA</a>
     <a href="#cenik" className="hover:underline">CENÍK</a>
@@ -28,8 +28,8 @@ export default function Home() {
       <main className="bg-[#1e1e1e] text-white px-4 py-12">
   <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
     <div className="md:w-1/2 text-left mb-8 md:mb-0">
-      <h2 className="text-5xl font-extrabold mb-4 leading-tight">ZEMNÍ A VÝKOPOVÉ PRÁCE</h2>
-      <p className="text-lg">Provádíme zemní a výkopové práce pomocí pásového rypadla.</p>
+      <h2 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">ZEMNÍ A VÝKOPOVÉ PRÁCE</h2>
+      <p className="text-base md:text-lg">Provádíme zemní a výkopové práce pomocí pásového rypadla.</p>
     </div>
     <div className="md:w-1/2 flex justify-center">
       <Image
@@ -44,7 +44,7 @@ export default function Home() {
 </main>
 
       <section id="sluzby" className="bg-[#f9c600] text-black px-6 py-12">
-        <h3 className="text-3xl font-bold mb-6 text-left pl-4 text-[#1e1e1e] drop-shadow">NAŠE SLUŽBY</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left pl-8 md:pl-16 text-[#1e1e1e] drop-shadow">NAŠE SLUŽBY</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xl max-w-3xl mx-auto">
           <div className="flex items-center gap-2">
             <span>✔️</span>
@@ -62,11 +62,11 @@ export default function Home() {
       </section>
 
       <section id="technika" className="bg-white text-black px-6 py-12">
-        <h3 className="text-3xl font-bold mb-6 text-left pl-4 text-[#1e1e1e] drop-shadow">TECHNIKA</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left pl-8 md:pl-16 text-[#1e1e1e] drop-shadow">TECHNIKA</h3>
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-4xl mx-auto">
           <Image src="/images/bagr-technik.png" alt="Bagr Technika" width={400} height={300} />
           <div className="text-left text-lg">
-            <h4 className="text-xl font-bold mb-2">Hitachi ZX 48-A5A</h4>
+            <h4 className="text-lg md:text-xl font-bold mb-2">Hitachi ZX 48-A5A</h4>
             <ul className="list-disc list-inside space-y-1">
               <li>Hmotnost: 4.3 tuny</li>
               <li>Motor: Yanmar 4TNV88 – 25.2 KW</li>
@@ -78,7 +78,7 @@ export default function Home() {
       </section>
 
       <section id="cenik" className="bg-[#f9c600] text-black px-6 py-12 text-center">
-        <h3 className="text-3xl font-bold mb-6">CENÍK</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left pl-8 md:pl-16 text-[#1e1e1e] drop-shadow">CENÍK</h3>
         <ul className="space-y-2 text-lg">
           <li>Bagr s obsluhou: <strong>990 Kč/hod</strong></li>
           <li>Doprava stroje: <strong>30 Kč/km</strong></li>
@@ -89,7 +89,7 @@ export default function Home() {
       </section>
 
       <section id="kontakt" className="bg-black text-white px-6 py-12">
-        <h3 className="text-3xl font-bold mb-6 text-left pl-4 text-[#1e1e1e] drop-shadow">KONTAKT</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left pl-8 md:pl-16 text-[#1e1e1e] drop-shadow">KONTAKT</h3>
         <form className="max-w-md mx-auto space-y-4 text-black">
           <input type="text" placeholder="Jméno" className="w-full px-4 py-2 rounded" />
           <input type="email" placeholder="E-mail" className="w-full px-4 py-2 rounded" />
