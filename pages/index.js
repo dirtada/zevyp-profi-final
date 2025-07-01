@@ -44,7 +44,7 @@ export default function Home() {
 </main>
 
       <section id="sluzby" className="bg-[#f9c600] text-black px-6 py-12">
-        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:ml-[30%] text-[#2f3237] drop-shadow">NAŠE SLUŽBY</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:mx-auto md:pl-12 text-[#2f3237] drop-shadow">NAŠE SLUŽBY</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xl max-w-3xl mx-auto">
           <div className="flex items-center gap-2">
             <span>✔️</span>
@@ -62,7 +62,7 @@ export default function Home() {
       </section>
 
       <section id="technika" className="bg-white text-black px-6 py-12">
-        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:ml-[30%] text-[#2f3237] drop-shadow">TECHNIKA</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:mx-auto md:pl-12 text-[#2f3237] drop-shadow">TECHNIKA</h3>
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-4xl mx-auto">
           <Image src="/images/bagr-technik.png" alt="Bagr Technika" width={400} height={300} />
           <div className="text-left text-lg">
@@ -78,7 +78,7 @@ export default function Home() {
       </section>
 
       <section id="cenik" className="bg-[#f9c600] text-black px-6 py-12 text-center">
-        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:ml-[30%] text-[#2f3237] drop-shadow">CENÍK</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:mx-auto md:pl-12 text-[#2f3237] drop-shadow">CENÍK</h3>
         <ul className="space-y-2 text-lg">
           <li>Bagr s obsluhou: <strong>990 Kč/hod</strong></li>
           <li>Doprava stroje: <strong>30 Kč/km</strong></li>
@@ -89,7 +89,7 @@ export default function Home() {
       </section>
 
       <section id="kontakt" className="bg-black text-white px-6 py-12">
-        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:ml-[30%] text-[#2f3237] drop-shadow">KONTAKT</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:mx-auto md:pl-12 text-[#2f3237] drop-shadow">KONTAKT</h3>
         <form className="max-w-md mx-auto space-y-4 text-black">
           <input type="text" placeholder="Jméno" className="w-full px-4 py-2 rounded" />
           <input type="email" placeholder="E-mail" className="w-full px-4 py-2 rounded" />
