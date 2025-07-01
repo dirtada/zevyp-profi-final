@@ -9,19 +9,21 @@ export default function Home() {
         <meta name="description" content="Výkopové a zemní práce minibagrem Hitachi – Praha a okolí." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-    <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
-      <header className="bg-[#f9c600] text-black py-6 px-4 flex justify-between items-center shadow-md z-50 relative">
-        <div className="flex items-center gap-3">
-          <Image src="/images/logo.png" alt="Zevyp logo" width={60} height={60} className="h-16 w-auto" />
-          <h1 className="text-2xl font-extrabold">ZEVYP.CZ</h1>
-        </div>
-        <nav className="space-x-4 text-lg">
-          <a href="#sluzby" className="hover:underline">NAŠE SLUŽBY</a>
-          <a href="#technika" className="hover:underline">TECHNIKA</a>
-          <a href="#cenik" className="hover:underline">CENÍK</a>
-          <a href="#kontakt" className="hover:underline">KONTAKT</a>
-        </nav>
-      </header>
+
+<header className="bg-[#f9c600] text-black py-6 px-4 flex justify-between items-center shadow-md z-50 relative">
+  <div className="flex items-center gap-3">
+    <Image src="/images/logo.png" alt="Zevyp logo" width={60} height={60} className="h-16 w-auto" />
+    <h1 className="text-2xl font-extrabold">ZEVYP.CZ</h1>
+  </div>
+  <nav className="space-x-4 text-lg">
+    <a href="#sluzby" className="hover:underline">NAŠE SLUŽBY</a>
+    <a href="#technika" className="hover:underline">TECHNIKA</a>
+    <a href="#cenik" className="hover:underline">CENÍK</a>
+    <a href="#kontakt" className="hover:underline">KONTAKT</a>
+  </nav>
+</header>
+
+<div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
 
       <main className="bg-[#1e1e1e] text-white px-4 py-12">
   <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
