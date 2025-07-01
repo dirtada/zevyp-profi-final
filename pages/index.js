@@ -44,7 +44,7 @@ export default function Home() {
 </main>
 
       <section id="sluzby" className="bg-[#f9c600] text-black px-6 py-12">
-        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left px-6 md:px-[11rem] text-[#1e1e1e] drop-shadow">NAŠE SLUŽBY</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left px-6 md:px-[17rem] text-[#1e1e1e] drop-shadow">NAŠE SLUŽBY</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xl max-w-3xl mx-auto">
           <div className="flex items-center gap-2">
             <span>✔️</span>
