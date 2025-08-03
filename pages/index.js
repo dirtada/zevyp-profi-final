@@ -12,7 +12,7 @@ export default function Home() {
 
 <header className="bg-[#f9c600] text-black py-6 px-4 flex justify-between items-center shadow-md z-50 relative w-full">
   <div className="flex items-center gap-3">
-    <Image src="/images/logo.png" alt="Zevyp logo" width={100} height={100} className="h-16 w-auto" />
+    <Image src="/images/logo_update.png" alt="Zevyp logo" width={150} height={150} className="h-16 w-auto" />
     <h1 className="text-2xl font-extrabold">TEST</h1>
   </div>
   <nav className="flex flex-wrap gap-2 md:space-x-4 text-base md:text-lg mt-4 md:mt-0">
