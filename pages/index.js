@@ -21,10 +21,46 @@ export default function Home() {
     <a href="#cenik" className="hover:underline">CENÍK</a>
     <a href="#kontakt" className="hover:underline">KONTAKT</a>
   </nav>
-</header>
+</header 
 
 <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
 
+
+<main className="bg-[#2f3237] text-white px-4 py-12">
+  <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+    <div className="md:w-1/2 text-left mb-8 md:mb-0">
+      <h2 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
+        ZEMNÍ A VÝKOPOVÉ PRÁCE
+      </h2>
+      <p className="text-base md:text-lg">
+        Provádíme zemní a výkopové práce pomocí pásového rypadla.
+      </p>
+
+      {/* sem vlož CTA tlačítko */}
+      <a
+        href="#kontakt"
+        className="inline-block mt-6 bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
+      >
+        Nezávazná poptávka
+      </a>
+    </div>
+    <div className="md:w-1/2 flex justify-center">
+      <Image
+        src="/images/bagr-hero.png"
+        alt="Bagr"
+        width={700}
+        height={500}
+        className="object-contain -mb-24 md:-mb-32"
+      />
+    </div>
+  </div>
+</main>
+
+
+
+
+    
+    {/*
       <main className="bg-[#2f3237] text-white px-4 py-12">
   <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
     <div className="md:w-1/2 text-left mb-8 md:mb-0">
@@ -42,7 +78,7 @@ export default function Home() {
     </div>
   </div>
 </main>
-
+ */}
       <section id="sluzby" className="bg-[#f9c600] text-black px-6 py-12">
         <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:mx-auto md:pl-12 text-[#2f3237] drop-shadow">NAŠE SLUŽBY</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xl max-w-3xl mx-auto">
