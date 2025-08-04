@@ -122,16 +122,41 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="cenik" className="bg-[#f9c600] text-black px-6 py-12 text-center">
-        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:mx-auto md:pl-12 text-[#2f3237] drop-shadow">CENÍK</h3>
-        <ul className="space-y-2 text-lg">
-          <li>Bagr s obsluhou: <strong>990 Kč/hod</strong></li>
-          <li>Doprava stroje: <strong>30 Kč/km</strong></li>
-          <li>Výkop základů do 1 m: <strong>od 66 Kč/m²</strong></li>
-          <li>Zásypy, zarovnání: <strong>dle domluvy</strong></li>
-        </ul>
-        <p className="text-sm text-gray-700 mt-4">*Konečnou cenu předanastavíme e-mailem podle vzdálenosti a požadavků.</p>
-      </section>
+      <section id="cenik" className="bg-[#f9c600] text-black py-16">
+  <div className="container mx-auto px-4">
+    <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] drop-shadow text-center">
+      CENÍK
+    </h3>
+
+    <div className="overflow-x-auto">
+      <table className="w-full max-w-3xl mx-auto border border-gray-300 rounded-lg overflow-hidden">
+        <tbody className="divide-y divide-gray-300">
+          <tr>
+            <td className="py-4 px-6 font-semibold">Bagr s obsluhou</td>
+            <td className="py-4 px-6 text-right font-bold">990 Kč / hod</td>
+          </tr>
+          <tr>
+            <td className="py-4 px-6 font-semibold">Doprava stroje</td>
+            <td className="py-4 px-6 text-right font-bold">30 Kč / km</td>
+          </tr>
+          <tr>
+            <td className="py-4 px-6 font-semibold">Výkop základů do 1 m</td>
+            <td className="py-4 px-6 text-right font-bold">od 66 Kč / m²</td>
+          </tr>
+          <tr>
+            <td className="py-4 px-6 font-semibold">Zásypy, zarovnání</td>
+            <td className="py-4 px-6 text-right font-bold">dle domluvy</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p className="text-sm text-gray-700 mt-6 text-center max-w-xl mx-auto">
+      *Konečnou cenu stanovíme individuálně podle vzdálenosti a požadavků.
+    </p>
+  </div>
+</section>
+
           
           <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
   <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:pl-12 text-[#f9c600] drop-shadow">
