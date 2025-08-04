@@ -2,22 +2,34 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function Vypocet() {
+  const [jmeno, setJmeno] = useState("");
+  const [datumOd, setDatumOd] = useState("");
+  const [datumDo, setDatumDo] = useState("");
   const [hodiny, setHodiny] = useState(0);
   const [km, setKm] = useState(0);
   const [cena, setCena] = useState(null);
-  const [jmeno, setJmeno] = useState("");
-  const [datum, setDatum] = useState("");
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
 
   const spocitat = () => {
-    const cenaPrace = hodiny * 990;
+    if (!datumOd || !datumDo) {
+      setMsg("Vyberte prosím datum od a do.");
+      return;
+    }
+
+    const start = new Date(datumOd);
+    const end = new Date(datumDo);
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // včetně obou dní
+
+    const cenaPrace = hodiny * 990 * diffDays;
     const cenaDopravy = km * 30;
     setCena(cenaPrace + cenaDopravy);
+    setMsg(`Počet dní: ${diffDays}`);
   };
 
   const odeslat = async () => {
-    if (!jmeno || !datum || cena === null) {
+    if (!jmeno || !datumOd || !datumDo || cena === null) {
       setMsg("Vyplňte prosím všechna pole a nejdříve spočítejte cenu.");
       return;
     }
@@ -28,7 +40,7 @@ export default function Vypocet() {
       const res = await fetch("/api/objednavka", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jmeno, datum, hodiny, km, cena }),
+        body: JSON.stringify({ jmeno, datumOd, datumDo, hodiny, km, cena }),
       });
 
       const data = await res.json();
@@ -70,17 +82,27 @@ export default function Vypocet() {
           </div>
 
           <div>
-            <label className="block font-semibold mb-1">Datum</label>
+            <label className="block font-semibold mb-1">Datum od</label>
             <input
               type="date"
               className="w-full border px-4 py-2 rounded"
-              value={datum}
-              onChange={(e) => setDatum(e.target.value)}
+              value={datumOd}
+              onChange={(e) => setDatumOd(e.target.value)}
             />
           </div>
 
           <div>
-            <label className="block font-semibold mb-1">Počet hodin</label>
+            <label className="block font-semibold mb-1">Datum do</label>
+            <input
+              type="date"
+              className="w-full border px-4 py-2 rounded"
+              value={datumDo}
+              onChange={(e) => setDatumDo(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label className="block font-semibold mb-1">Počet hodin / den</label>
             <input
               type="number"
               className="w-full border px-4 py-2 rounded"
@@ -125,7 +147,9 @@ export default function Vypocet() {
           )}
 
           {msg && (
-            <p className="mt-4 text-center font-medium text-blue-600">{msg}</p>
+            <p className={`mt-4 text-center font-medium ${msg.includes("obsazený") ? "text-red-600" : "text-blue-600"}`}>
+              {msg}
+            </p>
           )}
         </div>
       </div>
