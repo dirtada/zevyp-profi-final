@@ -21,7 +21,7 @@ export default function Home() {
     <a href="#cenik" className="hover:underline">CENÍK</a>
     <a href="#kontakt" className="hover:underline">KONTAKT</a>
   </nav>
-</header 
+</header>
 
 <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
 
