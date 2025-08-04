@@ -1,14 +1,26 @@
-import { useState } from "react";
+import Head from "next/head";
 import Image from "next/image";
+import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  ScaleIcon,
+  Cog6ToothIcon,
+  ArrowsUpDownIcon,
+  WrenchScrewdriverIcon,
+  BuildingOffice2Icon,
+  TruckIcon,
+  SquaresPlusIcon,
+} from "@heroicons/react/24/outline";
 
-export default function Header() {
+function Header() {
   const [open, setOpen] = useState(false);
+
+  const navClasses =
+    "px-4 py-2 rounded-lg font-semibold uppercase tracking-wide transition hover:bg-[#2f3237] hover:text-white";
 
   return (
     <header className="bg-[#f9c600] text-black py-4 px-4 shadow-md relative z-50">
       <div className="container mx-auto flex justify-between items-center">
-        {/* Logo */}
         <div className="flex items-center gap-3">
           <Image
             src="/images/logo_update.png"
@@ -20,12 +32,12 @@ export default function Header() {
         </div>
 
         {/* Desktop menu */}
-        <nav className="hidden md:flex gap-6 text-base md:text-lg">
-          <a href="#sluzby" className="hover:underline">NAŠE SLUŽBY</a>
-          <a href="#technika" className="hover:underline">TECHNIKA</a>
-          <a href="#cenik" className="hover:underline">CENÍK</a>
-          <a href="#kontakt" className="hover:underline">KONTAKT</a>
-          <a href="/vypocet" className="hover:underline">VÝPOČET</a>
+        <nav className="hidden md:flex gap-4 text-base md:text-lg">
+          <a href="#sluzby" className={navClasses}>Služby</a>
+          <a href="#technika" className={navClasses}>Technika</a>
+          <a href="#cenik" className={navClasses}>Ceník</a>
+          <a href="#kontakt" className={navClasses}>Kontakt</a>
+          <a href="/vypocet" className={navClasses}>Výpočet</a>
         </nav>
 
         {/* Mobile hamburger */}
@@ -44,15 +56,31 @@ export default function Header() {
 
       {/* Mobile dropdown */}
       {open && (
-        <div className="md:hidden bg-[#f9c600] py-4 px-6 flex flex-col gap-4 shadow-lg">
-          <a href="#sluzby" onClick={() => setOpen(false)}>NAŠE SLUŽBY</a>
-          <a href="#technika" onClick={() => setOpen(false)}>TECHNIKA</a>
-          <a href="#cenik" onClick={() => setOpen(false)}>CENÍK</a>
-          <a href="#kontakt" onClick={() => setOpen(false)}>KONTAKT</a>
-          <a href="/vypocet" onClick={() => setOpen(false)}>VÝPOČET</a>
+        <div className="md:hidden bg-[#f9c600] py-4 px-6 flex flex-col gap-3 shadow-lg">
+          <a href="#sluzby" className={navClasses} onClick={() => setOpen(false)}>Služby</a>
+          <a href="#technika" className={navClasses} onClick={() => setOpen(false)}>Technika</a>
+          <a href="#cenik" className={navClasses} onClick={() => setOpen(false)}>Ceník</a>
+          <a href="#kontakt" className={navClasses} onClick={() => setOpen(false)}>Kontakt</a>
+          <a href="/vypocet" className={navClasses} onClick={() => setOpen(false)}>Výpočet</a>
         </div>
       )}
     </header>
+  );
+}
+
+export default function Home() {
+  return (
+    <>
+      <Head>
+        <title>Zemní a výkopové práce – Zevyp.cz</title>
+        <meta
+          name="description"
+          content="Výkopové a zemní práce minibagrem Hitachi – Praha a okolí."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <Header />
 
       <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
         {/* Hero */}
