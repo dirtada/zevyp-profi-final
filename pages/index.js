@@ -28,32 +28,34 @@ export default function Home() {
 
 
 
-<main className="bg-[#2f3237] text-white px-4 py-12 relative">
-  <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
-    <div className="md:w-1/2 text-left mb-8 md:mb-0 relative z-20">
-      <h2 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
+<main className="bg-[#2f3237] text-white py-16">
+  <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+    {/* Textový blok */}
+    <div className="md:w-1/2 text-left mb-12 md:mb-0 relative z-20">
+      <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
         ZEMNÍ A VÝKOPOVÉ PRÁCE
       </h2>
-  {/* CTA tlačítko nad obrázkem */}
+
+      <p className="flex items-start text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
+        <span className="mr-3 text-2xl">⛏️</span>
+        <span>
+          Provádíme{" "}
+          <span className="text-[#f9c600] font-semibold">
+            spolehlivé zemní a výkopové práce
+          </span>{" "}
+          minibagrem Hitachi v Praze a okolí.
+        </span>
+      </p>
+
       <a
         href="#kontakt"
-        className="relative z-30 inline-block bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
+        className="inline-block bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
       >
         Nezávazná poptávka
       </a>
-
-          <p className="flex items-start text-lg md:text-xl text-gray-300 leading-relaxed mt-4">
-  <span className="mr-3 text-2xl">⛏️</span>
-  <span>
-    Provádíme <span className="text-[#f9c600] font-semibold">
-      spolehlivé zemní a výkopové práce
-    </span>{" "}
-    minibagrem Hitachi v Praze a okolí.
-  </span>
-</p>
-
-   
     </div>
+
+    {/* Obrázek */}
     <div className="md:w-1/2 flex justify-center relative z-10">
       <Image
         src="/images/bagr-hero.png"
@@ -65,6 +67,7 @@ export default function Home() {
     </div>
   </div>
 </main>
+
 
       <section id="sluzby" className="bg-[#f9c600] text-black px-6 py-12">
         <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:mx-auto md:pl-12 text-[#2f3237] drop-shadow">NAŠE SLUŽBY</h3>
