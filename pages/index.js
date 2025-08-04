@@ -87,7 +87,7 @@ export default function Home() {
         </ul>
         <p className="text-sm text-gray-700 mt-4">*Konečnou cenu předanastavíme e-mailem podle vzdálenosti a požadavků.</p>
       </section>
-
+/*
       <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
         <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:mx-auto md:pl-12 text-[#2f3237] drop-shadow">KONTAKT</h3>
         <form className="max-w-md mx-auto space-y-4 text-black">
@@ -97,7 +97,67 @@ export default function Home() {
           <button type="submit" className="bg-[#f9c600] px-6 py-2 font-bold rounded">ODESLAT</button>
         </form>
       </section>
+*/
+          <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
+  <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:pl-12 text-[#f9c600] drop-shadow">
+    KONTAKT
+  </h3>
+  
+  <form className="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5">
+    <div>
+      <label className="block text-sm font-semibold text-gray-700 mb-1">
+        Jméno
+      </label>
+      <input
+        type="text"
+        placeholder="Vaše jméno"
+        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"
+      />
+    </div>
+    
+    <div>
+      <label className="block text-sm font-semibold text-gray-700 mb-1">
+        E-mail
+      </label>
+      <input
+        type="email"
+        placeholder="vas@email.cz"
+        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"
+      />
+    </div>
 
+    <div>
+      <label className="block text-sm font-semibold text-gray-700 mb-1">
+        Telefon
+      </label>
+      <input
+        type="tel"
+        placeholder="+420 ..."
+        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"
+      />
+    </div>
+    
+    <div>
+      <label className="block text-sm font-semibold text-gray-700 mb-1">
+        Zpráva
+      </label>
+      <textarea
+        rows="4"
+        placeholder="Sem napište svou poptávku..."
+        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"
+      ></textarea>
+    </div>
+    
+    <button
+      type="submit"
+      className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded-lg shadow hover:bg-yellow-400 transition"
+    >
+      ODESLAT POPTÁVKU
+    </button>
+  </form>
+</section>
+
+        
       <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
         Zemní a Výkopové práce • IČO:73377619 • info@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
       </footer>      </div>
