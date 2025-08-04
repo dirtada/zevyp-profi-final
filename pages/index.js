@@ -105,22 +105,55 @@ export default function Home() {
   </div>
 </section>
 
+<section id="technika" className="bg-white text-black py-16">
+  <div className="container mx-auto px-4">
+    <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] drop-shadow text-center">
+      TECHNIKA
+    </h3>
 
-      <section id="technika" className="bg-white text-black px-6 py-12">
-        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:mx-auto md:pl-12 text-[#2f3237] drop-shadow">TECHNIKA</h3>
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-4xl mx-auto">
-          <Image src="/images/bagr-technik.png" alt="Bagr Technika" width={400} height={300} />
-          <div className="text-left text-lg">
-            <h4 className="text-lg md:text-xl font-bold mb-2">Hitachi ZX 48-A5A</h4>
-            <ul className="list-disc list-inside space-y-1">
-              <li>Hmotnost: 4.3 tuny</li>
-              <li>Motor: Yanmar 4TNV88 – 25.2 KW</li>
-              <li>Max. hloubka výkopu: 3.74 m</li>
-              <li>Vhodný pro výkopy základů, inženýrské sítě, úpravy terénu</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+    <div className="flex flex-col md:flex-row items-center gap-10 max-w-5xl mx-auto bg-gray-50 rounded-xl shadow-lg p-8">
+      <Image
+        src="/images/bagr-technik.png"
+        alt="Bagr Technika"
+        width={400}
+        height={300}
+        className="rounded-lg shadow"
+      />
+
+      <div className="text-left text-lg space-y-4">
+        <h4 className="text-2xl font-bold text-[#2f3237]">
+          Hitachi ZX 48-A5A
+        </h4>
+        <ul className="space-y-3">
+          <li className="flex items-center gap-3">
+            <span className="text-yellow-500 text-xl">⚖️</span>
+            <span>Hmotnost: 4.3 tuny</span>
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="text-yellow-500 text-xl">⚙️</span>
+            <span>Motor: Yanmar 4TNV88 – 25.2 KW</span>
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="text-yellow-500 text-xl">📏</span>
+            <span>Max. hloubka výkopu: 3.74 m</span>
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="text-yellow-500 text-xl">🏗️</span>
+            <span>Vhodný pro základy, inženýrské sítě a úpravy terénu</span>
+          </li>
+        </ul>
+
+        <a
+          href="#kontakt"
+          className="inline-block mt-6 bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
+        >
+          Poptat tuto techniku
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       <section id="cenik" className="bg-[#f9c600] text-black py-16">
   <div className="container mx-auto px-4">
