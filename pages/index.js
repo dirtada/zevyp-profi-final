@@ -28,37 +28,37 @@ export default function Home() {
 
 
 
-<main className="bg-[#2f3237] text-white px-4 py-12">
+<main className="bg-[#2f3237] text-white px-4 py-12 relative">
   <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
-    <div className="md:w-1/2 text-left mb-8 md:mb-0">
+    <div className="md:w-1/2 text-left mb-8 md:mb-0 relative z-20">
       <h2 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
         ZEMNÍ A VÝKOPOVÉ PRÁCE
       </h2>
-      <p className="text-base md:text-lg">
-        Provádíme zemní a výkopové práce pomocí pásového rypadla.
-      </p>
 
-      {/* CTA tlačítko pod textem */}
+      {/* CTA tlačítko nad obrázkem */}
       <a
         href="#kontakt"
-        className="inline-block mt-6 bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
+        className="relative z-30 inline-block bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
       >
         Nezávazná poptávka
       </a>
+
+      <p className="mt-6 text-base md:text-lg">
+        Provádíme zemní a výkopové práce pomocí pásového rypadla.
+      </p>
     </div>
 
-    <div className="md:w-1/2 flex justify-center">
+    <div className="md:w-1/2 flex justify-center relative z-10">
       <Image
         src="/images/bagr-hero.png"
         alt="Bagr"
         width={700}
         height={500}
-        className="object-contain mt-8 md:mt-12"
+        className="object-contain -mb-24 md:-mb-32"
       />
     </div>
   </div>
 </main>
-
 
 
 
