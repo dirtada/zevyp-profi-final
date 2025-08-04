@@ -1,5 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
+import { ScaleIcon, Cog6ToothIcon, RulerIcon, BuildingOffice2Icon } from "@heroicons/react/24/outline";
+
 
 export default function Home() {
   return (
@@ -121,27 +123,36 @@ export default function Home() {
       />
 
       <div className="text-left text-lg space-y-4">
-        <h4 className="text-2xl font-bold text-[#2f3237]">
-          Hitachi ZX 48-A5A
-        </h4>
+        <h4 className="text-2xl font-bold text-[#2f3237]">Hitachi ZX 48-A5A</h4>
         <ul className="space-y-3">
           <li className="flex items-center gap-3">
-            <span className="text-yellow-500 text-xl">⚖️</span>
+            <ScaleIcon className="w-6 h-6 text-yellow-500" />
             <span>Hmotnost: 4.3 tuny</span>
           </li>
           <li className="flex items-center gap-3">
-            <span className="text-yellow-500 text-xl">⚙️</span>
+            <Cog6ToothIcon className="w-6 h-6 text-yellow-500" />
             <span>Motor: Yanmar 4TNV88 – 25.2 KW</span>
           </li>
           <li className="flex items-center gap-3">
-            <span className="text-yellow-500 text-xl">📏</span>
+            <RulerIcon className="w-6 h-6 text-yellow-500" />
             <span>Max. hloubka výkopu: 3.74 m</span>
           </li>
           <li className="flex items-center gap-3">
-            <span className="text-yellow-500 text-xl">🏗️</span>
+            <BuildingOffice2Icon className="w-6 h-6 text-yellow-500" />
             <span>Vhodný pro základy, inženýrské sítě a úpravy terénu</span>
           </li>
         </ul>
+
+        <a
+          href="#kontakt"
+          className="inline-block mt-6 bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
+        >
+          Poptat tuto techniku
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
         <a
           href="#kontakt"
