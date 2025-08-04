@@ -154,6 +154,7 @@ export default function Home() {
   </div>
 </section>
 
+
         <a
           href="#kontakt"
           className="inline-block mt-6 bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
