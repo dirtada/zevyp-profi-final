@@ -255,30 +255,39 @@ export default function Vypocet() {
             Spočítat cenu
           </button>
 
-         {cena !== null && (
+        {cena !== null && (
   <div className="mt-4 text-center border-t pt-4">
     <h3 className="text-lg font-bold mb-2">Souhrn kalkulace</h3>
-    
+
     <div className="space-y-1 text-sm text-gray-700">
+      {/* Cena za operaci strojů */}
       <p>
         <strong>Cena za operaci strojů:</strong>{" "}
-        {(
-          (typPrace === "vykop" ? hodiny * 900 : 0) +
-          (typPrace !== "vykop" ? hodiny * 900 : 0) +
-          (typPrace === "vykopZasyp" || typPrace === "komplexni" ? hodiny * 850 : 0) +
-          (typPrace === "komplexni" ? hodiny * manualniPracovnici * 300 : 0)
-        ).toLocaleString()}{" "}
-        Kč
+        {(() => {
+          const cenaBagr = hodiny * 900;
+          const cenaNakladni =
+            typPrace === "vykopZasyp" || typPrace === "komplexni"
+              ? hodiny * 850
+              : 0;
+          const cenaPracovnici =
+            typPrace === "komplexni"
+              ? hodiny * manualniPracovnici * 300
+              : 0;
+
+          return (cenaBagr + cenaNakladni + cenaPracovnici).toLocaleString();
+        })()} Kč
       </p>
 
+      {/* Cena za dopravu */}
       <p>
         <strong>Cena za dopravu:</strong>{" "}
-        {(
-          (typPrace === "vykop" ? km * 8 : 0) +
-          (typPrace === "vykopZasyp" ? km * 16 : 0) +
-          (typPrace === "komplexni" ? km * 16 : 0)
-        ).toLocaleString()}{" "}
-        Kč
+        {(() => {
+          let doprava = 0;
+          if (typPrace === "vykop") doprava = km * 8;
+          if (typPrace === "vykopZasyp") doprava = km * 16;
+          if (typPrace === "komplexni") doprava = km * 16;
+          return doprava.toLocaleString();
+        })()} Kč
       </p>
     </div>
 
