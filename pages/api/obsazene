@@ -1,7 +1,9 @@
 import { google } from "googleapis";
+console.log("API /obsazene bylo zavolano");
 
 export default async function handler(req, res) {
   try {
+
     const oauth2Client = new google.auth.OAuth2(
       process.env.GCAL_CLIENT_ID,
       process.env.GCAL_CLIENT_SECRET,
@@ -48,5 +50,4 @@ export default async function handler(req, res) {
 
 
   }
-console.log("Obsazene udalosti:", obsazene);
 }
