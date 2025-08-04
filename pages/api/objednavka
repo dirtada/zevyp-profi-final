@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   const { jmeno, datum, hodiny, km, cena } = req.body;
 
   try {
-    // 1) Nastavení Nodemailer transportu
+    // 1) Odeslání e‑mailu
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -18,7 +18,6 @@ export default async function handler(req, res) {
       },
     });
 
-    // 2) Odeslání e‑mailu
     await transporter.sendMail({
       from: `"Zevyp kalkulace" <${process.env.MAIL_USER}>`,
       to: "kontaktzevyp@gmail.com",
@@ -33,7 +32,7 @@ export default async function handler(req, res) {
       `,
     });
 
-    // 3) Přidání návrhu do Google Kalendáře
+    // 2) Přidání celodenní události do Google Kalendáře
     const oauth2Client = new google.auth.OAuth2(
       process.env.GCAL_CLIENT_ID,
       process.env.GCAL_CLIENT_SECRET,
@@ -50,22 +49,22 @@ export default async function handler(req, res) {
       summary: `NÁVRH: ${jmeno}`,
       description: `Počet hodin: ${hodiny}, Km: ${km}, Cena: ${cena} Kč`,
       start: {
-        dateTime: new Date(datum).toISOString(),
+        date: datum, // celý den
         timeZone: "Europe/Prague",
       },
       end: {
-        dateTime: new Date(new Date(datum).getTime() + 60 * 60 * 1000).toISOString(),
+        date: datum, // končí stejný den
         timeZone: "Europe/Prague",
       },
-      status: "tentative", // událost čekající na potvrzení
+      status: "tentative", // čekající na schválení
     };
 
     await calendar.events.insert({
-      calendarId: "primary", // můžeš změnit na konkrétní ID kalendáře
+      calendarId: "primary", // případně uveď konkrétní ID kalendáře
       resource: event,
     });
 
-    return res.status(200).json({ message: "Poptávka byla úspěšně odeslána a vložena do kalendáře." });
+    return res.status(200).json({ message: "Poptávka byla odeslána a rezervována v kalendáři jako návrh." });
   } catch (error) {
     console.error("Chyba při zpracování:", error);
     return res.status(500).json({ error: "Nepodařilo se odeslat poptávku." });
