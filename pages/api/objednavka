@@ -1,0 +1,72 @@
+import { google } from "googleapis";
+import nodemailer from "nodemailer";
+
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  const { jmeno, datum, hodiny, km, cena } = req.body;
+
+  try {
+    // 1) Odeslání e‑mailu
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"Zevyp kalkulace" <${process.env.MAIL_USER}>`,
+      to: "kontaktzevyp@gmail.com",
+      subject: "Nová poptávka výkopových prací",
+      html: `
+        <h3>Nová kalkulace</h3>
+        <p><strong>Projekt:</strong> ${jmeno}</p>
+        <p><strong>Datum:</strong> ${new Date(datum).toLocaleDateString()}</p>
+        <p><strong>Hodiny:</strong> ${hodiny}</p>
+        <p><strong>Kilometry:</strong> ${km}</p>
+        <p><strong>Celková cena:</strong> ${cena} Kč</p>
+      `,
+    });
+
+    // 2) Vytvoření návrhu v Google Kalendáři
+    const oauth2Client = new google.auth.OAuth2(
+      process.env.GCAL_CLIENT_ID,
+      process.env.GCAL_CLIENT_SECRET,
+      process.env.GCAL_REDIRECT_URI
+    );
+
+    oauth2Client.setCredentials({
+      refresh_token: process.env.GCAL_REFRESH_TOKEN,
+    });
+
+    const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+
+    const event = {
+      summary: `NÁVRH: ${jmeno}`,
+      description: `Počet hodin: ${hodiny}, Km: ${km}, Cena: ${cena} Kč`,
+      start: {
+        date: datum.split("T")[0],
+        timeZone: "Europe/Prague",
+      },
+      end: {
+        date: datum.split("T")[0],
+        timeZone: "Europe/Prague",
+      },
+      status: "tentative", // návrh, čeká na schválení
+    };
+
+    await calendar.events.insert({
+      calendarId: "primary", // můžeš změnit na konkrétní calendarId
+      resource: event,
+    });
+
+    return res.status(200).json({ message: "Poptávka byla odeslána a vložena do kalendáře jako návrh." });
+  } catch (error) {
+    console.error("Chyba při zpracování:", error);
+    return res.status(500).json({ error: "Nepodařilo se odeslat poptávku." });
+  }
+}
