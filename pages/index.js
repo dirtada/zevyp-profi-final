@@ -35,8 +35,13 @@ export default function Home() {
       <p className="text-base md:text-lg">
         Provádíme zemní a výkopové práce pomocí pásového rypadla.
       </p>
+<a
+  href="#kontakt"
+  className="inline-block mt-6 bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
+>
+  Nezávazná poptávka
+</a>
 
-      {/* sem vlož CTA tlačítko */}
       <a
         href="#kontakt"
         className="inline-block mt-6 bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
