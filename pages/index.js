@@ -65,24 +65,46 @@ export default function Home() {
   </div>
 </main>
 
+<section id="sluzby" className="bg-[#f9c600] text-black py-16">
+  <div className="container mx-auto px-4">
+    <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] drop-shadow text-center">
+      NAŠE SLUŽBY
+    </h3>
 
-      <section id="sluzby" className="bg-[#f9c600] text-black px-6 py-12">
-        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:mx-auto md:pl-12 text-[#2f3237] drop-shadow">NAŠE SLUŽBY</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xl max-w-3xl mx-auto">
-          <div className="flex items-center gap-2">
-            <span>✔️</span>
-            <p>Výkopy základů</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <span>✔️</span>
-            <p>Zásypy a zasypávání</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <span>✔️</span>
-            <p>Zarovnání terénu</p>
-          </div>
-        </div>
-      </section>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition text-center">
+        <div className="text-4xl mb-4">🏗️</div>
+        <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">
+          Výkopy základů
+        </h4>
+        <p className="text-gray-600 text-sm">
+          Přesné a rychlé výkopy základových pasů a desek pro rodinné domy či stavby.
+        </p>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition text-center">
+        <div className="text-4xl mb-4">🪣</div>
+        <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">
+          Zásypy a zasypávání
+        </h4>
+        <p className="text-gray-600 text-sm">
+          Kvalitní a efektivní zásypy základů, rýh i inženýrských sítí.
+        </p>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition text-center">
+        <div className="text-4xl mb-4">🌍</div>
+        <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">
+          Zarovnání terénu
+        </h4>
+        <p className="text-gray-600 text-sm">
+          Úpravy a modelace terénu pro zahrady, příjezdové cesty či stavební plochy.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       <section id="technika" className="bg-white text-black px-6 py-12">
         <h3 className="text-2xl md:text-3xl font-bold mb-6 text-left max-w-4xl mx-auto md:mx-auto md:pl-12 text-[#2f3237] drop-shadow">TECHNIKA</h3>
