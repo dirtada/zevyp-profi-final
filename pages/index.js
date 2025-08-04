@@ -44,7 +44,7 @@ export default function Home() {
       </a>
 
       <p className="mt-6 text-base md:text-lg">
-        Provádíme zemní a výkopové práce pomocí pásového rypadla.
+        Provádíme zemní a výkopové práce pomocí pásového rypadla. TEST
       </p>
     </div>
     {/*
