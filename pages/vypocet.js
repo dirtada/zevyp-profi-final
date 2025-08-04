@@ -18,7 +18,7 @@ export default function Vypocet() {
   const [loading, setLoading] = useState(false);
   const [obsazene, setObsazene] = useState([]);
 
-  // načteme obsazené termíny z API
+  // načtení obsazených dnů
   useEffect(() => {
     const nactiObsazene = async () => {
       try {
@@ -32,7 +32,7 @@ export default function Vypocet() {
     nactiObsazene();
   }, []);
 
-  // spočítá km přes Google API
+  // spočítat km
   const spocitatVzdalenost = async () => {
     try {
       const res = await fetch("/api/vzdalenost", {
@@ -43,6 +43,7 @@ export default function Vypocet() {
       const data = await res.json();
       if (res.ok) {
         setKm(data.km);
+        setMsg(`Vzdálenost je ${data.km} km.`);
       } else {
         setMsg(data.error || "Nepodařilo se zjistit vzdálenost.");
       }
@@ -52,7 +53,7 @@ export default function Vypocet() {
     }
   };
 
-  // spočítá cenu
+  // spočítat cenu
   const spocitat = () => {
     if (!datumOd || !datumDo) {
       setMsg("Vyberte prosím rozsah dní.");
@@ -72,13 +73,10 @@ export default function Vypocet() {
     setHodiny(vypocetHodiny);
 
     let cenaCelkem = 0;
-
-    // základní sazby
     const cenaBagr = vypocetHodiny * 900;
     const cenaNakladni = vypocetHodiny * 850;
     const cenaPracovnici = vypocetHodiny * manualniPracovnici * 300;
 
-    // výpočty podle varianty
     if (typPrace === "vykop") {
       cenaCelkem = cenaBagr + km * 8;
     } else if (typPrace === "vykopZasyp") {
@@ -91,6 +89,7 @@ export default function Vypocet() {
     setMsg(`Počet dní: ${diffDays}, hodin celkem: ${vypocetHodiny}`);
   };
 
+  // odeslat poptávku
   const odeslat = async () => {
     if (!jmeno || !datumOd || !datumDo || cena === null) {
       setMsg("Vyplňte prosím všechna pole a nejdříve spočítejte cenu.");
@@ -102,7 +101,17 @@ export default function Vypocet() {
       const res = await fetch("/api/objednavka", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jmeno, adresa, datumOd, datumDo, hodiny, km, cena }),
+        body: JSON.stringify({
+          jmeno,
+          adresa,
+          typPrace,
+          manualniPracovnici,
+          datumOd,
+          datumDo,
+          hodiny,
+          km,
+          cena,
+        }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -164,47 +173,58 @@ export default function Vypocet() {
 
           {/* Výběr typu práce */}
           <div>
-            <label className="block font-semibold mb-2">Typ prací</label>
+            <label className="block font-semibold mb-2">Vyberte typ prací</label>
             <div className="grid gap-3">
               <button
                 onClick={() => setTypPrace("vykop")}
-                className={`flex items-center p-3 border rounded hover:shadow ${
-                  typPrace === "vykop" ? "border-yellow-500 bg-yellow-50" : ""
+                className={`flex items-center justify-between p-4 border rounded-lg hover:shadow transition ${
+                  typPrace === "vykop" ? "border-yellow-500 bg-yellow-50" : "border-gray-300"
                 }`}
               >
-                <Hammer className="w-6 h-6 mr-2 text-yellow-600" />
-                Výkopové práce (900 Kč/h) – obtížnost ★
+                <div className="flex items-center">
+                  <Hammer className="w-6 h-6 mr-2 text-yellow-600" />
+                  <span className="font-semibold">Výkopové práce</span>
+                </div>
+                <span className="text-sm text-gray-600">Obtížnost ★</span>
               </button>
+
               <button
                 onClick={() => setTypPrace("vykopZasyp")}
-                className={`flex items-center p-3 border rounded hover:shadow ${
-                  typPrace === "vykopZasyp" ? "border-yellow-500 bg-yellow-50" : ""
+                className={`flex items-center justify-between p-4 border rounded-lg hover:shadow transition ${
+                  typPrace === "vykopZasyp" ? "border-yellow-500 bg-yellow-50" : "border-gray-300"
                 }`}
               >
-                <Truck className="w-6 h-6 mr-2 text-yellow-600" />
-                Výkop + zásyp (900 + 850 Kč/h) – obtížnost ★★
+                <div className="flex items-center">
+                  <Truck className="w-6 h-6 mr-2 text-yellow-600" />
+                  <span className="font-semibold">Výkop + zásypové práce</span>
+                </div>
+                <span className="text-sm text-gray-600">Obtížnost ★★</span>
               </button>
+
               <button
                 onClick={() => setTypPrace("komplexni")}
-                className={`flex items-center p-3 border rounded hover:shadow ${
-                  typPrace === "komplexni" ? "border-yellow-500 bg-yellow-50" : ""
+                className={`flex items-center justify-between p-4 border rounded-lg hover:shadow transition ${
+                  typPrace === "komplexni" ? "border-yellow-500 bg-yellow-50" : "border-gray-300"
                 }`}
               >
-                <Layers className="w-6 h-6 mr-2 text-yellow-600" />
-                Komplexní práce (bagr + vůz + pracovníci) – obtížnost ★★★
+                <div className="flex items-center">
+                  <Layers className="w-6 h-6 mr-2 text-yellow-600" />
+                  <span className="font-semibold">Komplexní práce</span>
+                </div>
+                <span className="text-sm text-gray-600">Obtížnost ★★★</span>
               </button>
             </div>
           </div>
 
-          {/* Počet pracovníků (jen u komplexních prací) */}
+          {/* Počet pracovníků u komplexních prací */}
           {typPrace === "komplexni" && (
             <div>
               <label className="block font-semibold mb-1">Počet manuálních pracovníků</label>
               <input
                 type="number"
+                min="0"
                 className="w-full border px-4 py-2 rounded"
                 value={manualniPracovnici}
-                min="0"
                 onChange={(e) => setManualniPracovnici(Number(e.target.value))}
               />
             </div>
@@ -227,7 +247,7 @@ export default function Vypocet() {
             />
           </div>
 
-          {/* Výpočet ceny */}
+          {/* Spočítat cenu */}
           <button
             onClick={spocitat}
             className="w-full bg-yellow-500 text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-600 transition"
@@ -235,10 +255,16 @@ export default function Vypocet() {
             Spočítat cenu
           </button>
 
+          {/* Výsledek */}
           {cena !== null && (
             <div className="mt-4 text-center">
-              <p className="text-lg font-semibold">Celková cena: {cena.toLocaleString()} Kč</p>
+              <p className="text-lg font-semibold">
+                Celková cena: {cena.toLocaleString()} Kč
+              </p>
               <p className="text-sm text-gray-600">Hodin celkem: {hodiny}</p>
+              <p className="mt-2 text-xs text-red-600 font-medium">
+                Upozornění: Kalkulace je pouze orientační. Konečná cena se může lišit dle specifických požadavků.
+              </p>
             </div>
           )}
 
@@ -253,7 +279,12 @@ export default function Vypocet() {
             </button>
           )}
 
-          {msg && <p className="mt-4 text-center font-medium text-blue-600">{msg}</p>}
+          {/* Info zpráva */}
+          {msg && (
+            <p className="mt-4 text-center font-medium text-blue-600">
+              {msg}
+            </p>
+          )}
         </div>
       </div>
     </div>
