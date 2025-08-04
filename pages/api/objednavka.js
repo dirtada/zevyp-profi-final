@@ -15,23 +15,12 @@ export default async function handler(req, res) {
       process.env.GCAL_CLIENT_SECRET,
       process.env.GCAL_REDIRECT_URI
     );
+
     oauth2Client.setCredentials({
       refresh_token: process.env.GCAL_REFRESH_TOKEN,
     });
+
     const calendar = google.calendar({ version: "v3", auth: oauth2Client });
-
-    // Kontrola obsazenosti v rozsahu
-    const events = await calendar.events.list({
-      calendarId: "primary",
-      timeMin: new Date(datumOd).toISOString(),
-      timeMax: new Date(new Date(datumDo).getTime() + 24*60*60*1000).toISOString(),
-      singleEvents: true,
-      orderBy: "startTime",
-    });
-
-    if (events.data.items.length > 0) {
-      return res.status(400).json({ error: "V tomto rozsahu je již rezervace. Zvolte prosím jiné datum." });
-    }
 
     // Odeslání e‑mailu
     const transporter = nodemailer.createTransport({
@@ -51,13 +40,13 @@ export default async function handler(req, res) {
         <p><strong>Projekt:</strong> ${jmeno}</p>
         <p><strong>Od:</strong> ${new Date(datumOd).toLocaleDateString("cs-CZ")}</p>
         <p><strong>Do:</strong> ${new Date(datumDo).toLocaleDateString("cs-CZ")}</p>
-        <p><strong>Hodiny:</strong> ${hodiny}</p>
+        <p><strong>Hodiny celkem:</strong> ${hodiny}</p>
         <p><strong>Kilometry:</strong> ${km}</p>
         <p><strong>Celková cena:</strong> ${cena} Kč</p>
       `,
     });
 
-    // Vytvoření události přes více dní
+    // Přidání celodenní události jako návrh
     const event = {
       summary: `NÁVRH: ${jmeno}`,
       description: `Počet hodin: ${hodiny}, Km: ${km}, Cena: ${cena} Kč`,
@@ -66,12 +55,13 @@ export default async function handler(req, res) {
         timeZone: "Europe/Prague",
       },
       end: {
-        date: new Date(new Date(datumDo).getTime() + 24*60*60*1000)
+        // Google bere end.date jako "den po"
+        date: new Date(new Date(datumDo).getTime() + 24 * 60 * 60 * 1000)
           .toISOString()
-          .split("T")[0], // Google očekává, že "end.date" je den po konci
+          .split("T")[0],
         timeZone: "Europe/Prague",
       },
-      status: "tentative",
+      status: "tentative", // ❗ rezervace čeká na schválení
     };
 
     await calendar.events.insert({
@@ -79,7 +69,9 @@ export default async function handler(req, res) {
       resource: event,
     });
 
-    return res.status(200).json({ message: "Poptávka byla úspěšně odeslána a vložena do kalendáře." });
+    return res.status(200).json({
+      message: "Poptávka byla odeslána. Rezervace je vložena do kalendáře jako návrh.",
+    });
   } catch (error) {
     console.error("Chyba při zpracování:", error);
     return res.status(500).json({ error: "Nepodařilo se odeslat poptávku." });
