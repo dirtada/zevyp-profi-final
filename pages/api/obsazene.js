@@ -26,22 +26,23 @@ export default async function handler(req, res) {
       singleEvents: true,
       orderBy: "startTime",
     });
+const obsazene = [];
+for (const ev of events.data.items) {
+  if (ev.status !== "confirmed") continue; // ❗ ignorujeme návrhy
 
-    const obsazene = [];
-    for (const ev of events.data.items) {
-      if (ev.start.date && ev.end.date) {
-        // Celodenní událost → přidáme všechny dny v rozsahu
-        let current = new Date(ev.start.date);
-        const end = new Date(ev.end.date);
-        while (current < end) {
-          obsazene.push(current.toISOString().split("T")[0]);
-          current.setDate(current.getDate() + 1);
-        }
-      } else if (ev.start.dateTime) {
-        // Časová událost → jen konkrétní den
-        obsazene.push(ev.start.dateTime.split("T")[0]);
-      }
+  if (ev.start?.date && ev.end?.date) {
+    let current = new Date(ev.start.date);
+    const end = new Date(ev.end.date);
+    while (current < end) {
+      obsazene.push(current.toISOString().split("T")[0]);
+      current.setDate(current.getDate() + 1);
     }
+  } else if (ev.start?.dateTime) {
+    const den = new Date(ev.start.dateTime).toISOString().split("T")[0];
+    obsazene.push(den);
+  }
+}
+
 
     res.status(200).json({ obsazene });
   } catch (error) {
