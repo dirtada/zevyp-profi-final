@@ -46,6 +46,7 @@ export default function Home() {
           <a href="#kontakt" className="hover:underline">
             KONTAKT
           </a>
+             <a href="/vypocet" className="hover:underline">VÝPOČET</a> 
         </nav>
       </header>
 
