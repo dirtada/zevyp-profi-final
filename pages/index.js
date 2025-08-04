@@ -47,7 +47,7 @@ export default function Home() {
         Provádíme zemní a výkopové práce pomocí pásového rypadla.
       </p>
     </div>
-
+    {/*
     <div className="md:w-1/2 flex justify-center relative z-10">
       <Image
         src="/images/bagr-hero.png"
@@ -59,7 +59,7 @@ export default function Home() {
     </div>
   </div>
 </main>
-
+ */}
 
 
 
