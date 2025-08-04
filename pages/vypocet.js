@@ -2,19 +2,23 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { Hammer, Truck, Layers } from "lucide-react";
 
 export default function Vypocet() {
   const [jmeno, setJmeno] = useState("");
+  const [adresa, setAdresa] = useState("");
+  const [typPrace, setTypPrace] = useState("vykop");
+  const [manualniPracovnici, setManualniPracovnici] = useState(0);
   const [datumOd, setDatumOd] = useState("");
   const [datumDo, setDatumDo] = useState("");
   const [km, setKm] = useState(0);
   const [hodiny, setHodiny] = useState(0);
   const [cena, setCena] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const [obsazene, setObsazene] = useState([]);
 
-  // načti obsazené termíny z Google Kalendáře
+  // načteme obsazené termíny z API
   useEffect(() => {
     const nactiObsazene = async () => {
       try {
@@ -28,9 +32,34 @@ export default function Vypocet() {
     nactiObsazene();
   }, []);
 
+  // spočítá km přes Google API
+  const spocitatVzdalenost = async () => {
+    try {
+      const res = await fetch("/api/vzdalenost", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ adresa }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setKm(data.km);
+      } else {
+        setMsg(data.error || "Nepodařilo se zjistit vzdálenost.");
+      }
+    } catch (error) {
+      console.error(error);
+      setMsg("Chyba při komunikaci se serverem.");
+    }
+  };
+
+  // spočítá cenu
   const spocitat = () => {
     if (!datumOd || !datumDo) {
       setMsg("Vyberte prosím rozsah dní.");
+      return;
+    }
+    if (!adresa || km === 0) {
+      setMsg("Zadejte prosím adresu a zjistěte vzdálenost.");
       return;
     }
 
@@ -42,11 +71,24 @@ export default function Vypocet() {
     const vypocetHodiny = diffDays * 8;
     setHodiny(vypocetHodiny);
 
-    const cenaPrace = vypocetHodiny * 990;
-    const cenaDopravy = km * 30;
-    setCena(cenaPrace + cenaDopravy);
+    let cenaCelkem = 0;
 
-    setMsg(`Počet dní: ${diffDays} (${vypocetHodiny} hodin)`);
+    // základní sazby
+    const cenaBagr = vypocetHodiny * 900;
+    const cenaNakladni = vypocetHodiny * 850;
+    const cenaPracovnici = vypocetHodiny * manualniPracovnici * 300;
+
+    // výpočty podle varianty
+    if (typPrace === "vykop") {
+      cenaCelkem = cenaBagr + km * 8;
+    } else if (typPrace === "vykopZasyp") {
+      cenaCelkem = cenaBagr + cenaNakladni + km * 16;
+    } else if (typPrace === "komplexni") {
+      cenaCelkem = cenaBagr + cenaNakladni + cenaPracovnici + km * 16;
+    }
+
+    setCena(cenaCelkem);
+    setMsg(`Počet dní: ${diffDays}, hodin celkem: ${vypocetHodiny}`);
   };
 
   const odeslat = async () => {
@@ -55,15 +97,13 @@ export default function Vypocet() {
       return;
     }
     setLoading(true);
-    setMsg("");
 
     try {
       const res = await fetch("/api/objednavka", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jmeno, datumOd, datumDo, hodiny, km, cena }),
+        body: JSON.stringify({ jmeno, adresa, datumOd, datumDo, hodiny, km, cena }),
       });
-
       const data = await res.json();
       if (res.ok) {
         setMsg("Poptávka byla úspěšně odeslána!");
@@ -71,7 +111,7 @@ export default function Vypocet() {
         setMsg(data.error || "Chyba při odesílání poptávky.");
       }
     } catch (error) {
-      console.error("Chyba:", error);
+      console.error(error);
       setMsg("Nepodařilo se připojit k serveru.");
     } finally {
       setLoading(false);
@@ -80,8 +120,7 @@ export default function Vypocet() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-      <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
-
+      <div className="bg-white rounded-lg shadow-lg p-8 max-w-lg w-full">
         <Link href="/" className="text-sm text-blue-600 hover:underline block mb-4">
           ← Zpět na hlavní stránku
         </Link>
@@ -103,6 +142,74 @@ export default function Vypocet() {
             />
           </div>
 
+          {/* Adresa */}
+          <div>
+            <label className="block font-semibold mb-1">Adresa zakázky</label>
+            <div className="flex space-x-2">
+              <input
+                type="text"
+                className="flex-1 border px-4 py-2 rounded"
+                value={adresa}
+                onChange={(e) => setAdresa(e.target.value)}
+              />
+              <button
+                onClick={spocitatVzdalenost}
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              >
+                Zjistit km
+              </button>
+            </div>
+            {km > 0 && <p className="text-sm text-gray-600 mt-1">Vzdálenost: {km} km</p>}
+          </div>
+
+          {/* Výběr typu práce */}
+          <div>
+            <label className="block font-semibold mb-2">Typ prací</label>
+            <div className="grid gap-3">
+              <button
+                onClick={() => setTypPrace("vykop")}
+                className={`flex items-center p-3 border rounded hover:shadow ${
+                  typPrace === "vykop" ? "border-yellow-500 bg-yellow-50" : ""
+                }`}
+              >
+                <Hammer className="w-6 h-6 mr-2 text-yellow-600" />
+                Výkopové práce (900 Kč/h) – obtížnost ★
+              </button>
+              <button
+                onClick={() => setTypPrace("vykopZasyp")}
+                className={`flex items-center p-3 border rounded hover:shadow ${
+                  typPrace === "vykopZasyp" ? "border-yellow-500 bg-yellow-50" : ""
+                }`}
+              >
+                <Truck className="w-6 h-6 mr-2 text-yellow-600" />
+                Výkop + zásyp (900 + 850 Kč/h) – obtížnost ★★
+              </button>
+              <button
+                onClick={() => setTypPrace("komplexni")}
+                className={`flex items-center p-3 border rounded hover:shadow ${
+                  typPrace === "komplexni" ? "border-yellow-500 bg-yellow-50" : ""
+                }`}
+              >
+                <Layers className="w-6 h-6 mr-2 text-yellow-600" />
+                Komplexní práce (bagr + vůz + pracovníci) – obtížnost ★★★
+              </button>
+            </div>
+          </div>
+
+          {/* Počet pracovníků (jen u komplexních prací) */}
+          {typPrace === "komplexni" && (
+            <div>
+              <label className="block font-semibold mb-1">Počet manuálních pracovníků</label>
+              <input
+                type="number"
+                className="w-full border px-4 py-2 rounded"
+                value={manualniPracovnici}
+                min="0"
+                onChange={(e) => setManualniPracovnici(Number(e.target.value))}
+              />
+            </div>
+          )}
+
           {/* Kalendář */}
           <div>
             <label className="block font-semibold mb-2">Vyberte rozsah dní</label>
@@ -111,65 +218,27 @@ export default function Vypocet() {
               tileDisabled={({ date }) =>
                 obsazene.includes(date.toISOString().split("T")[0])
               }
-              onClickDay={(value) => {
-                const clickedDate = value.toISOString().split("T")[0];
-                if (obsazene.includes(clickedDate)) {
-                  setMsg("Tento termín je obsazený.");
-                }
-              }}
               onChange={(range) => {
                 if (Array.isArray(range) && range.length === 2) {
-                  const od = range[0].toISOString().split("T")[0];
-                  const doo = range[1].toISOString().split("T")[0];
-
-                  // kontrola, jestli rozsah neobsahuje obsazený den
-                  const hasConflict = obsazene.some(
-                    (day) => day >= od && day <= doo
-                  );
-
-                  if (hasConflict) {
-                    setMsg("V tomto rozsahu je obsazený termín. Zvolte prosím jiné dny.");
-                    setDatumOd("");
-                    setDatumDo("");
-                    return;
-                  }
-
-                  setDatumOd(od);
-                  setDatumDo(doo);
-                  setMsg("");
+                  setDatumOd(range[0].toISOString().split("T")[0]);
+                  setDatumDo(range[1].toISOString().split("T")[0]);
                 }
               }}
             />
           </div>
 
-          {/* Kilometry */}
-          <div>
-            <label className="block font-semibold mb-1">Kilometry dopravy</label>
-            <input
-              type="number"
-              className="w-full border px-4 py-2 rounded"
-              value={km}
-              onChange={(e) => setKm(Number(e.target.value))}
-            />
-          </div>
-
-          {/* Spočítat cenu */}
+          {/* Výpočet ceny */}
           <button
             onClick={spocitat}
-            className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400 transition"
+            className="w-full bg-yellow-500 text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-600 transition"
           >
             Spočítat cenu
           </button>
 
-          {/* Výsledek kalkulace */}
           {cena !== null && (
             <div className="mt-4 text-center">
-              <p className="text-lg font-semibold">
-                Celková cena: {cena.toLocaleString()} Kč
-              </p>
-              <p className="text-sm text-gray-600">
-                Hodin celkem: {hodiny}
-              </p>
+              <p className="text-lg font-semibold">Celková cena: {cena.toLocaleString()} Kč</p>
+              <p className="text-sm text-gray-600">Hodin celkem: {hodiny}</p>
             </div>
           )}
 
@@ -184,16 +253,7 @@ export default function Vypocet() {
             </button>
           )}
 
-          {/* Zpráva */}
-          {msg && (
-            <p
-              className={`mt-4 text-center font-medium ${
-                msg.includes("obsazený") ? "text-red-600" : "text-blue-600"
-              }`}
-            >
-              {msg}
-            </p>
-          )}
+          {msg && <p className="mt-4 text-center font-medium text-blue-600">{msg}</p>}
         </div>
       </div>
     </div>
