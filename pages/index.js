@@ -35,17 +35,14 @@ export default function Home() {
       <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
         ZEMNÍ A VÝKOPOVÉ PRÁCE
       </h2>
+<p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
+  Provádíme{" "}
+  <span className="text-[#f9c600] font-semibold">
+    spolehlivé zemní a výkopové práce
+  </span>{" "}
+  minibagrem Hitachi v Praze a okolí.
+</p>
 
-      <p className="flex items-start text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
-        <span className="mr-3 text-2xl">⛏️</span>
-        <span>
-          Provádíme{" "}
-          <span className="text-[#f9c600] font-semibold">
-            spolehlivé zemní a výkopové práce
-          </span>{" "}
-          minibagrem Hitachi v Praze a okolí.
-        </span>
-      </p>
 
       <a
         href="#kontakt"
