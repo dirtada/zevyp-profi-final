@@ -1,0 +1,43 @@
+import { google } from "googleapis";
+
+export default async function handler(req, res) {
+  try {
+    const oauth2Client = new google.auth.OAuth2(
+      process.env.GCAL_CLIENT_ID,
+      process.env.GCAL_CLIENT_SECRET,
+      process.env.GCAL_REDIRECT_URI
+    );
+    oauth2Client.setCredentials({
+      refresh_token: process.env.GCAL_REFRESH_TOKEN,
+    });
+
+    const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+
+    // vezmeme obsazené termíny na příští 3 měsíce
+    const now = new Date();
+    const threeMonthsLater = new Date();
+    threeMonthsLater.setMonth(now.getMonth() + 3);
+
+    const events = await calendar.events.list({
+      calendarId: "primary",
+      timeMin: now.toISOString(),
+      timeMax: threeMonthsLater.toISOString(),
+      singleEvents: true,
+      orderBy: "startTime",
+    });
+
+    const obsazene = events.data.items.map((ev) => {
+      if (ev.start.date) {
+        // celodenní událost
+        return ev.start.date;
+      } else if (ev.start.dateTime) {
+        return ev.start.dateTime.split("T")[0];
+      }
+    });
+
+    res.status(200).json({ obsazene });
+  } catch (error) {
+    console.error("Chyba při načítání obsazených termínů:", error);
+    res.status(500).json({ error: "Nepodařilo se načíst obsazené termíny." });
+  }
+}
