@@ -9,7 +9,35 @@ export default async function handler(req, res) {
   const { jmeno, datum, hodiny, km, cena } = req.body;
 
   try {
-    // 1) Odeslání e‑mailu
+    // Připojení k Google Calendar
+    const oauth2Client = new google.auth.OAuth2(
+      process.env.GCAL_CLIENT_ID,
+      process.env.GCAL_CLIENT_SECRET,
+      process.env.GCAL_REDIRECT_URI
+    );
+    oauth2Client.setCredentials({
+      refresh_token: process.env.GCAL_REFRESH_TOKEN,
+    });
+    const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+
+    // 1) Zkontrolujeme, zda je datum volné
+    const startOfDay = new Date(datum);
+    const endOfDay = new Date(datum);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+
+    const events = await calendar.events.list({
+      calendarId: "primary",
+      timeMin: startOfDay.toISOString(),
+      timeMax: endOfDay.toISOString(),
+      singleEvents: true,
+      orderBy: "startTime",
+    });
+
+    if (events.data.items.length > 0) {
+      return res.status(400).json({ error: "Tento den je již obsazený. Zvolte prosím jiné datum." });
+    }
+
+    // 2) Odeslání e‑mailu
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -32,39 +60,27 @@ export default async function handler(req, res) {
       `,
     });
 
-    // 2) Přidání celodenní události do Google Kalendáře
-    const oauth2Client = new google.auth.OAuth2(
-      process.env.GCAL_CLIENT_ID,
-      process.env.GCAL_CLIENT_SECRET,
-      process.env.GCAL_REDIRECT_URI
-    );
-
-    oauth2Client.setCredentials({
-      refresh_token: process.env.GCAL_REFRESH_TOKEN,
-    });
-
-    const calendar = google.calendar({ version: "v3", auth: oauth2Client });
-
+    // 3) Vytvoření celodenní události
     const event = {
       summary: `NÁVRH: ${jmeno}`,
       description: `Počet hodin: ${hodiny}, Km: ${km}, Cena: ${cena} Kč`,
       start: {
-        date: datum, // celý den
+        date: datum,
         timeZone: "Europe/Prague",
       },
       end: {
-        date: datum, // končí stejný den
+        date: datum,
         timeZone: "Europe/Prague",
       },
-      status: "tentative", // čekající na schválení
+      status: "tentative",
     };
 
     await calendar.events.insert({
-      calendarId: "primary", // případně uveď konkrétní ID kalendáře
+      calendarId: "primary",
       resource: event,
     });
 
-    return res.status(200).json({ message: "Poptávka byla odeslána a rezervována v kalendáři jako návrh." });
+    return res.status(200).json({ message: "Poptávka byla úspěšně odeslána a vložena do kalendáře." });
   } catch (error) {
     console.error("Chyba při zpracování:", error);
     return res.status(500).json({ error: "Nepodařilo se odeslat poptávku." });
