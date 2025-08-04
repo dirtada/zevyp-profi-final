@@ -255,38 +255,39 @@ export default function Vypocet() {
             Spočítat cenu
           </button>
 
-          {/* Výsledek */}
-          {cena !== null && (
-            <div className="mt-4 text-center">
-              <p className="text-lg font-semibold">
-                Celková cena: {cena.toLocaleString()} Kč
-              </p>
-              <p className="text-sm text-gray-600">Hodin celkem: {hodiny}</p>
-              <p className="mt-2 text-xs text-red-600 font-medium">
-                Upozornění: Kalkulace je pouze orientační. Konečná cena se může lišit dle specifických požadavků.
-              </p>
-            </div>
-          )}
+         {cena !== null && (
+  <div className="mt-4 text-center border-t pt-4">
+    <h3 className="text-lg font-bold mb-2">Souhrn kalkulace</h3>
+    
+    <div className="space-y-1 text-sm text-gray-700">
+      <p>
+        <strong>Cena za operaci strojů:</strong>{" "}
+        {(
+          (typPrace === "vykop" ? hodiny * 900 : 0) +
+          (typPrace !== "vykop" ? hodiny * 900 : 0) +
+          (typPrace === "vykopZasyp" || typPrace === "komplexni" ? hodiny * 850 : 0) +
+          (typPrace === "komplexni" ? hodiny * manualniPracovnici * 300 : 0)
+        ).toLocaleString()}{" "}
+        Kč
+      </p>
 
-          {/* Odeslat poptávku */}
-          {cena !== null && (
-            <button
-              onClick={odeslat}
-              disabled={loading}
-              className="w-full mt-4 bg-green-600 text-white font-bold py-3 rounded hover:bg-green-700 transition"
-            >
-              {loading ? "Odesílám..." : "Odeslat poptávku"}
-            </button>
-          )}
-
-          {/* Info zpráva */}
-          {msg && (
-            <p className="mt-4 text-center font-medium text-blue-600">
-              {msg}
-            </p>
-          )}
-        </div>
-      </div>
+      <p>
+        <strong>Cena za dopravu:</strong>{" "}
+        {(
+          (typPrace === "vykop" ? km * 8 : 0) +
+          (typPrace === "vykopZasyp" ? km * 16 : 0) +
+          (typPrace === "komplexni" ? km * 16 : 0)
+        ).toLocaleString()}{" "}
+        Kč
+      </p>
     </div>
-  );
-}
+
+    <p className="text-lg font-semibold mt-3">
+      Celková cena: {cena.toLocaleString()} Kč
+    </p>
+    <p className="text-sm text-gray-600">Hodin celkem: {hodiny}</p>
+    <p className="mt-2 text-xs text-red-600 font-medium">
+      Upozornění: Kalkulace je pouze orientační. Konečná cena se může lišit dle specifických požadavků.
+    </p>
+  </div>
+)}
