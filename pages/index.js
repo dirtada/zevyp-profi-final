@@ -26,6 +26,8 @@ export default function Home() {
 <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
 
 
+
+
 <main className="bg-[#2f3237] text-white px-4 py-12">
   <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
     <div className="md:w-1/2 text-left mb-8 md:mb-0">
@@ -35,27 +37,23 @@ export default function Home() {
       <p className="text-base md:text-lg">
         Provádíme zemní a výkopové práce pomocí pásového rypadla.
       </p>
-<a
-  href="#kontakt"
-  className="relative z-10 inline-block mt-6 bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
->
-  Nezávazná poptávka
-</a>
 
-
+      {/* CTA tlačítko pod textem */}
       <a
         href="#kontakt"
         className="inline-block mt-6 bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
-  > Nezávazná poptávka
+      >
+        Nezávazná poptávka
       </a>
     </div>
+
     <div className="md:w-1/2 flex justify-center">
       <Image
         src="/images/bagr-hero.png"
         alt="Bagr"
         width={700}
         height={500}
-        className="object-contain -mb-24 md:-mb-32"
+        className="object-contain mt-8 md:mt-12"
       />
     </div>
   </div>
@@ -64,6 +62,10 @@ export default function Home() {
 
 
 
+
+
+
+    
     
     {/*
       <main className="bg-[#2f3237] text-white px-4 py-12">
