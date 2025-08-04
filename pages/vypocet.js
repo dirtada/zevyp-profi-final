@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import ical from "ical";
 
 export default function Vypocet() {
   const [step, setStep] = useState(1);
@@ -14,29 +13,20 @@ export default function Vypocet() {
   const [cena, setCena] = useState(null);
   const [obsazeneDny, setObsazeneDny] = useState([]);
 
-  // URL na veřejný iCal kalendář
-  const ICAL_URL = "https://calendar.google.com/calendar/ical/TVUJ_KALENDAR/basic.ics";
-
+  // načíst obsazené dny ze serveru
   useEffect(() => {
-    async function fetchCalendar() {
+    async function fetchObsazene() {
       try {
-        const res = await fetch(ICAL_URL);
-        const text = await res.text();
-        const events = ical.parseICS(text);
-
-        const dny = [];
-        for (let k in events) {
-          const ev = events[k];
-          if (ev.start) {
-            dny.push(new Date(ev.start));
-          }
+        const res = await fetch("/api/kalendare");
+        const data = await res.json();
+        if (data.obsazene) {
+          setObsazeneDny(data.obsazene.map(d => new Date(d)));
         }
-        setObsazeneDny(dny);
       } catch (err) {
-        console.error("Chyba při načítání kalendáře", err);
+        console.error("Nepodařilo se načíst obsazené dny", err);
       }
     }
-    fetchCalendar();
+    fetchObsazene();
   }, []);
 
   const spocitat = () => {
@@ -45,7 +35,7 @@ export default function Vypocet() {
     setCena(cenaPrace + cenaDopravy);
   };
 
-  // disable pokud datum je v obsazených dnech
+  // Disable pokud je datum obsazené
   const disableTiles = ({ date }) => {
     return obsazeneDny.some(
       (d) =>
@@ -56,7 +46,7 @@ export default function Vypocet() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+    <div className="relative min-h-screen flex items-center justify-center p-6 bg-gray-100">
       <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
         <Link href="/" className="text-sm text-blue-600 hover:underline block mb-4">
           ← Zpět na hlavní stránku
@@ -66,6 +56,7 @@ export default function Vypocet() {
           Kalkulace výkopových prací
         </h2>
 
+        {/* Krok 1 */}
         {step === 1 && (
           <div className="space-y-4">
             <label className="block font-semibold mb-1">Jméno projektu</label>
@@ -85,6 +76,7 @@ export default function Vypocet() {
           </div>
         )}
 
+        {/* Krok 2 */}
         {step === 2 && (
           <div className="space-y-4">
             <p className="font-semibold">Vyberte datum (volné dny)</p>
@@ -99,6 +91,7 @@ export default function Vypocet() {
           </div>
         )}
 
+        {/* Krok 3 */}
         {step === 3 && (
           <div className="space-y-4">
             <div>
@@ -128,6 +121,7 @@ export default function Vypocet() {
           </div>
         )}
 
+        {/* Krok 4 */}
         {step === 4 && cena !== null && (
           <div className="text-center space-y-4">
             <p className="text-lg font-semibold">Projekt: {jmeno}</p>
