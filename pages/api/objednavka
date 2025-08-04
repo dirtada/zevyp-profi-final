@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   const { jmeno, datum, hodiny, km, cena } = req.body;
 
   try {
-    // 1) Odeslání e‑mailu
+    // 1) Nastavení Nodemailer transportu
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -18,21 +18,22 @@ export default async function handler(req, res) {
       },
     });
 
+    // 2) Odeslání e‑mailu
     await transporter.sendMail({
       from: `"Zevyp kalkulace" <${process.env.MAIL_USER}>`,
       to: "kontaktzevyp@gmail.com",
       subject: "Nová poptávka výkopových prací",
       html: `
-        <h3>Nová kalkulace</h3>
+        <h2>Nová poptávka</h2>
         <p><strong>Projekt:</strong> ${jmeno}</p>
-        <p><strong>Datum:</strong> ${new Date(datum).toLocaleDateString()}</p>
+        <p><strong>Datum:</strong> ${new Date(datum).toLocaleDateString("cs-CZ")}</p>
         <p><strong>Hodiny:</strong> ${hodiny}</p>
         <p><strong>Kilometry:</strong> ${km}</p>
         <p><strong>Celková cena:</strong> ${cena} Kč</p>
       `,
     });
 
-    // 2) Vytvoření návrhu v Google Kalendáři
+    // 3) Přidání návrhu do Google Kalendáře
     const oauth2Client = new google.auth.OAuth2(
       process.env.GCAL_CLIENT_ID,
       process.env.GCAL_CLIENT_SECRET,
@@ -49,22 +50,22 @@ export default async function handler(req, res) {
       summary: `NÁVRH: ${jmeno}`,
       description: `Počet hodin: ${hodiny}, Km: ${km}, Cena: ${cena} Kč`,
       start: {
-        date: datum.split("T")[0],
+        dateTime: new Date(datum).toISOString(),
         timeZone: "Europe/Prague",
       },
       end: {
-        date: datum.split("T")[0],
+        dateTime: new Date(new Date(datum).getTime() + 60 * 60 * 1000).toISOString(),
         timeZone: "Europe/Prague",
       },
-      status: "tentative", // návrh, čeká na schválení
+      status: "tentative", // událost čekající na potvrzení
     };
 
     await calendar.events.insert({
-      calendarId: "primary", // můžeš změnit na konkrétní calendarId
+      calendarId: "primary", // můžeš změnit na konkrétní ID kalendáře
       resource: event,
     });
 
-    return res.status(200).json({ message: "Poptávka byla odeslána a vložena do kalendáře jako návrh." });
+    return res.status(200).json({ message: "Poptávka byla úspěšně odeslána a vložena do kalendáře." });
   } catch (error) {
     console.error("Chyba při zpracování:", error);
     return res.status(500).json({ error: "Nepodařilo se odeslat poptávku." });
