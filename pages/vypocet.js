@@ -5,8 +5,8 @@ export default function Vypocet() {
   const [jmeno, setJmeno] = useState("");
   const [datumOd, setDatumOd] = useState("");
   const [datumDo, setDatumDo] = useState("");
-  const [hodiny, setHodiny] = useState(0);
   const [km, setKm] = useState(0);
+  const [hodiny, setHodiny] = useState(0); // počítá se automaticky
   const [cena, setCena] = useState(null);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
@@ -20,12 +20,15 @@ export default function Vypocet() {
     const start = new Date(datumOd);
     const end = new Date(datumDo);
     const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // včetně obou dní
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // oba dny včetně
 
-    const cenaPrace = hodiny * 990 * diffDays;
+    const vypocetHodiny = diffDays * 8;
+    setHodiny(vypocetHodiny);
+
+    const cenaPrace = vypocetHodiny * 990;
     const cenaDopravy = km * 30;
     setCena(cenaPrace + cenaDopravy);
-    setMsg(`Počet dní: ${diffDays}`);
+    setMsg(`Počet dní: ${diffDays} (${vypocetHodiny} hodin)`);
   };
 
   const odeslat = async () => {
@@ -61,7 +64,6 @@ export default function Vypocet() {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
 
-        {/* odkaz zpět */}
         <Link href="/" className="text-sm text-blue-600 hover:underline block mb-4">
           ← Zpět na hlavní stránku
         </Link>
@@ -102,16 +104,6 @@ export default function Vypocet() {
           </div>
 
           <div>
-            <label className="block font-semibold mb-1">Počet hodin / den</label>
-            <input
-              type="number"
-              className="w-full border px-4 py-2 rounded"
-              value={hodiny}
-              onChange={(e) => setHodiny(Number(e.target.value))}
-            />
-          </div>
-
-          <div>
             <label className="block font-semibold mb-1">Kilometry dopravy</label>
             <input
               type="number"
@@ -132,6 +124,9 @@ export default function Vypocet() {
             <div className="mt-4 text-center">
               <p className="text-lg font-semibold">
                 Celková cena: {cena.toLocaleString()} Kč
+              </p>
+              <p className="text-sm text-gray-600">
+                Hodin celkem: {hodiny}
               </p>
             </div>
           )}
