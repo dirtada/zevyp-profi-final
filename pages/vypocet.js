@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Vypocet() {
   const [hodiny, setHodiny] = useState(0);
@@ -6,14 +7,20 @@ export default function Vypocet() {
   const [cena, setCena] = useState(null);
 
   const spocitat = () => {
-    const cenaPrace = hodiny * 990; // cena za hodinu bagru
-    const cenaDopravy = km * 30; // doprava za km
+    const cenaPrace = hodiny * 990;
+    const cenaDopravy = km * 30;
     setCena(cenaPrace + cenaDopravy);
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+        
+        {/* odkaz zpět */}
+        <Link href="/" className="text-sm text-blue-600 hover:underline block mb-4">
+          ← Zpět na hlavní stránku
+        </Link>
+
         <h2 className="text-2xl font-bold mb-6 text-center text-[#2f3237]">
           Kalkulace výkopových prací
         </h2>
