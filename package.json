@@ -12,7 +12,8 @@
     "react-dom": "18.2.0",
     "@heroicons/react": "^2.0.18",
     "react-calendar": "^4.6.0",
-    "ical.js": "^1.4.0"
+    "ical.js": "^1.4.0",
+    "googleapis": "^126.0.0"
   },
   "devDependencies": {
     "tailwindcss": "^3.3.2",
