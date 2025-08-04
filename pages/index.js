@@ -155,18 +155,6 @@ export default function Home() {
 </section>
 
 
-        <a
-          href="#kontakt"
-          className="inline-block mt-6 bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
-        >
-          Poptat tuto techniku
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
       <section id="cenik" className="bg-[#f9c600] text-black py-16">
   <div className="container mx-auto px-4">
     <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] drop-shadow text-center">
