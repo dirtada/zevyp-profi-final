@@ -1,0 +1,77 @@
+import { google } from "googleapis";
+import nodemailer from "nodemailer";
+
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  const { jmeno, typPrace, objem, typZeminy, startDatum, hodiny, dny, cena } = req.body;
+
+  try {
+    const oauth2Client = new google.auth.OAuth2(
+      process.env.GCAL_CLIENT_ID,
+      process.env.GCAL_CLIENT_SECRET,
+      process.env.GCAL_REDIRECT_URI
+    );
+    oauth2Client.setCredentials({
+      refresh_token: process.env.GCAL_REFRESH_TOKEN,
+    });
+
+    const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+
+    // konecné datum
+    const endDate = new Date(startDatum);
+    endDate.setDate(endDate.getDate() + (dny - 1));
+
+    // Přidání události jako návrh
+    const event = {
+      summary: `NÁVRH: ${jmeno}`,
+      description: `Typ práce: ${typPrace}\nObjem: ${objem} m³\nTyp zeminy: ${typZeminy}\nHodin: ${hodiny}\nCena: ${cena} Kč`,
+      start: {
+        date: startDatum,
+        timeZone: "Europe/Prague",
+      },
+      end: {
+        date: endDate.toISOString().split("T")[0],
+        timeZone: "Europe/Prague",
+      },
+      status: "tentative",
+    };
+
+    await calendar.events.insert({
+      calendarId: "primary",
+      resource: event,
+    });
+
+    // Email
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"Zevyp kalkulace" <${process.env.MAIL_USER}>`,
+      to: "kontaktzevyp@gmail.com",
+      subject: "Nová poptávka výkopových prací podle objemu",
+      html: `
+        <h2>Nová poptávka</h2>
+        <p><strong>Projekt:</strong> ${jmeno}</p>
+        <p><strong>Typ práce:</strong> ${typPrace}</p>
+        <p><strong>Objem:</strong> ${objem} m³</p>
+        <p><strong>Typ zeminy:</strong> ${typZeminy}</p>
+        <p><strong>Hodin:</strong> ${hodiny}</p>
+        <p><strong>Dní:</strong> ${dny}</p>
+        <p><strong>Celková cena:</strong> ${cena} Kč</p>
+      `,
+    });
+
+    return res.status(200).json({ message: "Poptávka byla odeslána." });
+  } catch (error) {
+    console.error("Chyba při zpracování:", error);
+    return res.status(500).json({ error: "Nepodařilo se odeslat poptávku." });
+  }
+}
