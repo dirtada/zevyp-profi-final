@@ -6,10 +6,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { jmeno, datum, hodiny, km, cena } = req.body;
+  const { jmeno, datumOd, datumDo, hodiny, km, cena } = req.body;
 
   try {
-    // Připojení k Google Calendar
+    // Připojení ke Google Calendar
     const oauth2Client = new google.auth.OAuth2(
       process.env.GCAL_CLIENT_ID,
       process.env.GCAL_CLIENT_SECRET,
@@ -20,24 +20,20 @@ export default async function handler(req, res) {
     });
     const calendar = google.calendar({ version: "v3", auth: oauth2Client });
 
-    // 1) Zkontrolujeme, zda je datum volné
-    const startOfDay = new Date(datum);
-    const endOfDay = new Date(datum);
-    endOfDay.setDate(endOfDay.getDate() + 1);
-
+    // Kontrola obsazenosti v rozsahu
     const events = await calendar.events.list({
       calendarId: "primary",
-      timeMin: startOfDay.toISOString(),
-      timeMax: endOfDay.toISOString(),
+      timeMin: new Date(datumOd).toISOString(),
+      timeMax: new Date(new Date(datumDo).getTime() + 24*60*60*1000).toISOString(),
       singleEvents: true,
       orderBy: "startTime",
     });
 
     if (events.data.items.length > 0) {
-      return res.status(400).json({ error: "Tento den je již obsazený. Zvolte prosím jiné datum." });
+      return res.status(400).json({ error: "V tomto rozsahu je již rezervace. Zvolte prosím jiné datum." });
     }
 
-    // 2) Odeslání e‑mailu
+    // Odeslání e‑mailu
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -53,23 +49,26 @@ export default async function handler(req, res) {
       html: `
         <h2>Nová poptávka</h2>
         <p><strong>Projekt:</strong> ${jmeno}</p>
-        <p><strong>Datum:</strong> ${new Date(datum).toLocaleDateString("cs-CZ")}</p>
+        <p><strong>Od:</strong> ${new Date(datumOd).toLocaleDateString("cs-CZ")}</p>
+        <p><strong>Do:</strong> ${new Date(datumDo).toLocaleDateString("cs-CZ")}</p>
         <p><strong>Hodiny:</strong> ${hodiny}</p>
         <p><strong>Kilometry:</strong> ${km}</p>
         <p><strong>Celková cena:</strong> ${cena} Kč</p>
       `,
     });
 
-    // 3) Vytvoření celodenní události
+    // Vytvoření události přes více dní
     const event = {
       summary: `NÁVRH: ${jmeno}`,
       description: `Počet hodin: ${hodiny}, Km: ${km}, Cena: ${cena} Kč`,
       start: {
-        date: datum,
+        date: datumOd,
         timeZone: "Europe/Prague",
       },
       end: {
-        date: datum,
+        date: new Date(new Date(datumDo).getTime() + 24*60*60*1000)
+          .toISOString()
+          .split("T")[0], // Google očekává, že "end.date" je den po konci
         timeZone: "Europe/Prague",
       },
       status: "tentative",
