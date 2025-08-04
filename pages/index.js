@@ -41,9 +41,17 @@ export default function Home() {
       >
         Nezávazná poptávka
       </a>
-      <p className="mt-6 text-base md:text-lg">
-        Provádíme zemní a výkopové práce pomocí pásového rypadla. TEST
-      </p>
+
+          <p className="flex items-start text-lg md:text-xl text-gray-300 leading-relaxed mt-4">
+  <span className="mr-3 text-2xl">⛏️</span>
+  <span>
+    Provádíme <span className="text-[#f9c600] font-semibold">
+      spolehlivé zemní a výkopové práce
+    </span>{" "}
+    minibagrem Hitachi v Praze a okolí.
+  </span>
+</p>
+
    
     </div>
     <div className="md:w-1/2 flex justify-center relative z-10">
