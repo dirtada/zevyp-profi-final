@@ -13,7 +13,11 @@ export default function handler(req, res) {
     access_type: "offline",
     prompt: "consent",
     scope: scopes,
+    response_type: "code", // 👈 přidáme explicitně
   });
+
+  // vypíšeme do Vercel logu
+  console.log("GENERATED AUTH URL:", url);
 
   res.status(200).json({ url });
 }
