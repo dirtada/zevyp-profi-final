@@ -14,7 +14,7 @@ export default function Vypocet() {
   const [msg, setMsg] = useState("");
   const [obsazene, setObsazene] = useState([]);
 
-  // Načteme obsazené termíny z API
+  // načti obsazené termíny z Google Kalendáře
   useEffect(() => {
     const nactiObsazene = async () => {
       try {
@@ -103,7 +103,7 @@ export default function Vypocet() {
             />
           </div>
 
-          {/* Kalendář pro výběr rozsahu */}
+          {/* Kalendář */}
           <div>
             <label className="block font-semibold mb-2">Vyberte rozsah dní</label>
             <Calendar
@@ -111,10 +111,32 @@ export default function Vypocet() {
               tileDisabled={({ date }) =>
                 obsazene.includes(date.toISOString().split("T")[0])
               }
+              onClickDay={(value) => {
+                const clickedDate = value.toISOString().split("T")[0];
+                if (obsazene.includes(clickedDate)) {
+                  setMsg("Tento termín je obsazený.");
+                }
+              }}
               onChange={(range) => {
                 if (Array.isArray(range) && range.length === 2) {
-                  setDatumOd(range[0].toISOString().split("T")[0]);
-                  setDatumDo(range[1].toISOString().split("T")[0]);
+                  const od = range[0].toISOString().split("T")[0];
+                  const doo = range[1].toISOString().split("T")[0];
+
+                  // kontrola, jestli rozsah neobsahuje obsazený den
+                  const hasConflict = obsazene.some(
+                    (day) => day >= od && day <= doo
+                  );
+
+                  if (hasConflict) {
+                    setMsg("V tomto rozsahu je obsazený termín. Zvolte prosím jiné dny.");
+                    setDatumOd("");
+                    setDatumDo("");
+                    return;
+                  }
+
+                  setDatumOd(od);
+                  setDatumDo(doo);
+                  setMsg("");
                 }
               }}
             />
@@ -131,7 +153,7 @@ export default function Vypocet() {
             />
           </div>
 
-          {/* Tlačítko na výpočet ceny */}
+          {/* Spočítat cenu */}
           <button
             onClick={spocitat}
             className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400 transition"
@@ -151,7 +173,7 @@ export default function Vypocet() {
             </div>
           )}
 
-          {/* Tlačítko na odeslání poptávky */}
+          {/* Odeslat poptávku */}
           {cena !== null && (
             <button
               onClick={odeslat}
@@ -162,9 +184,13 @@ export default function Vypocet() {
             </button>
           )}
 
-          {/* Zpráva pro uživatele */}
+          {/* Zpráva */}
           {msg && (
-            <p className={`mt-4 text-center font-medium ${msg.includes("obsazený") ? "text-red-600" : "text-blue-600"}`}>
+            <p
+              className={`mt-4 text-center font-medium ${
+                msg.includes("obsazený") ? "text-red-600" : "text-blue-600"
+              }`}
+            >
               {msg}
             </p>
           )}
