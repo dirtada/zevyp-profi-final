@@ -33,7 +33,7 @@ export default function Home() {
     <div className="md:w-1/2 text-left mb-8 md:mb-0 relative z-20">
       <h2 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
         ZEMNÍ A VÝKOPOVÉ PRÁCE
-      </h2
+      </h2>
 
       <p className="mt-6 text-base md:text-lg">
         Provádíme zemní a výkopové práce pomocí pásového rypadla. TEST
