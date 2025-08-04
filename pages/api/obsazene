@@ -7,33 +7,42 @@ export default async function handler(req, res) {
       process.env.GCAL_CLIENT_SECRET,
       process.env.GCAL_REDIRECT_URI
     );
+
     oauth2Client.setCredentials({
       refresh_token: process.env.GCAL_REFRESH_TOKEN,
     });
 
     const calendar = google.calendar({ version: "v3", auth: oauth2Client });
 
-    // vezmeme obsazené termíny na příští 3 měsíce
+    // Zobrazíme obsazené termíny na příští 3 měsíce
     const now = new Date();
     const threeMonthsLater = new Date();
     threeMonthsLater.setMonth(now.getMonth() + 3);
 
     const events = await calendar.events.list({
-      calendarId: "primary",
+      calendarId: "primary", // můžeš nahradit jiným calendarId
       timeMin: now.toISOString(),
       timeMax: threeMonthsLater.toISOString(),
       singleEvents: true,
       orderBy: "startTime",
     });
 
-    const obsazene = events.data.items.map((ev) => {
-      if (ev.start.date) {
-        // celodenní událost
-        return ev.start.date;
+    // Vrátíme seznam obsazených dnů
+    const obsazene = [];
+    for (const ev of events.data.items) {
+      if (ev.start.date && ev.end.date) {
+        // celodenní události → projdeme každý den v rozsahu
+        let d = new Date(ev.start.date);
+        const end = new Date(ev.end.date);
+        while (d < end) {
+          obsazene.push(d.toISOString().split("T")[0]);
+          d.setDate(d.getDate() + 1);
+        }
       } else if (ev.start.dateTime) {
-        return ev.start.dateTime.split("T")[0];
+        // časové události → vezmeme jen datum
+        obsazene.push(ev.start.dateTime.split("T")[0]);
       }
-    });
+    }
 
     res.status(200).json({ obsazene });
   } catch (error) {
