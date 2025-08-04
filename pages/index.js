@@ -35,9 +35,9 @@ export default function Home() {
       <Image
         src="/images/bagr-hero.png"
         alt="Bagr"
-        width={800}
-        height={600}
-        className="object-contain -mb-12 md:-mb-14"
+        width={600}
+        height={400}
+        className="object-contain -mb-12 md:-mb-24"
       />
     </div>
   </div>
