@@ -477,5 +477,8 @@ export default function Home() {
         <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
           Zemní a Výkopové Práce • IČO:73377619 • info@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
         </footer>
-
+</div>  {/* <- uzavření hlavního wrapperu */}
+    </>
+  );
+}
 
