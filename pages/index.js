@@ -314,7 +314,7 @@ export default function Home() {
                   </li>
                         <li>
                     <button
-                      onClick={() => { setSelectedAttachmentBagr("bagr-lzicesvah"); setShowAccessoriesBagr(false); }}
+                      onClick={() => { setSelectedAttachmentBagr("bagr-lzicesvahova"); setShowAccessoriesBagr(false); }}
                       className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
                     >
                       Lžíce svahová
