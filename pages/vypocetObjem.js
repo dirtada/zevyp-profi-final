@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
-{/* */}
+
 export default function VypocetObjem() {
   const [jmeno, setJmeno] = useState("");
   const [typPrace, setTypPrace] = useState("vykop");
