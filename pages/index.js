@@ -266,7 +266,7 @@ export default function Home() {
                 <ul className="space-y-3 text-gray-800">
                   <li>
                     <button
-                      onClick={() => { setSelectedAttachmentBagr("bagr-vrtak.png"); setShowAccessoriesBagr(false); }}
+                      onClick={() => { setSelectedAttachmentBagr("bagr-vrtak"); setShowAccessoriesBagr(false); }}
                       className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
                     >
                       Vrták
