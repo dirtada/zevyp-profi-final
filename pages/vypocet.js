@@ -139,7 +139,6 @@ export default function Vypocet() {
         </h2>
 
         <div className="space-y-4">
-
           {/* Název projektu */}
           <div>
             <label className="block font-semibold mb-1">Název projektu</label>
@@ -255,50 +254,63 @@ export default function Vypocet() {
             Spočítat cenu
           </button>
 
-             {cena !== null && (
-          <div className="mt-4 text-center border-t pt-4">
-            <h3 className="text-lg font-bold mb-2">Souhrn kalkulace</h3>
+          {cena !== null && (
+            <div className="mt-4 text-center border-t pt-4">
+              <h3 className="text-lg font-bold mb-2">Souhrn kalkulace</h3>
 
-            <div className="space-y-1 text-sm text-gray-700">
-              {/* Cena za operaci strojů */}
-              <p>
-                <strong>Cena za operaci strojů:</strong>{" "}
-                {(() => {
-                  const cenaBagr = hodiny * 900;
-                  const cenaNakladni =
-                    typPrace === "vykopZasyp" || typPrace === "komplexni"
-                      ? hodiny * 850
-                      : 0;
-                  const cenaPracovnici =
-                    typPrace === "komplexni"
-                      ? hodiny * manualniPracovnici * 300
-                      : 0;
+              <div className="space-y-1 text-sm text-gray-700">
+                <p>
+                  <strong>Cena za operaci strojů:</strong>{" "}
+                  {(() => {
+                    const cenaBagr = hodiny * 900;
+                    const cenaNakladni =
+                      typPrace === "vykopZasyp" || typPrace === "komplexni"
+                        ? hodiny * 850
+                        : 0;
+                    const cenaPracovnici =
+                      typPrace === "komplexni"
+                        ? hodiny * manualniPracovnici * 300
+                        : 0;
+                    return (cenaBagr + cenaNakladni + cenaPracovnici).toLocaleString();
+                  })()} Kč
+                </p>
 
-                  return (cenaBagr + cenaNakladni + cenaPracovnici).toLocaleString();
-                })()} Kč
+                <p>
+                  <strong>Cena za dopravu:</strong>{" "}
+                  {(() => {
+                    let doprava = 0;
+                    if (typPrace === "vykop") doprava = km * 8;
+                    if (typPrace === "vykopZasyp") doprava = km * 16;
+                    if (typPrace === "komplexni") doprava = km * 16;
+                    return doprava.toLocaleString();
+                  })()} Kč
+                </p>
+              </div>
+
+              <p className="text-lg font-semibold mt-3">
+                Celková cena: {cena.toLocaleString()} Kč
               </p>
-
-              <p>
-                <strong>Cena za dopravu:</strong>{" "}
-                {(() => {
-                  let doprava = 0;
-                  if (typPrace === "vykop") doprava = km * 8;
-                  if (typPrace === "vykopZasyp") doprava = km * 16;
-                  if (typPrace === "komplexni") doprava = km * 16;
-                  return doprava.toLocaleString();
-                })()} Kč
+              <p className="text-sm text-gray-600">Hodin celkem: {hodiny}</p>
+              <p className="mt-2 text-xs text-red-600 font-medium">
+                Upozornění: Kalkulace je pouze orientační. Konečná cena se může lišit dle specifických požadavků.
               </p>
             </div>
+          )}
 
-            <p className="text-lg font-semibold mt-3">
-              Celková cena: {cena.toLocaleString()} Kč
-            </p>
-            <p className="text-sm text-gray-600">Hodin celkem: {hodiny}</p>
-            <p className="mt-2 text-xs text-red-600 font-medium">
-              Upozornění: Kalkulace je pouze orientační. Konečná cena se může lišit dle specifických požadavků.
-            </p>
-          </div>
-               )}
+          {cena !== null && (
+            <button
+              onClick={odeslat}
+              disabled={loading}
+              className="w-full mt-4 bg-green-600 text-white font-bold py-3 rounded hover:bg-green-700 transition"
+            >
+              {loading ? "Odesílám..." : "Odeslat poptávku"}
+            </button>
+          )}
+
+          {msg && (
+            <p className="mt-4 text-center font-medium text-blue-600">{msg}</p>
+          )}
+        </div>
       </div>
     </div>
   );
