@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
   ScaleIcon,
@@ -11,9 +11,9 @@ import {
   TruckIcon,
   SquaresPlusIcon,
 } from "@heroicons/react/24/outline";
-
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { Hammer, Truck, Layers } from "lucide-react";
 
 function Header() {
   const [open, setOpen] = useState(false);
@@ -32,21 +32,16 @@ function Header() {
             className="h-12 w-auto"
           />
         </div>
-
-        {/* Desktop menu */}
         <nav className="hidden md:flex gap-4 text-base md:text-lg">
           <a href="#sluzby" className={navClasses}>Služby</a>
           <a href="#technika" className={navClasses}>Technika</a>
           <a href="#cenik" className={navClasses}>Ceník</a>
           <a href="#kontakt" className={navClasses}>Kontakt</a>
         </nav>
-
-        {/* Mobile hamburger */}
-        <button className="md:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu">
+        <button className="md:hidden" onClick={() => setOpen(!open)}>
           {open ? <XMarkIcon className="w-8 h-8" /> : <Bars3Icon className="w-8 h-8" />}
         </button>
       </div>
-
       {open && (
         <div className="md:hidden bg-[#f9c600] py-4 px-6 flex flex-col gap-3 shadow-lg">
           <a href="#sluzby" className={navClasses} onClick={() => setOpen(false)}>Služby</a>
@@ -60,22 +55,39 @@ function Header() {
 }
 
 export default function Home() {
+  // kontaktni form
   const [jmeno, setJmeno] = useState("");
   const [email, setEmail] = useState("");
   const [telefon, setTelefon] = useState("");
   const [zprava, setZprava] = useState("");
 
+  // kalkulacka
   const [projJmeno, setProjJmeno] = useState("");
   const [adresa, setAdresa] = useState("");
   const [typPrace, setTypPrace] = useState("vykop");
+  const [manualniPracovnici, setManualniPracovnici] = useState(0);
   const [datumOd, setDatumOd] = useState("");
   const [datumDo, setDatumDo] = useState("");
   const [km, setKm] = useState(0);
-
+  const [hodiny, setHodiny] = useState(0);
+  const [cena, setCena] = useState(null);
+  const [obsazene, setObsazene] = useState([]);
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // zjistit km
+  useEffect(() => {
+    const nactiObsazene = async () => {
+      try {
+        const res = await fetch("/api/obsazene");
+        const data = await res.json();
+        setObsazene(data.obsazene || []);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    nactiObsazene();
+  }, []);
+
   const spocitatVzdalenost = async () => {
     try {
       const res = await fetch("/api/vzdalenost", {
@@ -96,10 +108,36 @@ export default function Home() {
     }
   };
 
-  // odeslat objednávku
-  const odeslat = async () => {
-    if (!projJmeno || !adresa || !datumOd || !datumDo) {
+  const spocitat = () => {
+    if (!datumOd || !datumDo || !adresa || km === 0) {
       setMsg("Vyplňte prosím všechna pole.");
+      return;
+    }
+    const start = new Date(datumOd);
+    const end = new Date(datumDo);
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    const vypocetHodiny = diffDays * 8;
+    setHodiny(vypocetHodiny);
+
+    const cenaBagr = vypocetHodiny * 900;
+    const cenaNakladni =
+      typPrace === "vykopZasyp" || typPrace === "komplexni" ? vypocetHodiny * 850 : 0;
+    const cenaPracovnici =
+      typPrace === "komplexni" ? vypocetHodiny * manualniPracovnici * 300 : 0;
+
+    let cenaCelkem = 0;
+    if (typPrace === "vykop") cenaCelkem = cenaBagr + km * 8;
+    if (typPrace === "vykopZasyp") cenaCelkem = cenaBagr + cenaNakladni + km * 16;
+    if (typPrace === "komplexni") cenaCelkem = cenaBagr + cenaNakladni + cenaPracovnici + km * 16;
+
+    setCena(cenaCelkem);
+    setMsg(`Počet dní: ${diffDays}, hodin celkem: ${vypocetHodiny}`);
+  };
+
+  const odeslat = async () => {
+    if (!projJmeno || !datumOd || !datumDo || cena === null) {
+      setMsg("Vyplňte prosím všechna pole a spočítejte cenu.");
       return;
     }
     setLoading(true);
@@ -111,16 +149,19 @@ export default function Home() {
           jmeno: projJmeno,
           adresa,
           typPrace,
+          manualniPracovnici,
           datumOd,
           datumDo,
+          hodiny,
           km,
+          cena,
         }),
       });
       const data = await res.json();
       if (res.ok) {
         setMsg("Objednávka byla úspěšně odeslána!");
       } else {
-        setMsg("Chyba při odesílání objednávky.");
+        setMsg(data.error || "Chyba při odesílání objednávky.");
       }
     } catch (error) {
       console.error(error);
@@ -142,38 +183,16 @@ export default function Home() {
 
       <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
         {/* Hero */}
-        <main className="bg-[#2f3237] text-white py-16">
-          <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
-            <div className="md:w-1/2 text-left mb-12 md:mb-0 relative z-20">
-              <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
-                ZEMNÍ A VÝKOPOVÉ PRÁCE
-              </h2>
-              <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
-                Provádíme{" "}
-                <span className="text-[#f9c600] font-semibold">spolehlivé zemní a výkopové práce</span>{" "}
-                minibagrem Hitachi v Praze a okolí.
-              </p>
-              <a href="#kontakt" className="inline-block bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition">
-                Nezávazná poptávka
-              </a>
-            </div>
-            <div className="md:w-1/2 flex justify-center relative z-10">
-              <Image src="/images/bagr-hero.png" alt="Bagr" width={700} height={500} className="object-contain -mb-24 md:-mb-32" />
-            </div>
-          </div>
-        </main>
+        {/* ... tvoje hero, služby, technika, ceník ... */}
 
-        {/* SLUŽBY */}
-        {/* ... (tvoje původní sekce Služby, Technika, Ceník) ... */}
-
-        {/* KONTAKT + POPTÁVKA */}
+        {/* Kontakt + Poptávka */}
         <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
           <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600] drop-shadow">
             KONTAKT & POPTÁVKA
           </h3>
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
             
-            {/* Kontaktni formulář */}
+            {/* Kontakt */}
             <form className="bg-white rounded-lg shadow-lg p-6 space-y-5 text-black">
               <h4 className="text-xl font-bold text-[#2f3237] mb-4">Kontaktujte nás</h4>
               <input type="text" value={jmeno} onChange={(e)=>setJmeno(e.target.value)} placeholder="Vaše jméno"
@@ -190,9 +209,9 @@ export default function Home() {
               </button>
             </form>
 
-            {/* Rezervační formulář */}
+            {/* Kalkulace */}
             <div className="bg-white rounded-lg shadow-lg p-6 text-black">
-              <h4 className="text-xl font-bold text-[#2f3237] mb-4">Rezervace termínu</h4>
+              <h4 className="text-xl font-bold text-[#2f3237] mb-4">Výpočet & Rezervace</h4>
               <input type="text" value={projJmeno} onChange={(e)=>setProjJmeno(e.target.value)} placeholder="Název projektu"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg mb-3"/>
               <div className="flex space-x-2 mb-3">
@@ -206,19 +225,28 @@ export default function Home() {
               {km > 0 && <p className="text-sm text-gray-600 mb-3">Vzdálenost: {km} km</p>}
               <div className="grid gap-3 mb-3">
                 <button type="button" onClick={()=>setTypPrace("vykop")}
-                  className={`p-3 border rounded-lg ${typPrace==="vykop" ? "border-yellow-500 bg-yellow-50":"border-gray-300"}`}>
-                  Výkopové práce ★
+                  className={`flex items-center justify-between p-3 border rounded-lg ${typPrace==="vykop"?"border-yellow-500 bg-yellow-50":"border-gray-300"}`}>
+                  <Hammer className="w-5 h-5 mr-2 text-yellow-600"/> Výkopové práce ★
                 </button>
                 <button type="button" onClick={()=>setTypPrace("vykopZasyp")}
-                  className={`p-3 border rounded-lg ${typPrace==="vykopZasyp" ? "border-yellow-500 bg-yellow-50":"border-gray-300"}`}>
-                  Výkop + zásypové práce ★★
+                  className={`flex items-center justify-between p-3 border rounded-lg ${typPrace==="vykopZasyp"?"border-yellow-500 bg-yellow-50":"border-gray-300"}`}>
+                  <Truck className="w-5 h-5 mr-2 text-yellow-600"/> Výkop + zásypové práce ★★
                 </button>
                 <button type="button" onClick={()=>setTypPrace("komplexni")}
-                  className={`p-3 border rounded-lg ${typPrace==="komplexni" ? "border-yellow-500 bg-yellow-50":"border-gray-300"}`}>
-                  Komplexní práce ★★★
+                  className={`flex items-center justify-between p-3 border rounded-lg ${typPrace==="komplexni"?"border-yellow-500 bg-yellow-50":"border-gray-300"}`}>
+                  <Layers className="w-5 h-5 mr-2 text-yellow-600"/> Komplexní práce ★★★
                 </button>
               </div>
+              {typPrace === "komplexni" && (
+                <input type="number" min="0" value={manualniPracovnici}
+                  onChange={(e)=>setManualniPracovnici(Number(e.target.value))}
+                  placeholder="Počet manuálních pracovníků"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg mb-3"/>
+              )}
               <Calendar selectRange={true}
+                tileDisabled={({ date }) =>
+                  obsazene.includes(date.toISOString().split("T")[0])
+                }
                 onChange={(range) => {
                   if (Array.isArray(range) && range.length === 2) {
                     setDatumOd(range[0].toISOString().split("T")[0]);
@@ -226,13 +254,20 @@ export default function Home() {
                   }
                 }}
                 className="bg-white rounded-lg shadow-md p-2 mb-3"/>
-              {datumOd && datumDo && (
-                <p className="text-sm text-gray-600 mb-3">
-                  Vybráno: {datumOd} – {datumDo}
-                </p>
+              {datumOd && datumDo && <p className="text-sm text-gray-600 mb-3">Vybráno: {datumOd} – {datumDo}</p>}
+              <button type="button" onClick={spocitat}
+                className="w-full bg-yellow-500 text-[#2f3237] font-bold py-3 rounded-lg hover:bg-yellow-600 transition mb-3">
+                Spočítat cenu
+              </button>
+              {cena !== null && (
+                <div className="text-center border-t pt-3">
+                  <p className="text-lg font-bold">Celková cena: {cena.toLocaleString()} Kč</p>
+                  <p className="text-sm text-gray-600">Hodin celkem: {hodiny}</p>
+                  <p className="mt-2 text-xs text-red-600">Kalkulace je orientační.</p>
+                </div>
               )}
               <button type="button" onClick={odeslat} disabled={loading}
-                className="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition">
+                className="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition mt-3">
                 {loading ? "Odesílám..." : "ODESLAT OBJEDNÁVKU"}
               </button>
               {msg && <p className="text-center text-sm mt-2 text-blue-600">{msg}</p>}
