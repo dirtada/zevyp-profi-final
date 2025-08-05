@@ -188,7 +188,7 @@ export default function Home() {
             <ul className="text-sm text-gray-700 mt-3 space-y-2">
                   <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 2.7 t</li>
                   <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Kubota 33 kW</li>
-                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Pracovní šířka válce: 1,2 m/li>
+                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Pracovní šířka válce: 1,2 m</li>
                   <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Vhodný pro hutnění asfaltu, štěrku a zemin při výstavbě cest, chodníků a ploch</li>
                 </ul>
               </div>
