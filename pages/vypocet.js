@@ -299,8 +299,10 @@ export default function Vypocet() {
               Upozornění: Kalkulace je pouze orientační. Konečná cena se může lišit dle specifických požadavků.
             </p>
           </div>
-        )}
-      </div> {/* konec bílého boxu */}
-    </div>   {/* konec celé stránky */}
+               )}
+        {/* konec bílého boxu */}
+      </div>
+      {/* konec celé stránky */}
+    </div>
   );
 } // konec funkce Vypocet
