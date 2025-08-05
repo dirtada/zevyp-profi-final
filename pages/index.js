@@ -189,7 +189,7 @@ export default function Home() {
                   <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 2.7 t</li>
                   <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Kubota 33 kW</li>
                   <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Pracovní šířka válce: 1,2 m</li>
-                  <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Vhodný pro hutnění asfaltu, štěrku a zemin při výstavbě cest, chodníků a ploch</li>
+                  <li className="flex items-left gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Vhodný pro hutnění asfaltu, štěrku a zemin při výstavbě cest, chodníků a ploch</li>
                 </ul>
               </div>
 
@@ -219,7 +219,7 @@ export default function Home() {
                   <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Deutz 55 kW</li>
                   <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Nosnost: až 3500 Kg</li>
                   <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Max. výška zdvihu: 3,5 m</li>
-                  <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Vhodný pro nakládání a manipulace se sypkými materiály, přeprava palet, zemní práce a úpravy terénu</li>
+                  <li className="flex items-left gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Vhodný pro nakládání a manipulace se sypkými materiály, přeprava palet, zemní práce a úpravy terénu</li>
                 </ul>
               </div>
             </div>
