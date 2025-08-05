@@ -211,7 +211,7 @@ export default function Home() {
                   />
                   <button
                     onClick={() => setShowAccessoriesBagr(true)}
-                    className="absolute top-1/2 left-[75%] transform -translate-x-1/2 -translate-y-1/2 animate-pulse"
+                    className="absolute top-1/2 left-[95%] transform -translate-x-1/2 -translate-y-1/2 animate-pulse"
                   >
                     <PlusCircleIcon className="w-12 h-12 text-yellow-500 hover:text-yellow-600 transition" />
                   </button>
