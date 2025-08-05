@@ -278,7 +278,6 @@ export default function Vypocet() {
                 })()} Kč
               </p>
 
-              {/* Cena za dopravu */}
               <p>
                 <strong>Cena za dopravu:</strong>{" "}
                 {(() => {
@@ -300,9 +299,7 @@ export default function Vypocet() {
             </p>
           </div>
                )}
-        {/* konec bílého boxu */}
       </div>
-      {/* konec celé stránky */}
     </div>
   );
-} // konec funkce Vypocet
+}
