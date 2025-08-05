@@ -116,14 +116,14 @@ export default function Home() {
       <Header />
 
       <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
-        {/* Hero */}
+       {/* Hero */}
         <main className="bg-[#2f3237] text-white py-16">
           <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
-            <div className="md:w-1/2 text-left mb-12 md:mb-0">
-              <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
+            <div className="md:w-1/2 text-left mb-12 md:mb-0 relative z-20">
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
                 ZEMNÍ A VÝKOPOVÉ PRÁCE
               </h2>
-              <p className="text-lg md:text-xl text-gray-300 mb-8">
+              <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
                 Provádíme{" "}
                 <span className="text-[#f9c600] font-semibold">
                   spolehlivé zemní a výkopové práce
@@ -137,8 +137,14 @@ export default function Home() {
                 Nezávazná poptávka
               </a>
             </div>
-            <div className="md:w-1/2 flex justify-center">
-              <Image src="/images/bagr-hero.png" alt="Bagr" width={700} height={500} />
+            <div className="md:w-1/2 flex justify-center relative z-10">
+              <Image
+                src="/images/bagr-hero.png"
+                alt="Bagr"
+                width={700}
+                height={500}
+                className="object-contain -mb-24 md:-mb-32"
+              />
             </div>
           </div>
         </main>
