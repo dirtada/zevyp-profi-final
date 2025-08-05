@@ -246,60 +246,100 @@ export default function Home() {
           </div>
         </section>
 
-        {/* KONTAKT */}
-        <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
-          <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600] drop-shadow">
-            KONTAKT
-          </h3>
-          <form className="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">
-                Jméno
-              </label>
-              <input
-                type="text"
-                placeholder="Vaše jméno"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">
-                E-mail
-              </label>
-              <input
-                type="email"
-                placeholder="vas@email.cz"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">
-                Telefon
-              </label>
-              <input
-                type="tel"
-                placeholder="+420 ..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">
-                Zpráva
-              </label>
-              <textarea
-                rows="4"
-                placeholder="Sem napište svou poptávku..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded-lg shadow hover:bg-yellow-400 transition"
-            >
-              ODESLAT POPTÁVKU
+{/* KONTAKT */}
+<section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
+  <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600] drop-shadow">
+    KONTAKT & POPTÁVKA
+  </h3>
+  <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+    
+    {/* Kontaktni formulář */}
+    <form className="bg-white rounded-lg shadow-lg p-6 space-y-5">
+      <h4 className="text-xl font-bold text-[#2f3237] mb-4">Kontaktujte nás</h4>
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-1">Jméno</label>
+        <input type="text" placeholder="Vaše jméno"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"/>
+      </div>
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-1">E-mail</label>
+        <input type="email" placeholder="vas@email.cz"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"/>
+      </div>
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-1">Telefon</label>
+        <input type="tel" placeholder="+420 ..."
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"/>
+      </div>
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-1">Zpráva</label>
+        <textarea rows="4" placeholder="Sem napište svou poptávku..."
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"></textarea>
+      </div>
+      <button type="submit"
+        className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded-lg shadow hover:bg-yellow-400 transition">
+        ODESLAT POPTÁVKU
+      </button>
+    </form>
+
+    {/* Poptávkový formulář */}
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <h4 className="text-xl font-bold text-[#2f3237] mb-4">Rezervace termínu</h4>
+      <div className="space-y-4">
+        {/* Název projektu */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">Název projektu</label>
+          <input type="text" placeholder="Např. výkop základů"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"/>
+        </div>
+
+        {/* Adresa */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">Adresa zakázky</label>
+          <div className="flex space-x-2">
+            <input type="text" placeholder="Zadejte adresu"
+              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f9c600] focus:outline-none"/>
+            <button type="button"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+              Zjistit km
             </button>
-          </form>
-        </section>
+          </div>
+          <p className="text-sm text-gray-600 mt-1">Vzdálenost: 0 km</p>
+        </div>
+
+        {/* Typ práce */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">Typ prací</label>
+          <div className="grid gap-3">
+            <button className="flex items-center justify-between p-4 border rounded-lg hover:shadow transition border-gray-300">
+              <span>Výkopové práce</span><span className="text-sm">★</span>
+            </button>
+            <button className="flex items-center justify-between p-4 border rounded-lg hover:shadow transition border-gray-300">
+              <span>Výkop + zásypové práce</span><span className="text-sm">★★</span>
+            </button>
+            <button className="flex items-center justify-between p-4 border rounded-lg hover:shadow transition border-gray-300">
+              <span>Komplexní práce</span><span className="text-sm">★★★</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Kalendář */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">Vyberte rozsah dní</label>
+          <div className="bg-gray-100 rounded p-4 text-center text-gray-600 text-sm">
+            Zde bude kalendář (React-Calendar)
+          </div>
+        </div>
+
+        <button type="submit"
+          className="w-full bg-green-600 text-white font-bold py-3 rounded-lg shadow hover:bg-green-700 transition">
+          ODESLAT OBJEDNÁVKU
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
 
         {/* Footer */}
         <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
