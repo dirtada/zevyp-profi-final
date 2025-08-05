@@ -274,7 +274,7 @@ export default function Home() {
                   </li>
                   <li>
                     <button
-                      onClick={() => { setSelectedAttachmentBagr("bagr-sbijecka.png"); setShowAccessoriesBagr(false); }}
+                      onClick={() => { setSelectedAttachmentBagr("bagr-sbijecka"); setShowAccessoriesBagr(false); }}
                       className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
                     >
                       Sbíječka
@@ -282,7 +282,7 @@ export default function Home() {
                   </li>
                   <li>
                     <button
-                      onClick={() => { setSelectedAttachmentBagr("bagr-lzice30.png"); setShowAccessoriesBagr(false); }}
+                      onClick={() => { setSelectedAttachmentBagr("bagr-lzice30"); setShowAccessoriesBagr(false); }}
                       className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
                     >
                       Lžíce 30 cm
@@ -290,7 +290,7 @@ export default function Home() {
                   </li>
                   <li>
                     <button
-                      onClick={() => { setSelectedAttachmentBagr("bagr-lzice60.png"); setShowAccessoriesBagr(false); }}
+                      onClick={() => { setSelectedAttachmentBagr("bagr-lzice60"); setShowAccessoriesBagr(false); }}
                       className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
                     >
                       Lžíce 60 cm
@@ -315,7 +315,7 @@ export default function Home() {
                 <ul className="space-y-3 text-gray-800">
                   <li>
                     <button
-                      onClick={() => { setSelectedAttachmentLoader("nakladac-pluh.png"); setShowAccessoriesLoader(false); }}
+                      onClick={() => { setSelectedAttachmentLoader("nakladac-pluh"); setShowAccessoriesLoader(false); }}
                       className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
                     >
                       Pluh
@@ -323,7 +323,7 @@ export default function Home() {
                   </li>
                   <li>
                     <button
-                      onClick={() => { setSelectedAttachmentLoader("nakladac-vidle.png"); setShowAccessoriesLoader(false); }}
+                      onClick={() => { setSelectedAttachmentLoader("nakladac-vidle"); setShowAccessoriesLoader(false); }}
                       className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
                     >
                       Vidle na palety
