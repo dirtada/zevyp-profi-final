@@ -290,10 +290,34 @@ export default function Home() {
                   </li>
                   <li>
                     <button
+                      onClick={() => { setSelectedAttachmentBagr("bagr-lzice50"); setShowAccessoriesBagr(false); }}
+                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
+                    >
+                      Lžíce 50 cm
+                    </button>
+                  </li>
+                        <li>
+                    <button
                       onClick={() => { setSelectedAttachmentBagr("bagr-lzice60"); setShowAccessoriesBagr(false); }}
                       className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
                     >
                       Lžíce 60 cm
+                    </button>
+                  </li>
+                        <li>
+                    <button
+                      onClick={() => { setSelectedAttachmentBagr("bagr-lzice80"); setShowAccessoriesBagr(false); }}
+                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
+                    >
+                      Lžíce 80 cm
+                    </button>
+                  </li>
+                        <li>
+                    <button
+                      onClick={() => { setSelectedAttachmentBagr("bagr-lzicesvah"); setShowAccessoriesBagr(false); }}
+                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
+                    >
+                      Lžíce svahová
                     </button>
                   </li>
                 </ul>
