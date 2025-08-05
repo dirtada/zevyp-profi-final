@@ -13,7 +13,6 @@ import {
 } from "@heroicons/react/24/outline";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Hammer, Truck, Layers } from "lucide-react";
 
 function Header() {
   const [open, setOpen] = useState(false);
@@ -67,6 +66,7 @@ export default function Home() {
   const [datumOd, setDatumOd] = useState("");
   const [datumDo, setDatumDo] = useState("");
   const [obsazene, setObsazene] = useState([]);
+  const [km, setKm] = useState(0);
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
@@ -82,6 +82,30 @@ export default function Home() {
     nactiObsazene();
   }, []);
 
+  const zjistitKm = async () => {
+    if (!adresa) {
+      setMsg("Zadejte prosím adresu.");
+      return;
+    }
+    try {
+      const res = await fetch("/api/vzdalenost", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ adresa }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setKm(data.km);
+        setMsg(`Vzdálenost je ${data.km} km.`);
+      } else {
+        setMsg(data.error || "Nepodařilo se zjistit vzdálenost.");
+      }
+    } catch (error) {
+      console.error(error);
+      setMsg("Chyba při komunikaci se serverem.");
+    }
+  };
+
   const odeslat = async () => {
     if (!jmeno || !adresa || !datumOd || !datumDo) {
       setMsg("Vyplňte prosím všechna pole.");
@@ -91,7 +115,7 @@ export default function Home() {
       const res = await fetch("/api/objednavka", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jmeno, adresa, typPrace, datumOd, datumDo }),
+        body: JSON.stringify({ jmeno, adresa, typPrace, datumOd, datumDo, km }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -116,7 +140,7 @@ export default function Home() {
       <Header />
 
       <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
-       {/* Hero */}
+        {/* Hero */}
         <main className="bg-[#2f3237] text-white py-16">
           <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
             <div className="md:w-1/2 text-left mb-12 md:mb-0 relative z-20">
@@ -224,7 +248,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* KONTAKT + POPÁVKA */}
+        {/* KONTAKT + POPTÁVKA */}
         <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
           <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
             KONTAKT A POPTÁVKA
@@ -239,110 +263,49 @@ export default function Home() {
               <button type="submit" className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400">ODESLAT</button>
             </form>
 
-           {/* Poptávka */}
-<div className="bg-white rounded-lg shadow-lg p-6 space-y-4 text-gray-800">
-  <div>
-    <label className="block font-semibold">Název projektu</label>
-    <input
-      type="text"
-      className="w-full border px-4 py-2 rounded"
-      value={jmeno}
-      onChange={(e) => setJmeno(e.target.value)}
-    />
-  </div>
+            {/* Poptávka */}
+            <div className="bg-white rounded-lg shadow-lg p-6 space-y-4 text-gray-800">
+              <div>
+                <label className="block font-semibold">Název projektu</label>
+                <input type="text" className="w-full border px-4 py-2 rounded" value={jmeno} onChange={(e) => setJmeno(e.target.value)} />
+              </div>
 
-  <div>
-    <label className="block font-semibold">Adresa zakázky</label>
-    <div className="flex space-x-2">
-      <input
-        type="text"
-        className="flex-1 border px-4 py-2 rounded"
-        value={adresa}
-        onChange={(e) => setAdresa(e.target.value)}
-      />
-      <button
-        type="button"
-        onClick={async () => {
-          try {
-            const res = await fetch("/api/vzdalenost", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ adresa }),
-            });
-            const data = await res.json();
-            if (res.ok) {
-              setKm(data.km);
-              setMsg(`Vzdálenost je ${data.km} km.`);
-            } else {
-              setMsg(data.error || "Nepodařilo se zjistit vzdálenost.");
-            }
-          } catch (error) {
-            setMsg("Chyba při komunikaci se serverem.");
-          }
-        }}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-      >
-        Zjistit km
-      </button>
-    </div>
-    {km > 0 && <p className="text-sm text-gray-600 mt-1">Vzdálenost: {km} km</p>}
-  </div>
+              <div>
+                <label className="block font-semibold">Adresa zakázky</label>
+                <div className="flex space-x-2">
+                  <input type="text" className="flex-1 border px-4 py-2 rounded" value={adresa} onChange={(e) => setAdresa(e.target.value)} />
+                  <button type="button" onClick={zjistitKm} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Zjistit km</button>
+                </div>
+                {km > 0 && <p className="text-sm text-gray-600 mt-1">Vzdálenost: {km} km</p>}
+              </div>
 
-  <div>
-    <label className="block font-semibold">Vyberte typ prací</label>
-    <div className="grid gap-2">
-      <button
-        onClick={() => setTypPrace("vykop")}
-        className={`p-3 border rounded ${
-          typPrace === "vykop" ? "bg-yellow-100 border-yellow-500" : ""
-        }`}
-      >
-        Výkopové práce
-      </button>
-      <button
-        onClick={() => setTypPrace("vykopZasyp")}
-        className={`p-3 border rounded ${
-          typPrace === "vykopZasyp" ? "bg-yellow-100 border-yellow-500" : ""
-        }`}
-      >
-        Výkop + zásypové práce
-      </button>
-      <button
-        onClick={() => setTypPrace("komplexni")}
-        className={`p-3 border rounded ${
-          typPrace === "komplexni" ? "bg-yellow-100 border-yellow-500" : ""
-        }`}
-      >
-        Komplexní práce
-      </button>
-    </div>
-  </div>
+              <div>
+                <label className="block font-semibold">Vyberte typ prací</label>
+                <div className="grid gap-2">
+                  <button onClick={() => setTypPrace("vykop")} className={`p-3 border rounded ${typPrace === "vykop" ? "bg-yellow-100 border-yellow-500" : ""}`}>Výkopové práce</button>
+                  <button onClick={() => setTypPrace("vykopZasyp")} className={`p-3 border rounded ${typPrace === "vykopZasyp" ? "bg-yellow-100 border-yellow-500" : ""}`}>Výkop + zásypové práce</button>
+                  <button onClick={() => setTypPrace("komplexni")} className={`p-3 border rounded ${typPrace === "komplexni" ? "bg-yellow-100 border-yellow-500" : ""}`}>Komplexní práce</button>
+                </div>
+              </div>
 
-  <div>
-    <label className="block font-semibold">Vyberte termín</label>
-    <Calendar
-      selectRange={true}
-      tileDisabled={({ date }) =>
-        obsazene.includes(date.toISOString().split("T")[0])
-      }
-      onChange={(range) => {
-        if (Array.isArray(range) && range.length === 2) {
-          setDatumOd(range[0].toISOString().split("T")[0]);
-          setDatumDo(range[1].toISOString().split("T")[0]);
-        }
-      }}
-    />
-  </div>
+              <div>
+                <label className="block font-semibold">Vyberte termín</label>
+                <Calendar
+                  selectRange={true}
+                  tileDisabled={({ date }) => obsazene.includes(date.toISOString().split("T")[0])}
+                  onChange={(range) => {
+                    if (Array.isArray(range) && range.length === 2) {
+                      setDatumOd(range[0].toISOString().split("T")[0]);
+                      setDatumDo(range[1].toISOString().split("T")[0]);
+                    }
+                  }}
+                />
+              </div>
 
-  <button
-    onClick={odeslat}
-    className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400"
-  >
-    ODESLAT OBJEDNÁVKU
-  </button>
-  {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
-</div>
-
+              <button onClick={odeslat} className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400">ODESLAT OBJEDNÁVKU</button>
+              {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
+            </div>
+          </div>
         </section>
 
         {/* Footer */}
