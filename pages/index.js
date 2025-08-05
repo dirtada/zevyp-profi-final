@@ -239,37 +239,110 @@ export default function Home() {
               <button type="submit" className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400">ODESLAT</button>
             </form>
 
-            {/* Poptávka */}
-            <div className="bg-white rounded-lg shadow-lg p-6 space-y-4 text-gray-800">
-              <div>
-                <label className="block font-semibold">Název projektu</label>
-                <input type="text" className="w-full border px-4 py-2 rounded" value={jmeno} onChange={(e) => setJmeno(e.target.value)} />
-              </div>
-              <div>
-                <label className="block font-semibold">Adresa zakázky</label>
-                <input type="text" className="w-full border px-4 py-2 rounded" value={adresa} onChange={(e) => setAdresa(e.target.value)} />
-              </div>
-              <div>
-                <label className="block font-semibold">Vyberte typ prací</label>
-                <div className="grid gap-2">
-                  <button onClick={() => setTypPrace("vykop")} className={`p-3 border rounded ${typPrace === "vykop" ? "bg-yellow-100 border-yellow-500" : ""}`}>Výkopové práce</button>
-                  <button onClick={() => setTypPrace("vykopZasyp")} className={`p-3 border rounded ${typPrace === "vykopZasyp" ? "bg-yellow-100 border-yellow-500" : ""}`}>Výkop + zásypové práce</button>
-                  <button onClick={() => setTypPrace("komplexni")} className={`p-3 border rounded ${typPrace === "komplexni" ? "bg-yellow-100 border-yellow-500" : ""}`}>Komplexní práce</button>
-                </div>
-              </div>
-              <div>
-                <label className="block font-semibold">Vyberte termín</label>
-                <Calendar selectRange={true} tileDisabled={({ date }) => obsazene.includes(date.toISOString().split("T")[0])} onChange={(range) => {
-                  if (Array.isArray(range) && range.length === 2) {
-                    setDatumOd(range[0].toISOString().split("T")[0]);
-                    setDatumDo(range[1].toISOString().split("T")[0]);
-                  }
-                }} />
-              </div>
-              <button onClick={odeslat} className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400">ODESLAT OBJEDNÁVKU</button>
-              {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
-            </div>
-          </div>
+           {/* Poptávka */}
+<div className="bg-white rounded-lg shadow-lg p-6 space-y-4 text-gray-800">
+  <div>
+    <label className="block font-semibold">Název projektu</label>
+    <input
+      type="text"
+      className="w-full border px-4 py-2 rounded"
+      value={jmeno}
+      onChange={(e) => setJmeno(e.target.value)}
+    />
+  </div>
+
+  <div>
+    <label className="block font-semibold">Adresa zakázky</label>
+    <div className="flex space-x-2">
+      <input
+        type="text"
+        className="flex-1 border px-4 py-2 rounded"
+        value={adresa}
+        onChange={(e) => setAdresa(e.target.value)}
+      />
+      <button
+        type="button"
+        onClick={async () => {
+          try {
+            const res = await fetch("/api/vzdalenost", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ adresa }),
+            });
+            const data = await res.json();
+            if (res.ok) {
+              setKm(data.km);
+              setMsg(`Vzdálenost je ${data.km} km.`);
+            } else {
+              setMsg(data.error || "Nepodařilo se zjistit vzdálenost.");
+            }
+          } catch (error) {
+            setMsg("Chyba při komunikaci se serverem.");
+          }
+        }}
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+      >
+        Zjistit km
+      </button>
+    </div>
+    {km > 0 && <p className="text-sm text-gray-600 mt-1">Vzdálenost: {km} km</p>}
+  </div>
+
+  <div>
+    <label className="block font-semibold">Vyberte typ prací</label>
+    <div className="grid gap-2">
+      <button
+        onClick={() => setTypPrace("vykop")}
+        className={`p-3 border rounded ${
+          typPrace === "vykop" ? "bg-yellow-100 border-yellow-500" : ""
+        }`}
+      >
+        Výkopové práce
+      </button>
+      <button
+        onClick={() => setTypPrace("vykopZasyp")}
+        className={`p-3 border rounded ${
+          typPrace === "vykopZasyp" ? "bg-yellow-100 border-yellow-500" : ""
+        }`}
+      >
+        Výkop + zásypové práce
+      </button>
+      <button
+        onClick={() => setTypPrace("komplexni")}
+        className={`p-3 border rounded ${
+          typPrace === "komplexni" ? "bg-yellow-100 border-yellow-500" : ""
+        }`}
+      >
+        Komplexní práce
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <label className="block font-semibold">Vyberte termín</label>
+    <Calendar
+      selectRange={true}
+      tileDisabled={({ date }) =>
+        obsazene.includes(date.toISOString().split("T")[0])
+      }
+      onChange={(range) => {
+        if (Array.isArray(range) && range.length === 2) {
+          setDatumOd(range[0].toISOString().split("T")[0]);
+          setDatumDo(range[1].toISOString().split("T")[0]);
+        }
+      }}
+    />
+  </div>
+
+  <button
+    onClick={odeslat}
+    className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400"
+  >
+    ODESLAT OBJEDNÁVKU
+  </button>
+  {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
+</div>
+
         </section>
 
         {/* Footer */}
