@@ -185,6 +185,12 @@ export default function Home() {
                 <Image src="/images/valec.png" alt="Válec" width={300} height={200} className="mx-auto" />
                 <h4 className="text-xl font-bold mt-4 text-[#2f3237]">Válec</h4>
                 <p className="text-gray-600 text-sm mt-2">Zhutňování povrchů a příprava cest.</p>
+            <ul className="text-sm text-gray-700 mt-3 space-y-2">
+                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 4.3 t</li>
+                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Yanmar 25.2 KW</li>
+                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Hloubka výkopu: 3.74 m</li>
+                  <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Vhodný pro základy a úpravy</li>
+                </ul>
               </div>
 
               {/* Bagr uprostřed */}
@@ -211,6 +217,12 @@ export default function Home() {
                 <p className="text-gray-600 text-sm mt-2">Manipulace se sypkými materiály.</p>
               </div>
             </div>
+                  <ul className="text-sm text-gray-700 mt-3 space-y-2">
+                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 4.3 t</li>
+                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Yanmar 25.2 KW</li>
+                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Hloubka výkopu: 3.74 m</li>
+                  <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Vhodný pro základy a úpravy</li>
+                </ul>
           </div>
 
           {/* Modal příslušenství */}
