@@ -333,7 +333,9 @@ export default function Home() {
               </div>
             </div>
           )}
-        {/* CENÍK */}
+        </section>
+
+{/* CENÍK */}
         <section id="cenik" className="bg-[#f9c600] text-black py-16">
           <div className="container mx-auto px-4">
             <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">
