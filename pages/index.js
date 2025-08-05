@@ -11,6 +11,7 @@ import {
   TruckIcon,
   SquaresPlusIcon,
 } from "@heroicons/react/24/outline";
+import { PlusCircleIcon, XMarkIcon as CloseIcon } from "@heroicons/react/24/solid";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -27,26 +28,16 @@ function Header() {
           height={150}
           className="h-12 w-auto"
         />
-
-        {/* Desktop menu */}
         <nav className="hidden md:flex gap-6 text-base md:text-lg">
           <a href="#sluzby" className="hover:underline">NAŠE SLUŽBY</a>
           <a href="#technika" className="hover:underline">TECHNIKA</a>
           <a href="#cenik" className="hover:underline">CENÍK</a>
           <a href="#kontakt" className="hover:underline">KONTAKT</a>
         </nav>
-
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
+        <button className="md:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu">
           {open ? <XMarkIcon className="w-8 h-8" /> : <Bars3Icon className="w-8 h-8" />}
         </button>
       </div>
-
-      {/* Mobile dropdown */}
       {open && (
         <div className="md:hidden bg-[#f9c600] py-4 px-6 flex flex-col gap-4 shadow-lg">
           <a href="#sluzby" onClick={() => setOpen(false)}>NAŠE SLUŽBY</a>
@@ -66,8 +57,9 @@ export default function Home() {
   const [datumOd, setDatumOd] = useState("");
   const [datumDo, setDatumDo] = useState("");
   const [obsazene, setObsazene] = useState([]);
-  const [km, setKm] = useState(0);
   const [msg, setMsg] = useState("");
+  const [km, setKm] = useState(null);
+  const [showAccessories, setShowAccessories] = useState(false);
 
   useEffect(() => {
     const nactiObsazene = async () => {
@@ -82,11 +74,7 @@ export default function Home() {
     nactiObsazene();
   }, []);
 
-  const zjistitKm = async () => {
-    if (!adresa) {
-      setMsg("Zadejte prosím adresu.");
-      return;
-    }
+  const spocitatVzdalenost = async () => {
     try {
       const res = await fetch("/api/vzdalenost", {
         method: "POST",
@@ -96,7 +84,7 @@ export default function Home() {
       const data = await res.json();
       if (res.ok) {
         setKm(data.km);
-        setMsg(`Vzdálenost je ${data.km} km.`);
+        setMsg(`Vzdálenost: ${data.km} km`);
       } else {
         setMsg(data.error || "Nepodařilo se zjistit vzdálenost.");
       }
@@ -136,7 +124,6 @@ export default function Home() {
         <meta name="description" content="Výkopové a zemní práce minibagrem Hitachi – Praha a okolí." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <Header />
 
       <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
@@ -154,21 +141,12 @@ export default function Home() {
                 </span>{" "}
                 minibagrem Hitachi v Praze a okolí.
               </p>
-              <a
-                href="#kontakt"
-                className="inline-block bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
-              >
+              <a href="#kontakt" className="inline-block bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition">
                 Nezávazná poptávka
               </a>
             </div>
             <div className="md:w-1/2 flex justify-center relative z-10">
-              <Image
-                src="/images/bagr-hero.png"
-                alt="Bagr"
-                width={700}
-                height={500}
-                className="object-contain -mb-24 md:-mb-32"
-              />
+              <Image src="/images/bagr-hero.png" alt="Bagr" width={700} height={500} className="object-contain -mb-24 md:-mb-32" />
             </div>
           </div>
         </main>
@@ -176,9 +154,7 @@ export default function Home() {
         {/* SLUŽBY */}
         <section id="sluzby" className="bg-[#f9c600] text-black py-16">
           <div className="container mx-auto px-4">
-            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">
-              NAŠE SLUŽBY
-            </h3>
+            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">NAŠE SLUŽBY</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white rounded-xl shadow-lg p-6 text-center">
                 <BuildingOffice2Icon className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
@@ -200,44 +176,69 @@ export default function Home() {
         </section>
 
         {/* TECHNIKA */}
-        <section id="technika" className="bg-white text-black py-16">
-          <div className="container mx-auto px-4">
-            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">
-              TECHNIKA
-            </h3>
-            <div className="flex flex-col md:flex-row items-center gap-10 max-w-5xl mx-auto bg-gray-50 rounded-xl shadow-lg p-8">
-              <Image src="/images/bagr-technik.png" alt="Bagr Technika" width={400} height={300} />
-              <div className="text-lg space-y-4">
-                <h4 className="text-2xl font-bold text-[#2f3237]">Hitachi ZX 48-A5A</h4>
-                <ul className="space-y-3">
-                  <li className="flex items-center gap-3">
-                    <ScaleIcon className="w-6 h-6 text-yellow-500" />
-                    <span>Hmotnost: 4.3 tuny</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Cog6ToothIcon className="w-6 h-6 text-yellow-500" />
-                    <span>Motor: Yanmar 25.2 KW</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <ArrowsUpDownIcon className="w-6 h-6 text-yellow-500" />
-                    <span>Max. hloubka výkopu: 3.74 m</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <WrenchScrewdriverIcon className="w-6 h-6 text-yellow-500" />
-                    <span>Vhodný pro základy a terénní úpravy</span>
-                  </li>
+        <section id="technika" className="bg-white text-black py-16 relative">
+          <div className="container mx-auto px-4 text-center">
+            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237]">TECHNIKA</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-center justify-center">
+              {/* Válec */}
+              <div className="bg-gray-50 rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+                <Image src="/images/valec.png" alt="Válec" width={300} height={200} className="mx-auto" />
+                <h4 className="text-xl font-bold mt-4 text-[#2f3237]">Válec</h4>
+                <p className="text-gray-600 text-sm mt-2">Zhutňování povrchů a příprava cest.</p>
+              </div>
+
+              {/* Bagr uprostřed */}
+              <div className="relative bg-gray-50 rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+                <div className="relative">
+                  <Image src="/images/bagr-technik.png" alt="Bagr" width={400} height={300} className="mx-auto" />
+                  <button onClick={() => setShowAccessories(true)} className="absolute top-1/2 left-[75%] transform -translate-x-1/2 -translate-y-1/2 animate-pulse">
+                    <PlusCircleIcon className="w-12 h-12 text-yellow-500 hover:text-yellow-600 transition" />
+                  </button>
+                </div>
+                <h4 className="text-xl font-bold mt-4 text-[#2f3237]">Bagr Hitachi ZX 48-A5A</h4>
+                <ul className="text-sm text-gray-700 mt-3 space-y-2">
+                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 4.3 t</li>
+                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Yanmar 25.2 KW</li>
+                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Hloubka výkopu: 3.74 m</li>
+                  <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Vhodný pro základy a úpravy</li>
                 </ul>
+              </div>
+
+              {/* Nakladač */}
+              <div className="bg-gray-50 rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+                <Image src="/images/nakladac.png" alt="Nakladač" width={300} height={200} className="mx-auto" />
+                <h4 className="text-xl font-bold mt-4 text-[#2f3237]">Nakladač</h4>
+                <p className="text-gray-600 text-sm mt-2">Manipulace se sypkými materiály.</p>
               </div>
             </div>
           </div>
+
+          {/* Modal příslušenství */}
+          {showAccessories && (
+            <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
+              <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
+                <button onClick={() => setShowAccessories(false)} className="absolute top-3 right-3 text-gray-600 hover:text-black">
+                  <CloseIcon className="w-6 h-6" />
+                </button>
+                <h3 className="text-lg font-bold mb-4">Vyberte příslušenství pro bagr</h3>
+                <ul className="space-y-3 text-gray-800">
+                  <li><label className="flex items-center gap-3"><input type="checkbox" className="h-4 w-4" /> Vrták</label></li>
+                  <li><label className="flex items-center gap-3"><input type="checkbox" className="h-4 w-4" /> Sbíječka</label></li>
+                  <li><label className="flex items-center gap-3"><input type="checkbox" className="h-4 w-4" /> Lžíce 30 cm</label></li>
+                  <li><label className="flex items-center gap-3"><input type="checkbox" className="h-4 w-4" /> Lžíce 60 cm</label></li>
+                </ul>
+                <button onClick={() => setShowAccessories(false)} className="mt-6 w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400 transition">
+                  Potvrdit výběr
+                </button>
+              </div>
+            </div>
+          )}
         </section>
 
         {/* CENÍK */}
         <section id="cenik" className="bg-[#f9c600] text-black py-16">
           <div className="container mx-auto px-4">
-            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">
-              CENÍK
-            </h3>
+            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">CENÍK</h3>
             <table className="w-full max-w-3xl mx-auto border border-gray-300 rounded-lg">
               <tbody className="divide-y divide-gray-300">
                 <tr><td className="py-4 px-6 font-semibold">Bagr s obsluhou</td><td className="py-4 px-6 text-right font-bold">990 Kč / hod</td></tr>
@@ -248,13 +249,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* KONTAKT + POPTÁVKA */}
+        {/* KONTAKT */}
         <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
-          <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
-            KONTAKT A POPTÁVKA
-          </h3>
+          <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">KONTAKT A POPTÁVKA</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
-            {/* Kontakt */}
             <form className="bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800">
               <div><label className="block font-semibold">Jméno</label><input type="text" className="w-full border px-4 py-2 rounded" /></div>
               <div><label className="block font-semibold">E-mail</label><input type="email" className="w-full border px-4 py-2 rounded" /></div>
@@ -263,22 +261,16 @@ export default function Home() {
               <button type="submit" className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400">ODESLAT</button>
             </form>
 
-            {/* Poptávka */}
             <div className="bg-white rounded-lg shadow-lg p-6 space-y-4 text-gray-800">
-              <div>
-                <label className="block font-semibold">Název projektu</label>
-                <input type="text" className="w-full border px-4 py-2 rounded" value={jmeno} onChange={(e) => setJmeno(e.target.value)} />
-              </div>
-
+              <div><label className="block font-semibold">Název projektu</label><input type="text" className="w-full border px-4 py-2 rounded" value={jmeno} onChange={(e) => setJmeno(e.target.value)} /></div>
               <div>
                 <label className="block font-semibold">Adresa zakázky</label>
-                <div className="flex space-x-2">
+                <div className="flex gap-2">
                   <input type="text" className="flex-1 border px-4 py-2 rounded" value={adresa} onChange={(e) => setAdresa(e.target.value)} />
-                  <button type="button" onClick={zjistitKm} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Zjistit km</button>
+                  <button type="button" onClick={spocitatVzdalenost} className="bg-blue-600 text-white px-4 py-2 rounded">Zjistit km</button>
                 </div>
-                {km > 0 && <p className="text-sm text-gray-600 mt-1">Vzdálenost: {km} km</p>}
+                {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
               </div>
-
               <div>
                 <label className="block font-semibold">Vyberte typ prací</label>
                 <div className="grid gap-2">
@@ -287,7 +279,6 @@ export default function Home() {
                   <button onClick={() => setTypPrace("komplexni")} className={`p-3 border rounded ${typPrace === "komplexni" ? "bg-yellow-100 border-yellow-500" : ""}`}>Komplexní práce</button>
                 </div>
               </div>
-
               <div>
                 <label className="block font-semibold">Vyberte termín</label>
                 <Calendar
@@ -301,14 +292,12 @@ export default function Home() {
                   }}
                 />
               </div>
-
               <button onClick={odeslat} className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400">ODESLAT OBJEDNÁVKU</button>
               {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
             </div>
           </div>
         </section>
 
-        {/* Footer */}
         <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
           Zemní a Výkopové Práce • IČO:73377619 • info@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
         </footer>
