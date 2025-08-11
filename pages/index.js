@@ -246,16 +246,20 @@ export default function Home() {
 
           {/* BAGR – uprostřed */}
           <div className="bg-gray-100 p-6 rounded shadow relative">
-            <div className="relative inline-block">
-              <img src={selectedAttachmentBagr} alt="Bagr" className="mx-auto mb-4 transition-all duration-300" />
-              {/* Plus ikona */}
-              <button
-  onClick={() => setShowAccessoriesBagr(true)}
-  className="absolute top-1/2 right-10 bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
->
-  <PlusCircleIcon className="w-6 h-6" />
-</button>
-            </div>
+  <div className="relative inline-block">
+    <img
+      src={selectedAttachmentBagr}
+      alt="Bagr"
+      className="mx-auto mb-4 transition-all duration-300"
+    />
+    {/* Plus ikona na lžíci */}
+    <button
+      onClick={() => setShowAccessoriesBagr(true)}
+      className="absolute top-[72%] left-[80%] bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
+    >
+      <PlusIcon className="w-6 h-6" />
+    </button>
+  </div>
             <h3 className="font-bold text-xl">Bagr</h3>
             <ul className="text-sm text-gray-700 mt-3 space-y-2">
               <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 8 t</li>
@@ -266,17 +270,21 @@ export default function Home() {
           </div>
 
           {/* NAKLADAČ */}
-          <div className="bg-gray-100 p-6 rounded shadow relative">
-            <div className="relative inline-block">
-              <img src={selectedAttachmentNakladac} alt="Nakladač" className="mx-auto mb-4 transition-all duration-300" />
-              {/* Plus ikona */}
-              <button
-  onClick={() => setShowAccessoriesNakladac(true)}
-  className="absolute top-1/2 right-10 bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
->
-  <PlusCircleIcon className="w-6 h-6" />
-</button>
-            </div>
+         <div className="bg-gray-100 p-6 rounded shadow relative">
+  <div className="relative inline-block">
+    <img
+      src={selectedAttachmentNakladac}
+      alt="Nakladač"
+      className="mx-auto mb-4 transition-all duration-300"
+    />
+    {/* Plus ikona na lžíci */}
+    <button
+      onClick={() => setShowAccessoriesNakladac(true)}
+      className="absolute top-[68%] left-[78%] bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
+    >
+      <PlusIcon className="w-6 h-6" />
+    </button>
+  </div>
             <h3 className="font-bold text-xl">Nakladač</h3>
             <ul className="text-sm text-gray-700 mt-3 space-y-2">
               <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 5 t</li>
@@ -294,7 +302,7 @@ export default function Home() {
           <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
             <button
               onClick={() => setShowAccessoriesBagr(false)}
-              className="absolute top-4 right-3 text-gray-600 hover:text-black"
+              className="absolute top-3 right-3 text-gray-600 hover:text-black"
             >
               <CloseIcon className="w-6 h-6" />
             </button>
@@ -316,7 +324,7 @@ export default function Home() {
           <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
             <button
               onClick={() => setShowAccessoriesNakladac(false)}
-              className="absolute top-4 left-3 text-gray-600 hover:text-black"
+              className="absolute top-3 right-3 text-gray-600 hover:text-black"
             >
               <CloseIcon className="w-6 h-6" />
             </button>
