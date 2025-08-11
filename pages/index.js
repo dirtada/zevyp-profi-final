@@ -425,17 +425,18 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
   <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
     KONTAKTNÍ FORMULÁŘ
   </h3>
-  <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800">
-    <div>
-      <label className="block font-semibold">Popis požadovaných prací</label>
-      <input
-        type="text"
-        className="w-full border px-4 py-2 rounded"
-        value={popisZK}
-        onChange={(e) => setpopisZK(e.target.value)}
-      />
-    </div>
-
+<div>
+  <label className="block font-semibold">Popis požadovaných prací</label>
+  <textarea
+    className="w-full border px-4 py-3 rounded min-h-[140px] resize-y placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+    value={popisZK}
+    onChange={(e) => setpopisZK(e.target.value)}
+    placeholder={`Např.: Poptávám výkop rýhy pro elektriku cca 12 m, hloubka 70 cm, šířka 30 cm.\nOdvoz přebytečné zeminy, zarovnání terénu. Místo: Praha 5.`}
+  />
+  <p className="text-xs text-gray-500 mt-1">
+    Tip: uveďte rozměry (délka/šířka/hloubka), místo realizace a případně odvoz zeminy.
+  </p>
+</div>
     <div>
       <label className="block font-semibold">E-mail</label>
       <input type="email" className="w-full border px-4 py-2 rounded" />
