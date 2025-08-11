@@ -420,7 +420,7 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
           </div>
         </section>
 
-       {/* KONTAKT + POPTÁVKA */}
+      {/* KONTAKT + POPTÁVKA */}
 <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
   <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
     KONTAKTNÍ FORMULÁŘ
@@ -435,14 +435,17 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
         onChange={(e) => setpopisZK(e.target.value)}
       />
     </div>
+
     <div>
       <label className="block font-semibold">E-mail</label>
       <input type="email" className="w-full border px-4 py-2 rounded" />
     </div>
+
     <div>
       <label className="block font-semibold">Telefon</label>
       <input type="tel" className="w-full border px-4 py-2 rounded" />
     </div>
+
     <div>
       <label className="block font-semibold">Adresa zakázky</label>
       <div className="flex gap-2">
@@ -515,7 +518,7 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
           </div>
         </div>
       )}
-    </div> {/* ← tady je doplněné uzavření wrapperu pro „Typ práce“ */}
+    </div> {/* ← uzavření wrapperu „Typ práce“ */}
 
     <div>
       <label className="block font-semibold">Zvolte termín</label>
