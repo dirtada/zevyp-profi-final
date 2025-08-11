@@ -11,6 +11,7 @@ import {
   TruckIcon,
   SquaresPlusIcon,
   PlusIcon,
+  PlusCircleIcon,
   XMarkIcon as CloseIcon,
 } from "@heroicons/react/24/solid";
 import Calendar from "react-calendar";
