@@ -222,11 +222,11 @@ export default function Home() {
               <img src={selectedAttachmentBagr} alt="Bagr" className="mx-auto mb-4 transition-all duration-300" />
               {/* Plus ikona */}
               <button
-                onClick={() => setShowAccessoriesBagr(true)}
-                className="absolute top-1/2 right-10 bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
-              >
-                <PlusIcon className="w-6 h-6" />
-              </button>
+  onClick={() => setShowAccessoriesBagr(true)}
+  className="absolute top-1/2 right-10 bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
+>
+  <PlusCircleIcon className="w-6 h-6" />
+</button>
             </div>
             <h3 className="font-bold text-xl">Bagr</h3>
             <ul className="text-sm text-gray-700 mt-3 space-y-2">
@@ -243,11 +243,11 @@ export default function Home() {
               <img src={selectedAttachmentNakladac} alt="Nakladač" className="mx-auto mb-4 transition-all duration-300" />
               {/* Plus ikona */}
               <button
-                onClick={() => setShowAccessoriesNakladac(true)}
-                className="absolute top-1/2 right-10 bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
-              >
-                <PlusIcon className="w-6 h-6" />
-              </button>
+  onClick={() => setShowAccessoriesNakladac(true)}
+  className="absolute top-1/2 right-10 bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
+>
+  <PlusCircleIcon className="w-6 h-6" />
+</button>
             </div>
             <h3 className="font-bold text-xl">Nakladač</h3>
             <ul className="text-sm text-gray-700 mt-3 space-y-2">
