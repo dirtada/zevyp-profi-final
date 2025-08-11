@@ -58,7 +58,7 @@ export default function Home() {
   const [showAccessoriesBagr, setShowAccessoriesBagr] = useState(false);
   const [showAccessoriesNakladac, setShowAccessoriesNakladac] = useState(false);
   const [selectedAttachmentBagr, setSelectedAttachmentBagr] = useState("/images/bagr-lzice50.png");
-  const [selectedAttachmentNakladac, setSelectedAttachmentNakladac] = useState("/images/nakladac-standard.png");
+  const [selectedAttachmentNakladac, setSelectedAttachmentNakladac] = useState("/images/nakladac.png");
 
   const [startDate, setStartDate] = useState(new Date());
   const [customerName, setCustomerName] = useState("");
@@ -295,7 +295,7 @@ export default function Home() {
             <h3 className="text-lg font-bold mb-4">Vyberte příslušenství pro nakladač</h3>
             <ul className="space-y-3 text-gray-800">
               <li><button onClick={() => { setSelectedAttachmentNakladac("/images/nakladac-pluh.png"); setShowAccessoriesNakladac(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Pluh</button></li>
-              <li><button onClick={() => { setSelectedAttachmentNakladac("/images/nakladac-standard.png"); setShowAccessoriesNakladac(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Standardní lopata</button></li>
+              <li><button onClick={() => { setSelectedAttachmentNakladac("/images/nakladac.png"); setShowAccessoriesNakladac(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Standardní lopata</button></li>
             </ul>
           </div>
         </div>
