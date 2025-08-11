@@ -163,7 +163,7 @@ export default function Home() {
 
   // HERO sekce
   const Hero = () => (
-    <section className="bg-cover bg-center py-20" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}>
+    <section className="bg-cover bg-center py-20" style={{ backgroundImage: "url('/images/bagr-hero.png')" }}>
       <div className="container mx-auto text-center text-white">
         <h1 className="text-4xl md:text-6xl font-bold mb-6">Zemní a výkopové práce</h1>
         <p className="text-lg md:text-2xl mb-8">Profesionální služby s moderní technikou a zkušeným týmem</p>
