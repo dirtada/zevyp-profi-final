@@ -1,5 +1,25 @@
 import { google } from "googleapis";
 
+// Pomocné funkce pro bezpečnou práci s dny bez lokálního/UTC driftu
+const ymdFromUTCDate = (d) => d.toISOString().slice(0, 10); // YYYY-MM-DD
+const nextYMD = (ymd) => {
+  const [y, m, d] = ymd.split("-").map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  dt.setUTCDate(dt.getUTCDate() + 1);
+  return ymdFromUTCDate(dt);
+};
+
+// Rozbalí uzavřený interval [startYMD, endYMD], end je inclusive
+const expandRangeYMD = (startYMD, endYMD) => {
+  const days = [];
+  let cur = startYMD;
+  while (cur <= endYMD) {
+    days.push(cur);
+    cur = nextYMD(cur);
+  }
+  return days;
+};
+
 export default async function handler(req, res) {
   try {
     const oauth2Client = new google.auth.OAuth2(
@@ -7,10 +27,7 @@ export default async function handler(req, res) {
       process.env.GCAL_CLIENT_SECRET,
       process.env.GCAL_REDIRECT_URI
     );
-
-    oauth2Client.setCredentials({
-      refresh_token: process.env.GCAL_REFRESH_TOKEN,
-    });
+    oauth2Client.setCredentials({ refresh_token: process.env.GCAL_REFRESH_TOKEN });
 
     const calendar = google.calendar({ version: "v3", auth: oauth2Client });
 
@@ -24,33 +41,44 @@ export default async function handler(req, res) {
       timeMax: threeMonthsLater.toISOString(),
       singleEvents: true,
       orderBy: "startTime",
+      timeZone: "Europe/Prague", // sjednocení časové zóny v odpovědi
     });
 
-    const obsazene = [];
+    const blocked = [];
 
-    for (const ev of events.data.items) {
-      // Přeskočíme všechny návrhy (začínající prefixem NÁVRH)
-      if (ev.summary && ev.summary.toUpperCase().startsWith("NÁVRH")) {
-        continue;
-      }
+    for (const ev of events.data.items || []) {
+      // Přeskočit návrhy
+      if (ev.summary && ev.summary.toUpperCase().startsWith("NÁVRH")) continue;
 
-      if (ev.start?.date && ev.end?.date) {
-        // Celodenní události
-        let current = new Date(ev.start.date);
-        const end = new Date(ev.end.date);
+      const isAllDay = !!ev.start?.date && !!ev.end?.date;
 
-        while (current < end) {
-          obsazene.push(current.toISOString().split("T")[0]);
-          current.setDate(current.getDate() + 1);
+      if (isAllDay) {
+        // Google vrací end.date jako EXCLUSIVE -> obsazené dny jsou [start, end-1]
+        let cur = ev.start.date;      // "YYYY-MM-DD"
+        const endExclusive = ev.end.date;
+
+        while (cur < endExclusive) {
+          blocked.push(cur);
+          cur = nextYMD(cur);
         }
       } else if (ev.start?.dateTime) {
-        // Časové události
-        const den = new Date(ev.start.dateTime).toISOString().split("T")[0];
-        obsazene.push(den);
+        // Časové události – označíme všechny dny, kterých se dotýká
+        const start = new Date(ev.start.dateTime);
+        const end = new Date(ev.end?.dateTime || ev.start.dateTime);
+
+        const startYMD = ymdFromUTCDate(new Date(Date.UTC(
+          start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate()
+        )));
+        const endYMD = ymdFromUTCDate(new Date(Date.UTC(
+          end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate()
+        )));
+
+        expandRangeYMD(startYMD, endYMD).forEach((d) => blocked.push(d));
       }
     }
 
-    console.log("Obsazené termíny (bez NÁVRH):", obsazene);
+    // Odduplikovat a seřadit
+    const obsazene = Array.from(new Set(blocked)).sort();
 
     res.status(200).json({ obsazene });
   } catch (error) {
