@@ -161,16 +161,43 @@ export default function Home() {
   }
 
 
-  // HERO sekce
   const Hero = () => (
-    <section className="bg-cover bg-center py-20" style={{ backgroundImage: "url('/images/bagr-hero.png')" }}>
-      <div className="container mx-auto text-center text-white">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">Zemní a výkopové práce</h1>
-        <p className="text-lg md:text-2xl mb-8">Profesionální služby s moderní technikou a zkušeným týmem</p>
-        <a href="#kontakt" className="bg-[#f9c600] text-black px-6 py-3 rounded-lg font-bold hover:bg-yellow-400 transition">Kontaktujte nás</a>
+  <section className="bg-[#2f3237] text-white py-16">
+    <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+      {/* Text vlevo */}
+      <div className="md:w-1/2 text-left mb-12 md:mb-0 relative z-20">
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+          ZEMNÍ A VÝKOPOVÉ PRÁCE
+        </h1>
+        <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
+          Provádíme{" "}
+          <span className="text-[#f9c600] font-semibold">
+            spolehlivé zemní a výkopové práce
+          </span>{" "}
+          minibagrem Hitachi v Praze a okolí.
+        </p>
+        <a
+          href="#kontakt"
+          className="inline-block bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
+        >
+          Nezávazná poptávka
+        </a>
       </div>
-    </section>
-  );
+
+      {/* Obrázek bagru vpravo */}
+      <div className="md:w-1/2 flex justify-center relative z-10">
+        <Image
+          src="/images/bagr-hero.png"
+          alt="Bagr"
+          width={700}
+          height={500}
+          priority
+          className="object-contain -mb-24 md:-mb-32"
+        />
+      </div>
+    </div>
+  </section>
+);
 
   // SLUŽBY
   const Sluzby = () => (
