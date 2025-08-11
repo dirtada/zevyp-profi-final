@@ -26,15 +26,13 @@ export default async function handler(req, res) {
     const obsazene = [];
 
     for (const ev of events.data.items) {
-      // zahrnout POUZE potvrzené události, které nezačínají "NÁVRH"
-      if (
-        ev.status !== "confirmed" ||
-        (ev.summary && ev.summary.toUpperCase().startsWith("NÁVRH"))
-      ) {
-        continue;
-      }
+      const nazev = ev.summary?.toUpperCase().trim() || "";
+
+      // ⚠️ Přeskočíme všechny s názvem začínajícím "NÁVRH"
+      if (nazev.startsWith("NÁVRH")) continue;
 
       if (ev.start?.date && ev.end?.date) {
+        // celodenní událost
         let current = new Date(ev.start.date);
         const end = new Date(ev.end.date);
         while (current < end) {
@@ -42,6 +40,7 @@ export default async function handler(req, res) {
           current.setDate(current.getDate() + 1);
         }
       } else if (ev.start?.dateTime) {
+        // událost s časem
         const den = new Date(ev.start.dateTime).toISOString().split("T")[0];
         obsazene.push(den);
       }
