@@ -294,7 +294,7 @@ export default function Home() {
           <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
             <button
               onClick={() => setShowAccessoriesBagr(false)}
-              className="absolute top-3 right-3 text-gray-600 hover:text-black"
+              className="absolute top-4 right-3 text-gray-600 hover:text-black"
             >
               <CloseIcon className="w-6 h-6" />
             </button>
@@ -316,7 +316,7 @@ export default function Home() {
           <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
             <button
               onClick={() => setShowAccessoriesNakladac(false)}
-              className="absolute top-3 right-3 text-gray-600 hover:text-black"
+              className="absolute top-4 left-3 text-gray-600 hover:text-black"
             >
               <CloseIcon className="w-6 h-6" />
             </button>
