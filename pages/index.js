@@ -24,7 +24,7 @@ export default function Page() {
   const [showAccessoriesBagr, setShowAccessoriesBagr] = useState(false);
   const [showAccessoriesNakladac, setShowAccessoriesNakladac] = useState(false);
   const [selectedAttachmentBagr, setSelectedAttachmentBagr] = useState("/images/bagr-lzice50.png");
-  const [selectedAttachmentNakladac, setSelectedAttachmentNakladac] = useState("/images/nakladac-standard.png");
+  const [selectedAttachmentNakladac, setSelectedAttachmentNakladac] = useState("/images/nakladac.png");
 
   const [startDate, setStartDate] = useState(new Date());
   const [customerName, setCustomerName] = useState("");
@@ -32,7 +32,7 @@ export default function Page() {
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerAddress, setCustomerAddress] = useState("");
   const [distance, setDistance] = useState(null);
-  const [pozadavek, setPozadavek] = useState("Poptávám výkop základové desky...");
+  const [pozadavek, setPozadavek] = useState("");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [msg, setMsg] = useState("");
@@ -182,28 +182,45 @@ export default function Page() {
   );
 
   const Hero = () => (
-    <section className="bg-cover bg-center py-20 relative text-white"
-      style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}>
-      <div className="container mx-auto text-center px-4">
-        <div className="grid md:grid-cols-2 items-center gap-8">
-          <div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Zemní a výkopové práce</h1>
-            <p className="text-lg md:text-2xl mb-8">Profesionální služby s moderní technikou a zkušeným týmem</p>
-            <a href="#kontakt" className="bg-[#f9c600] text-black px-6 py-3 rounded-lg font-bold hover:bg-yellow-400 transition">Kontaktujte nás</a>
-          </div>
-          <div className="hidden md:block">
-            <Image
-              src="/images/bagr-hero.png"
-              alt="Bagr"
-              width={500}
-              height={500}
-              className="mx-auto"
-            />
-          </div>
+  <section
+    className="relative text-white bg-cover bg-center pb-0"
+    style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
+  >
+    <div className="absolute inset-0 bg-black bg-opacity-40 z-0" />
+    <div className="relative z-10 container mx-auto px-4 py-20">
+      <div className="grid md:grid-cols-2 items-end gap-8">
+        {/* Text vlevo */}
+        <div className="text-left">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            Zemní a výkopové práce
+          </h1>
+          <p className="text-lg md:text-2xl mb-8">
+            Profesionální služby s moderní technikou a zkušeným týmem
+          </p>
+          <a
+            href="#kontakt"
+            className="bg-[#f9c600] text-black px-6 py-3 rounded-lg font-bold hover:bg-yellow-400 transition"
+          >
+            Kontaktujte nás
+          </a>
+        </div>
+
+        {/* Obrázek vpravo */}
+        <div className="flex justify-center md:justify-end items-end">
+          <Image
+            src="/images/bagr-hero.png"
+            alt="Bagr"
+            width={500}
+            height={500}
+            className="max-w-[450px] w-full object-contain mb-[-1px]"
+            priority
+          />
         </div>
       </div>
-    </section>
-  );
+    </div>
+  </section>
+);
+
 
   const Sluzby = () => (
     <section id="sluzby" className="py-20 bg-gray-100">
