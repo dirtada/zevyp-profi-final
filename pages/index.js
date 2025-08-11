@@ -410,112 +410,106 @@ export default function Home() {
         </section>
 
         {/* KONTAKT + POPTÁVKA */}
-        <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
-          <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
-            KONTAKT A POPTÁVKA
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
-            {/* Kontakt */}
-            <form className="bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800">
-              <div>
-                <label className="block font-semibold">Jméno</label>
-                <input type="text" className="w-full border px-4 py-2 rounded" />
-              </div>
-              <div>
-                <label className="block font-semibold">E-mail</label>
-                <input type="email" className="w-full border px-4 py-2 rounded" />
-              </div>
-              <div>
-                <label className="block font-semibold">Telefon</label>
-                <input type="tel" className="w-full border px-4 py-2 rounded" />
-              </div>
-              <div>
-                <label className="block font-semibold">Zpráva</label>
-                <textarea rows="4" className="w-full border px-4 py-2 rounded"></textarea>
-              </div>
-              <button type="submit" className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400">
-                ODESLAT
-              </button>
-            </form>
-
-            {/* Poptávka */}
-            <div className="bg-white rounded-lg shadow-lg p-6 space-y-4 text-gray-800">
-              <div>
-                <label className="block font-semibold">Název projektu</label>
-                <input
-                  type="text"
-                  className="w-full border px-4 py-2 rounded"
-                  value={jmeno}
-                  onChange={(e) => setJmeno(e.target.value)}
-                />
-              </div>
-              <div>
-                <label className="block font-semibold">Adresa zakázky</label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    className="flex-1 border px-4 py-2 rounded"
-                    value={adresa}
-                    onChange={(e) => setAdresa(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    onClick={spocitatVzdalenost}
-                    className="bg-blue-600 text-white px-4 py-2 rounded"
-                  >
-                    Zjistit km
-                  </button>
-                </div>
-                {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
-              </div>
-              <div>
-                <label className="block font-semibold">Vyberte typ prací</label>
-                <div className="grid gap-2">
-                  <button
-                    onClick={() => setTypPrace("vykop")}
-                    className={`p-3 border rounded ${typPrace === "vykop" ? "bg-yellow-100 border-yellow-500" : ""}`}
-                  >
-                    Výkopové práce
-                  </button>
-                  <button
-                    onClick={() => setTypPrace("vykopZasyp")}
-                    className={`p-3 border rounded ${typPrace === "vykopZasyp" ? "bg-yellow-100 border-yellow-500" : ""}`}
-                  >
-                    Výkop + zásypové práce
-                  </button>
-                  <button
-                    onClick={() => setTypPrace("komplexni")}
-                    className={`p-3 border rounded ${typPrace === "komplexni" ? "bg-yellow-100 border-yellow-500" : ""}`}
-                  >
-                    Komplexní práce
-                  </button>
-                </div>
-              </div>
-              <div>
-                <label className="block font-semibold">Vyberte termín</label>
-                <Calendar
-                  selectRange={true}
-                  tileDisabled={({ date }) =>
-                    obsazene.includes(date.toISOString().split("T")[0])
-                  }
-                  onChange={(range) => {
-                    if (Array.isArray(range) && range.length === 2) {
-                      setDatumOd(range[0].toISOString().split("T")[0]);
-                      setDatumDo(range[1].toISOString().split("T")[0]);
-                    }
-                  }}
-                />
-              </div>
-              <button
-                onClick={odeslat}
-                className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400"
-              >
-                ODESLAT OBJEDNÁVKU
-              </button>
-              {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
-            </div>
-          </div>
-        </section>
+<section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
+  <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
+    KONTAKTNÍ FORMULÁŘ
+  </h3>
+  <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800">
+    <div>
+      <label className="block font-semibold">Jméno</label>
+      <input
+        type="text"
+        className="w-full border px-4 py-2 rounded"
+        value={jmeno}
+        onChange={(e) => setJmeno(e.target.value)}
+      />
+    </div>
+    <div>
+      <label className="block font-semibold">E-mail</label>
+      <input type="email" className="w-full border px-4 py-2 rounded" />
+    </div>
+    <div>
+      <label className="block font-semibold">Telefon</label>
+      <input type="tel" className="w-full border px-4 py-2 rounded" />
+    </div>
+    <div>
+      <label className="block font-semibold">Adresa zakázky</label>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          className="flex-1 border px-4 py-2 rounded"
+          value={adresa}
+          onChange={(e) => setAdresa(e.target.value)}
+        />
+        <button
+          type="button"
+          onClick={spocitatVzdalenost}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Zjistit km
+        </button>
+      </div>
+      {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
+    </div>
+    <div>
+      <label className="block font-semibold">Typ práce</label>
+      <div className="grid gap-2">
+        <button
+          onClick={() => setTypPrace("vykop")}
+          type="button"
+          className={`p-3 border rounded ${typPrace === "vykop" ? "bg-yellow-100 border-yellow-500" : ""}`}
+        >
+          Výkopové práce
+        </button>
+        <button
+          onClick={() => setTypPrace("vykopZasyp")}
+          type="button"
+          className={`p-3 border rounded ${typPrace === "vykopZasyp" ? "bg-yellow-100 border-yellow-500" : ""}`}
+        >
+          Výkop + zásypové práce
+        </button>
+        <button
+          onClick={() => setTypPrace("komplexni")}
+          type="button"
+          className={`p-3 border rounded ${typPrace === "komplexni" ? "bg-yellow-100 border-yellow-500" : ""}`}
+        >
+          Komplexní práce
+        </button>
+      </div>
+    </div>
+    <div>
+      <label className="block font-semibold">Zvolte termín</label>
+      <Calendar
+        selectRange={true}
+        tileDisabled={({ date }) =>
+          obsazene.includes(date.toISOString().split("T")[0])
+        }
+        onChange={(range) => {
+          if (Array.isArray(range) && range.length === 2) {
+            setDatumOd(range[0].toISOString().split("T")[0]);
+            setDatumDo(range[1].toISOString().split("T")[0]);
+          }
+        }}
+      />
+      {datumOd && datumDo && (
+        <p className="text-sm mt-2 text-gray-600">
+          Vybraný termín: {datumOd} až {datumDo}
+        </p>
+      )}
+    </div>
+    <div>
+      <label className="block font-semibold">Zpráva (volitelné)</label>
+      <textarea rows="4" className="w-full border px-4 py-2 rounded" />
+    </div>
+    <button
+      onClick={odeslat}
+      className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400"
+    >
+      ODESLAT OBJEDNÁVKU
+    </button>
+    {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
+  </div>
+</section>
 
         {/* Footer */}
         <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
