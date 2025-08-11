@@ -70,6 +70,8 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
   const [selectedAttachmentLoader, setSelectedAttachmentLoader] = useState(null);
   const [showAccessoriesBagr, setShowAccessoriesBagr] = useState(false);
   const [showAccessoriesLoader, setShowAccessoriesLoader] = useState(false);
+  const [msg, setMsg] = useState("");
+
 
 
   useEffect(() => {
@@ -114,7 +116,7 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    jmeno,
+    popisZK,
     adresa,
     datumOd,
     datumDo,
@@ -132,7 +134,7 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
     } catch (error) {
       console.error(error);
       setMsg("Nepodařilo se připojit k serveru.");
-   y }
+    }
   };
 
   return (
@@ -430,7 +432,7 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
         type="text"
         className="w-full border px-4 py-2 rounded"
         value={popisZK}
-        onChange={(e) => setJmeno(e.target.value)}
+        onChange={(e) => setpopisZK(e.target.value)}
       />
     </div>
     <div>
@@ -506,6 +508,7 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
     </div>
   </div>
 )}
+</div>
     <div>
       <label className="block font-semibold">Zvolte termín</label>
       <Calendar
