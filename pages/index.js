@@ -67,7 +67,7 @@ export default function Home() {
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerAddress, setCustomerAddress] = useState("");
   const [distance, setDistance] = useState(null);
-  const [pozadavek, setPozadavek] = useState("Poptávám výkop základové desky...");
+  const [pozadavek, setPozadavek] = useState("");
 
   const [knowsDetails, setKnowsDetails] = useState(null);
   const [dimensions, setDimensions] = useState("");
@@ -234,7 +234,7 @@ export default function Home() {
 
           {/* VÁLEC */}
           <div className="bg-gray-100 p-6 rounded shadow">
-            <img src="/images/valec.png" alt="Válec" className="mx-auto mb-4" />
+  <img src="/images/valec.png" alt="Válec" className="mx-auto mb-4 max-w-[220px]" />
             <h3 className="font-bold text-xl">Válec</h3>
             <ul className="text-sm text-gray-700 mt-3 space-y-2">
               <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 2.7 t</li>
@@ -245,17 +245,17 @@ export default function Home() {
           </div>
 
           {/* BAGR – uprostřed */}
-          <div className="bg-gray-100 p-6 rounded shadow relative">
+          <div className="bg-gray-100 p-8 rounded shadow relative col-span-1 md:col-span-1">
   <div className="relative inline-block">
     <img
       src={selectedAttachmentBagr}
       alt="Bagr"
-      className="mx-auto mb-4 transition-all duration-300"
+      className="mx-auto mb-4 transition-all duration-300 max-w-[300px]"
     />
     {/* Plus ikona na lžíci */}
     <button
       onClick={() => setShowAccessoriesBagr(true)}
-      className="absolute top-[72%] left-[80%] bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
+      className="absolute top-[74%] left-[83%] bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
     >
       <PlusIcon className="w-6 h-6" />
     </button>
@@ -275,12 +275,12 @@ export default function Home() {
     <img
       src={selectedAttachmentNakladac}
       alt="Nakladač"
-      className="mx-auto mb-4 transition-all duration-300"
+      className="mx-auto mb-4 transition-all duration-300 max-w-[240px]"
     />
     {/* Plus ikona na lžíci */}
     <button
       onClick={() => setShowAccessoriesNakladac(true)}
-      className="absolute top-[68%] left-[78%] bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
+      className="absolute top-[70%] left-[80%] bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
     >
       <PlusIcon className="w-6 h-6" />
     </button>
@@ -310,9 +310,11 @@ export default function Home() {
             <ul className="space-y-3 text-gray-800">
               <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-vrtak.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Vrták</button></li>
               <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-sbijecka.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Sbíječka</button></li>
+        <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-lzice30.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Lžíce 30 cm</button></li>
               <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-lzice50.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Lžíce 50 cm</button></li>
-              <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-lzice80.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Lžíce 80 cm</button></li>
-              <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-svahova.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Lžíce svahová</button></li>
+     <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-lzice60.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Lžíce 60 cm</button></li>
+        <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-lzice80.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Lžíce 80 cm</button></li>
+              <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-lzicesvahova.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Lžíce svahová</button></li>
             </ul>
           </div>
         </div>
