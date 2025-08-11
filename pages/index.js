@@ -420,7 +420,7 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
           </div>
         </section>
 
-        {/* KONTAKT + POPTÁVKA */}
+       {/* KONTAKT + POPTÁVKA */}
 <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
   <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
     KONTAKTNÍ FORMULÁŘ
@@ -462,53 +462,61 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
       </div>
       {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
     </div>
+
     <div>
       <label className="block font-semibold">Typ práce</label>
-  <div>
-  <label className="block font-semibold">Máte informace o typu a rozměru zeminy?</label>
-  <div className="grid gap-2 mt-2">
-    <button
-      onClick={() => setZnameRozmery(false)}
-      type="button"
-      className={`p-3 border rounded ${!znameRozmery ? "bg-yellow-100 border-yellow-500" : ""}`}
-    >
-      Ne, neznám rozměry
-    </button>
-    <button
-      onClick={() => setZnameRozmery(true)}
-      type="button"
-      className={`p-3 border rounded ${znameRozmery ? "bg-yellow-100 border-yellow-500" : ""}`}
-    >
-      Ano, znám rozměr a typ zeminy
-    </button>
-  </div>
-</div>
+      <div>
+        <label className="block font-semibold">
+          Máte informace o typu a rozměru zeminy?
+        </label>
+        <div className="grid gap-2 mt-2">
+          <button
+            onClick={() => setZnameRozmery(false)}
+            type="button"
+            className={`p-3 border rounded ${
+              !znameRozmery ? "bg-yellow-100 border-yellow-500" : ""
+            }`}
+          >
+            Ne, neznám rozměry
+          </button>
+          <button
+            onClick={() => setZnameRozmery(true)}
+            type="button"
+            className={`p-3 border rounded ${
+              znameRozmery ? "bg-yellow-100 border-yellow-500" : ""
+            }`}
+          >
+            Ano, znám rozměr a typ zeminy
+          </button>
+        </div>
+      </div>
 
-{znameRozmery && (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-    <div>
-      <label className="block font-semibold">Typ zeminy</label>
-      <input
-        type="text"
-        className="w-full border px-4 py-2 rounded"
-        value={typZeminy}
-        onChange={(e) => setTypZeminy(e.target.value)}
-        placeholder="např. jíl, hlína, štěrk"
-      />
-    </div>
-    <div>
-      <label className="block font-semibold">Rozměr zeminy</label>
-      <input
-        type="text"
-        className="w-full border px-4 py-2 rounded"
-        value={rozmerZeminy}
-        onChange={(e) => setRozmerZeminy(e.target.value)}
-        placeholder="např. 15 m³"
-      />
-    </div>
-  </div>
-)}
-</div>
+      {znameRozmery && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div>
+            <label className="block font-semibold">Typ zeminy</label>
+            <input
+              type="text"
+              className="w-full border px-4 py-2 rounded"
+              value={typZeminy}
+              onChange={(e) => setTypZeminy(e.target.value)}
+              placeholder="např. jíl, hlína, štěrk"
+            />
+          </div>
+          <div>
+            <label className="block font-semibold">Rozměr zeminy</label>
+            <input
+              type="text"
+              className="w-full border px-4 py-2 rounded"
+              value={rozmerZeminy}
+              onChange={(e) => setRozmerZeminy(e.target.value)}
+              placeholder="např. 15 m³"
+            />
+          </div>
+        </div>
+      )}
+    </div> {/* ← tady je doplněné uzavření wrapperu pro „Typ práce“ */}
+
     <div>
       <label className="block font-semibold">Zvolte termín</label>
       <Calendar
@@ -528,7 +536,8 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
           Vybraný termín: {datumOd} až {datumDo}
         </p>
       )}
-    
+    </div>
+
     <button
       onClick={odeslat}
       className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400"
@@ -539,11 +548,10 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
   </div>
 </section>
 
-        {/* Footer */}
-        <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
-          Zemní a Výkopové Práce • IČO:73377619 • info@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
-        </footer>
-</div>  {/* <- uzavření hlavního wrapperu */}
-    </>
-  );
-}
+{/* Footer */}
+<footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
+  Zemní a Výkopové Práce • IČO:73377619 • info@zevyp.cz • Habartov, Horní
+  Částkov ev. č. 2, 357 09
+</footer>
+</div> {/* <- uzavření hlavního wrapperu */}
+</>
