@@ -51,15 +51,7 @@ function Header() {
   );
 }
 export default function Home() {
-  const [jmeno, setJmeno] = useState("");
-  const [adresa, setAdresa] = useState("");
-  const [typPrace, setTypPrace] = useState("vykop");
-  const [datumOd, setDatumOd] = useState("");
-  const [datumDo, setDatumDo] = useState("");
-  const [obsazene, setObsazene] = useState([]);
-  const [msg, setMsg] = useState("");
-  const [km, setKm] = useState(null);
-  const [showAccessories, setShowAccessories] = useState(false);
+const [showAccessories, setShowAccessories] = useState(false);
   const [showNakladac, setShowNakladac] = useState(false);
   const [bagrImage, setBagrImage] = useState("/images/bagr-technik.png");
   const [nakladacImage, setNakladacImage] = useState("/images/nakladac.png");
@@ -67,60 +59,85 @@ export default function Home() {
   const [selectedAttachmentLoader, setSelectedAttachmentLoader] = useState(null);
   const [showAccessoriesBagr, setShowAccessoriesBagr] = useState(false);
   const [showAccessoriesLoader, setShowAccessoriesLoader] = useState(false);
+  
+ export default function Poptavka() {
+  const [jmeno, setJmeno] = useState("");
+  const [email, setEmail] = useState("");
+  const [adresa, setAdresa] = useState("");
+  const [datumOd, setDatumOd] = useState("");
+  const [datumDo, setDatumDo] = useState("");
+  const [pozadavek, setPozadavek] = useState(
+    "Poptávám výkop základové desky pro rodinný dům, přibližně 10x8 m, hloubka 1 m."
+  );
+  const [nevimRozmery, setNevimRozmery] = useState(true);
+  const [znamRozmery, setZnamRozmery] = useState(false);
+  const [rozmery, setRozmery] = useState("");
+  const [typZeminy, setTypZeminy] = useState("");
+  const [km, setKm] = useState("");
+  const [loadingKm, setLoadingKm] = useState(false);
 
+  const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+  const ORIGIN_ADDRESS = "Habartov, Horní Částkov ev. č. 2, 357 09";
 
-  useEffect(() => {
-    const nactiObsazene = async () => {
-      try {
-        const res = await fetch("/api/obsazene");
-        const data = await res.json();
-        setObsazene(data.obsazene || []);
-      } catch (error) {
-        console.error("Chyba při načítání obsazených termínů:", error);
-      }
-    };
-    nactiObsazene();
-  }, []);
   const spocitatVzdalenost = async () => {
+    if (!adresa) return;
+    setLoadingKm(true);
     try {
-      const res = await fetch("/api/vzdalenost", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ adresa }),
-      });
+      const res = await fetch(
+        `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(
+          ORIGIN_ADDRESS
+        )}&destinations=${encodeURIComponent(
+          adresa
+        )}&key=${GOOGLE_API_KEY}&units=metric`
+      );
       const data = await res.json();
-      if (res.ok) {
-        setKm(data.km);
-        setMsg(`Vzdálenost: ${data.km} km`);
+      if (data.rows[0].elements[0].status === "OK") {
+        const vzdKM =
+          data.rows[0].elements[0].distance.value / 1000; // metry → km
+        setKm(vzdKM.toFixed(1));
       } else {
-        setMsg(data.error || "Nepodařilo se zjistit vzdálenost.");
+        setKm("Chyba");
       }
-    } catch (error) {
-      console.error(error);
-      setMsg("Chyba při komunikaci se serverem.");
+    } catch (err) {
+      console.error(err);
+      setKm("Chyba");
     }
+    setLoadingKm(false);
   };
 
-  const odeslat = async () => {
-    if (!jmeno || !adresa || !datumOd || !datumDo) {
-      setMsg("Vyplňte prosím všechna pole.");
-      return;
+  const odeslat = async (e) => {
+    e.preventDefault();
+
+    let infoZemina;
+    if (nevimRozmery) {
+      infoZemina = "Zákazník neví rozměr/rozsah a typ zeminy.";
+    } else {
+      infoZemina = `Rozměry: ${rozmery}, Typ zeminy: ${typZeminy}`;
     }
+
+    const event = {
+      summary: `Poptávka od ${jmeno}`,
+      description: `${pozadavek}\nAdresa: ${adresa}\nVzdálenost: ${km} km\n${infoZemina}\nEmail: ${email}`,
+      start: {
+        dateTime: `${datumOd}T08:00:00`,
+        timeZone: "Europe/Prague",
+      },
+      end: {
+        dateTime: `${datumDo || datumOd}T17:00:00`,
+        timeZone: "Europe/Prague",
+      },
+    };
+
     try {
-      const res = await fetch("/api/objednavka", {
+      await fetch("/api/add-to-calendar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jmeno, adresa, typPrace, datumOd, datumDo, km }),
+        body: JSON.stringify(event),
       });
-      const data = await res.json();
-      if (res.ok) {
-        setMsg("Poptávka byla odeslána!");
-      } else {
-        setMsg(data.error || "Chyba při odesílání.");
-      }
-    } catch (error) {
-      console.error(error);
-      setMsg("Nepodařilo se připojit k serveru.");
+      alert("Poptávka odeslána!");
+    } catch (err) {
+      console.error(err);
+      alert("Chyba při odesílání.");
     }
   };
 
@@ -408,112 +425,137 @@ export default function Home() {
         </section>
 
         {/* KONTAKT + POPTÁVKA */}
-        <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
-          <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
-            KONTAKT A POPTÁVKA
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
-            {/* Kontakt */}
-            <form className="bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800">
-              <div>
-                <label className="block font-semibold">Jméno</label>
-                <input type="text" className="w-full border px-4 py-2 rounded" />
-              </div>
-              <div>
-                <label className="block font-semibold">E-mail</label>
-                <input type="email" className="w-full border px-4 py-2 rounded" />
-              </div>
-              <div>
-                <label className="block font-semibold">Telefon</label>
-                <input type="tel" className="w-full border px-4 py-2 rounded" />
-              </div>
-              <div>
-                <label className="block font-semibold">Zpráva</label>
-                <textarea rows="4" className="w-full border px-4 py-2 rounded"></textarea>
-              </div>
-              <button type="submit" className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400">
-                ODESLAT
-              </button>
-            </form>
+      <div className="bg-gray-100 py-10 px-6">
+      <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold mb-4">Poptávkový formulář</h2>
 
-            {/* Poptávka */}
-            <div className="bg-white rounded-lg shadow-lg p-6 space-y-4 text-gray-800">
-              <div>
-                <label className="block font-semibold">Název projektu</label>
+        {/* Telefonní kontakt */}
+        <div className="bg-yellow-200 p-3 rounded mb-6 text-center font-bold text-lg">
+          📞 Zavolejte nám: +420 123 456 789
+        </div>
+
+        <form onSubmit={odeslat} className="space-y-4">
+          <input
+            type="text"
+            placeholder="Vaše jméno"
+            value={jmeno}
+            onChange={(e) => setJmeno(e.target.value)}
+            className="w-full border px-4 py-2 rounded"
+            required
+          />
+          <input
+            type="email"
+            placeholder="Váš e-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full border px-4 py-2 rounded"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Adresa realizace"
+            value={adresa}
+            onChange={(e) => setAdresa(e.target.value)}
+            onBlur={spocitatVzdalenost}
+            className="w-full border px-4 py-2 rounded"
+            required
+          />
+
+          {/* Zobrazení vzdálenosti */}
+          {loadingKm ? (
+            <p className="text-blue-500">Počítám vzdálenost...</p>
+          ) : km ? (
+            <p className="text-green-600">Vzdálenost: {km} km</p>
+          ) : null}
+
+          <div className="grid grid-cols-2 gap-4">
+            <input
+              type="date"
+              value={datumOd}
+              onChange={(e) => setDatumOd(e.target.value)}
+              className="border px-4 py-2 rounded"
+              required
+            />
+            <input
+              type="date"
+              value={datumDo}
+              onChange={(e) => setDatumDo(e.target.value)}
+              className="border px-4 py-2 rounded"
+            />
+          </div>
+
+          {/* Volba znalosti parametrů */}
+          <div className="space-y-2">
+            <label className="block font-semibold">
+              Informace o rozměrech a zemině
+            </label>
+
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="rozmeryTypZeminy"
+                checked={nevimRozmery}
+                onChange={() => {
+                  setNevimRozmery(true);
+                  setZnamRozmery(false);
+                }}
+              />
+              Neznám rozměr/rozsah a typ zeminy
+            </label>
+
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="rozmeryTypZeminy"
+                checked={znamRozmery}
+                onChange={() => {
+                  setNevimRozmery(false);
+                  setZnamRozmery(true);
+                }}
+              />
+              Znám rozměr/rozsah a typ zeminy
+            </label>
+
+            {znamRozmery && (
+              <div className="mt-3 space-y-2">
                 <input
                   type="text"
+                  placeholder="Rozměry (např. 5x10 m)"
+                  value={rozmery}
+                  onChange={(e) => setRozmery(e.target.value)}
                   className="w-full border px-4 py-2 rounded"
-                  value={jmeno}
-                  onChange={(e) => setJmeno(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Typ zeminy (např. hlína, písek)"
+                  value={typZeminy}
+                  onChange={(e) => setTypZeminy(e.target.value)}
+                  className="w-full border px-4 py-2 rounded"
                 />
               </div>
-              <div>
-                <label className="block font-semibold">Adresa zakázky</label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    className="flex-1 border px-4 py-2 rounded"
-                    value={adresa}
-                    onChange={(e) => setAdresa(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    onClick={spocitatVzdalenost}
-                    className="bg-blue-600 text-white px-4 py-2 rounded"
-                  >
-                    Zjistit km
-                  </button>
-                </div>
-                {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
-              </div>
-              <div>
-                <label className="block font-semibold">Vyberte typ prací</label>
-                <div className="grid gap-2">
-                  <button
-                    onClick={() => setTypPrace("vykop")}
-                    className={`p-3 border rounded ${typPrace === "vykop" ? "bg-yellow-100 border-yellow-500" : ""}`}
-                  >
-                    Výkopové práce
-                  </button>
-                  <button
-                    onClick={() => setTypPrace("vykopZasyp")}
-                    className={`p-3 border rounded ${typPrace === "vykopZasyp" ? "bg-yellow-100 border-yellow-500" : ""}`}
-                  >
-                    Výkop + zásypové práce
-                  </button>
-                  <button
-                    onClick={() => setTypPrace("komplexni")}
-                    className={`p-3 border rounded ${typPrace === "komplexni" ? "bg-yellow-100 border-yellow-500" : ""}`}
-                  >
-                    Komplexní práce
-                  </button>
-                </div>
-              </div>
-              <div>
-                <label className="block font-semibold">Vyberte termín</label>
-                <Calendar
-                  selectRange={true}
-                  tileDisabled={({ date }) =>
-                    obsazene.includes(date.toISOString().split("T")[0])
-                  }
-                  onChange={(range) => {
-                    if (Array.isArray(range) && range.length === 2) {
-                      setDatumOd(range[0].toISOString().split("T")[0]);
-                      setDatumDo(range[1].toISOString().split("T")[0]);
-                    }
-                  }}
-                />
-              </div>
-              <button
-                onClick={odeslat}
-                className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400"
-              >
-                ODESLAT OBJEDNÁVKU
-              </button>
-              {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
-            </div>
+            )}
           </div>
-        </section>
+
+          {/* Pole Pozadavek */}
+          <textarea
+            value={pozadavek}
+            onChange={(e) => setPozadavek(e.target.value)}
+            placeholder="Popište, co potřebujete..."
+            className="w-full border px-4 py-2 rounded text-gray-600"
+            rows="4"
+          />
+
+          <button
+            type="submit"
+            className="bg-yellow-500 text-white px-6 py-2 rounded hover:bg-yellow-600"
+          >
+            Odeslat poptávku
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
 
         {/* Footer */}
         <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
