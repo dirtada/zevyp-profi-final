@@ -527,7 +527,7 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
           Vybraný termín: {datumOd} až {datumDo}
         </p>
       )}
-    </div>
+    
     <button
       onClick={odeslat}
       className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400"
