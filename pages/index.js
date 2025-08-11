@@ -10,7 +10,7 @@ import {
   BuildingOffice2Icon,
   TruckIcon,
   SquaresPlusIcon,
-  PlusCircleIcon,
+  PlusIcon,
   XMarkIcon as CloseIcon,
 } from "@heroicons/react/24/solid";
 import Calendar from "react-calendar";
@@ -349,14 +349,11 @@ export default function Home() {
       <Header />
 
       <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
-        {/* Hero */}
-        {/* Pokud chceš použít vlastní Hero sekci z vrchu souboru, můžeš buď volat <Hero /> 
-            anebo nechat tu verzi co už teď máš nahoře v kódu. 
-            Pokud používáš <Hero/>, odstraň duplikát. */}
-        {/* <Hero /> */}
+        {/* Hero */}   
+         <Hero /> 
 
         {/* SLUŽBY */}
-        {/* <Sluzby /> */}
+       <Sluzby /> 
 
         {/* TECHNIKA */}
         <Technika />
@@ -364,9 +361,182 @@ export default function Home() {
         {/* CENÍK */}
         <Cenik />
 
-        {/* KONTAKT + POPTÁVKA – sem doplň svou sjednocenou poptávku,
-            kterou už máš (s adresou, vzdáleností, rozsahem dat, poznámkou atd.) */}
-        {/* ... tvoje sekce #kontakt ... */}
+       {/* KONTAKT + POPTÁVKA (sjednocený formulář) */}
+<section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
+  <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
+    KONTAKT A POPTÁVKA
+  </h3>
+
+  {/* infobox s telefonem */}
+  <div className="max-w-5xl mx-auto mb-6">
+    <div className="bg-yellow-200 text-[#2f3237] rounded-lg p-4 text-center font-semibold">
+      Máte dotaz? Zavolejte nám kdykoliv na <span className="underline">+420 777 777 777</span>
+    </div>
+  </div>
+
+  <div className="max-w-5xl mx-auto grid grid-cols-1">
+    {/* Sjednocený formulář */}
+    <div className="bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800">
+      {/* Kontakty */}
+      <div className="grid md:grid-cols-3 gap-4">
+        <div>
+          <label className="block font-semibold">Jméno a příjmení</label>
+          <input
+            type="text"
+            className="w-full border px-4 py-2 rounded"
+            value={customerName}
+            onChange={(e) => setCustomerName(e.target.value)}
+          />
+        </div>
+        <div>
+          <label className="block font-semibold">E-mail</label>
+          <input
+            type="email"
+            className="w-full border px-4 py-2 rounded"
+            value={customerEmail}
+            onChange={(e) => setCustomerEmail(e.target.value)}
+          />
+        </div>
+        <div>
+          <label className="block font-semibold">Telefon</label>
+          <input
+            type="tel"
+            className="w-full border px-4 py-2 rounded"
+            value={customerPhone}
+            onChange={(e) => setCustomerPhone(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* Adresa + vzdálenost */}
+      <div>
+        <label className="block font-semibold">Adresa zakázky</label>
+        <div className="flex gap-2">
+          <input
+            type="text"
+            className="flex-1 border px-4 py-2 rounded"
+            value={customerAddress}
+            onChange={(e) => setCustomerAddress(e.target.value)}
+            placeholder="Např. Ulice 12, Město"
+          />
+          <button
+            type="button"
+            onClick={spocitatVzdalenost}
+            className="bg-blue-600 text-white px-4 py-2 rounded"
+          >
+            Zjistit km
+          </button>
+        </div>
+        {distance !== null && (
+          <p className="text-sm mt-1 text-gray-600">Vzdálenost: {distance} km</p>
+        )}
+      </div>
+
+      {/* Termín – výběr rozsahu dní */}
+      <div>
+        <label className="block font-semibold mb-2">Vyberte termín (rozsah dní)</label>
+        <Calendar
+          selectRange={true}
+          tileDisabled={({ date }) =>
+            obsazene.includes(date.toISOString().split("T")[0])
+          }
+          onChange={(range) => {
+            if (Array.isArray(range) && range.length === 2) {
+              setDateFrom(range[0].toISOString().split("T")[0]);
+              setDateTo(range[1].toISOString().split("T")[0]);
+            }
+          }}
+        />
+        {(dateFrom && dateTo) && (
+          <p className="text-sm text-gray-600 mt-2">
+            Od: <b>{dateFrom}</b> &nbsp; Do: <b>{dateTo}</b>
+          </p>
+        )}
+      </div>
+
+      {/* Požadavek / poznámka */}
+      <div>
+        <label className="block font-semibold">Požadavek / poznámka</label>
+        <textarea
+          rows={3}
+          className="w-full border px-4 py-2 rounded placeholder-gray-400"
+          value={pozadavek}
+          onChange={(e) => setPozadavek(e.target.value)}
+          placeholder="Poptávám výkop základové desky (cca 8×12 m), odvoz výkopku a následné zhutnění..."
+        />
+        <p className="text-xs text-gray-500 mt-1">
+          *Text je pouze orientační – upravte dle vašich potřeb.
+        </p>
+      </div>
+
+      {/* Varianta: znám vs. neznám parametry */}
+      <div className="space-y-3">
+        <p className="font-semibold">Upřesnění rozsahu a typu zeminy</p>
+
+        <label className="flex items-center gap-2">
+          <input
+            type="radio"
+            name="detaily"
+            checked={nevimRozmery}
+            onChange={() => {
+              setNevimRozmery(true);
+              setZnamRozmery(false);
+            }}
+          />
+          <span>Neznám rozměr/rozsah a typ zeminy</span>
+        </label>
+
+        <label className="flex items-center gap-2">
+          <input
+            type="radio"
+            name="detaily"
+            checked={znamRozmery}
+            onChange={() => {
+              setNevimRozmery(false);
+              setZnamRozmery(true);
+            }}
+          />
+          <span>Znám rozměry a typ zeminy</span>
+        </label>
+
+        {znamRozmery && (
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-semibold">Rozměry / rozsah</label>
+              <input
+                type="text"
+                className="w-full border px-4 py-2 rounded"
+                value={rozmery}
+                onChange={(e) => setRozmery(e.target.value)}
+                placeholder="např. 8×12 m, hloubka 0.8 m"
+              />
+            </div>
+            <div>
+              <label className="block font-semibold">Typ zeminy</label>
+              <input
+                type="text"
+                className="w-full border px-4 py-2 rounded"
+                value={typZeminy}
+                onChange={(e) => setTypZeminy(e.target.value)}
+                placeholder="např. jílovitá/písčitá"
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Odeslat */}
+      <button
+        onClick={odeslatPoptavku}
+        className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400"
+      >
+        ODESLAT POPTÁVKU
+      </button>
+
+      {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
+    </div>
+  </div>
+</section>
 
         <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
           Zemní a Výkopové Práce • IČO:73377619 • info@zevyp.cz • Habartov,
