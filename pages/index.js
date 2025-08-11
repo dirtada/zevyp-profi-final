@@ -385,21 +385,27 @@ export default function Home() {
 
             <div className="mt-6">
   <label className="block font-medium mb-1">Zvol datum realizace (rozsah):</label>
-  <Calendar
-    selectRange={true}
-    onChange={(range) => {
-      if (Array.isArray(range)) {
-        const [from, to] = range;
-        setDateFrom(from.toISOString().split("T")[0]);
-        setDateTo(to.toISOString().split("T")[0]);
-      }
-    }}
-    tileClassName={({ date }) =>
-      obsazene.includes(date.toISOString().split("T")[0])
-        ? "bg-red-300 text-white" // styl obsazeného dne
-        : ""
+ <Calendar
+  selectRange={true}
+  value={
+    dateFrom && dateTo
+      ? [new Date(dateFrom), new Date(dateTo)]
+      : null
+  }
+  onChange={(range) => {
+    if (Array.isArray(range)) {
+      const [from, to] = range;
+      setDateFrom(from.toISOString().split("T")[0]);
+      setDateTo(to.toISOString().split("T")[0]);
     }
-  />
+  }}
+  tileClassName={({ date }) =>
+    obsazene.includes(date.toISOString().split("T")[0])
+      ? "bg-red-300 text-white"
+      : ""
+  }
+/>
+
 </div>
 
             {/* Výběr znalosti údajů */}
