@@ -51,13 +51,12 @@ function Header() {
   );
 }
 export default function Home() {
-  const [jmeno, setJmeno] = useState("");
   const [adresa, setAdresa] = useState("");
   const [typPrace, setTypPrace] = useState("vykop");
   const [datumOd, setDatumOd] = useState("");
   const [datumDo, setDatumDo] = useState("");
   const [obsazene, setObsazene] = useState([]);
-  const [msg, setMsg] = useState("");
+  const [popisZK, setpopisZK] = useState("");
   const [km, setKm] = useState(null);
   const [showAccessories, setShowAccessories] = useState(false);
   const [showNakladac, setShowNakladac] = useState(false);
@@ -416,11 +415,11 @@ export default function Home() {
   </h3>
   <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800">
     <div>
-      <label className="block font-semibold">Jméno</label>
+      <label className="block font-semibold">Popis požadovaných prací</label>
       <input
         type="text"
         className="w-full border px-4 py-2 rounded"
-        value={jmeno}
+        value={popisZK}
         onChange={(e) => setJmeno(e.target.value)}
       />
     </div>
@@ -496,10 +495,6 @@ export default function Home() {
           Vybraný termín: {datumOd} až {datumDo}
         </p>
       )}
-    </div>
-    <div>
-      <label className="block font-semibold">Zpráva (volitelné)</label>
-      <textarea rows="4" className="w-full border px-4 py-2 rounded" />
     </div>
     <button
       onClick={odeslat}
