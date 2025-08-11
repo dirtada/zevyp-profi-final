@@ -252,78 +252,74 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+
           {/* Modal příslušenství pro Bagr */}
-          {showAccessoriesBagr && (
-            <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-              <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
-                <button
-                  onClick={() => setShowAccessoriesBagr(false)}
-                  className="absolute top-3 right-3 text-gray-600 hover:text-black"
-                >
-                  <CloseIcon className="w-6 h-6" />
-                </button>
-                <h3 className="text-lg font-bold mb-4">Vyberte příslušenství pro bagr</h3>
-                <ul className="space-y-3 text-gray-800">
-                  <li>
-                    <button
-                      onClick={() => { setSelectedAttachmentBagr("bagr-vrtak"); setShowAccessoriesBagr(false); }}
-                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
-                    >
-                      Vrták
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => { setSelectedAttachmentBagr("bagr-sbijecka"); setShowAccessoriesBagr(false); }}
-                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
-                    >
-                      Sbíječka
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => { setSelectedAttachmentBagr("bagr-lzice30"); setShowAccessoriesBagr(false); }}
-                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
-                    >
-                      Lžíce 30 cm
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => { setSelectedAttachmentBagr("bagr-lzice50"); setShowAccessoriesBagr(false); }}
-                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
-                    >
-                      Lžíce 50 cm
-                    </button>
-                  </li>
-                        <li>
-                    <button
-                      onClick={() => { setSelectedAttachmentBagr("bagr-lzice60"); setShowAccessoriesBagr(false); }}
-                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
-                    >
-                      Lžíce 60 cm
-                    </button>
-                  </li>
-                        <li>
-                    <button
-                      onClick={() => { setSelectedAttachmentBagr("bagr-lzice80"); setShowAccessoriesBagr(false); }}
-                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
-                    >
-                      Lžíce 80 cm
-                    </button>
-                  </li>
-                        <li>
-                    <button
-                      onClick={() => { setSelectedAttachmentBagr("bagr-lzicesvahova"); setShowAccessoriesBagr(false); }}
-                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
-                    >
-                      Lžíce svahová
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          )}
+{showAccessoriesBagr && (
+  <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
+    <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
+      <button
+        onClick={() => setShowAccessoriesBagr(false)}
+        className="absolute top-3 right-3 text-gray-600 hover:text-black"
+      >
+        <CloseIcon className="w-6 h-6" />
+      </button>
+      <h3 className="text-lg font-bold mb-4">Vyberte příslušenství pro bagr</h3>
+      <ul className="space-y-3 text-gray-800">
+        {/* Vrták */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-vrtak.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-vrtak.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-vrtak.png" width={40} height={40} alt="Vrták" />
+            Vrták
+          </button>
+        </li>
+        {/* Sbíječka */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-sbijecka.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-sbijecka.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-sbijecka.png" width={40} height={40} alt="Sbíječka" />
+            Sbíječka
+          </button>
+        </li>
+        {/* Lžíce 30 cm */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice30.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice30.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-lzice30.png" width={40} height={40} alt="Lžíce 30 cm" />
+            Lžíce 30 cm
+          </button>
+        </li>
+        {/* Lžíce 40 cm (výchozí) */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice40.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice40.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-lzice40.png" width={40} height={40} alt="Lžíce 40 cm" />
+            Lžíce 40 cm
+          </button>
+        </li>
+        {/* Lžíce 60 cm */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice60.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice60.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-lzice60.png" width={40} height={40} alt="Lžíce 60 cm" />
+            Lžíce 60 cm
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+)}
 
           {/* Modal příslušenství pro Nakladač */}
           {showAccessoriesLoader && (
