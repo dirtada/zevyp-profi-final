@@ -46,7 +46,7 @@ export default function Home() {
   useEffect(() => {
     async function nactiObsazene() {
       try {
-        const res = await fetch("/api/obsazene");
+        const res = await fetch("/api/kalendare");
         const data = await res.json();
         setObsazene(data.obsazene || []);
       } catch (e) {
