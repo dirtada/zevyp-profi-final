@@ -21,6 +21,38 @@ import "react-calendar/dist/Calendar.css";
 function Header() {
   const [open, setOpen] = useState(false);
 
+
+
+// SPOČÍTAT VZDÁLENOST (klient -> /api/vzdalenost)
+const spocitatVzdalenost = async () => {
+  if (!customerAddress) {
+    setMsg("Zadej prosím adresu.");
+    return;
+  }
+  try {
+    const res = await fetch("/api/vzdalenost", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ adresa: customerAddress }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      setDistance(data.km);
+      setMsg(`Vzdálenost: ${data.km} km`);
+    } else {
+      setMsg(data.error || "Nepodařilo se zjistit vzdálenost.");
+    }
+  } catch (err) {
+    console.error(err);
+    setMsg("Chyba při komunikaci se serverem.");
+  }
+};
+
+
+
+
+
+  
   return (
     <header className="bg-[#f9c600] text-black py-4 px-4 shadow-md relative z-50">
       <div className="container mx-auto flex justify-between items-center">
