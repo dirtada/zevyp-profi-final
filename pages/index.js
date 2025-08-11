@@ -146,10 +146,36 @@ export default function Home() {
       </div>
       {open && (
         <div className="md:hidden bg-[#f9c600] py-4 px-6 flex flex-col gap-4 shadow-lg">
-          <a href="#sluzby" onClick={() => setOpen(false)}>NAŠE SLUŽBY</a>
-          <a href="#technika" onClick={() => setOpen(false)}>TECHNIKA</a>
-          <a href="#cenik" onClick={() => setOpen(false)}>CENÍK</a>
-          <a href="#kontakt" onClick={() => setOpen(false)}>KONTAKT</a>
+           <a href="#cenik" onClick={(e) => {
+  e.preventDefault();
+  document.getElementById("sluzby")?.scrollIntoView({ behavior: "smooth" });
+  setOpen(false);
+}}>
+  NAŠE SLUŽBY
+</a>
+           <a href="#technika" onClick={(e) => {
+  e.preventDefault();
+  document.getElementById("technika")?.scrollIntoView({ behavior: "smooth" });
+  setOpen(false);
+}}>
+  TECHNIKA
+</a>
+          <a href="#cenik" onClick={(e) => {
+  e.preventDefault();
+  document.getElementById("cenik")?.scrollIntoView({ behavior: "smooth" });
+  setOpen(false);
+}}>
+  CENÍK
+</a>
+
+         <a href="#kontakt" onClick={(e) => {
+  e.preventDefault();
+  document.getElementById("kontakt")?.scrollIntoView({ behavior: "smooth" });
+  setOpen(false);
+}}>
+  KONTAKT
+</a>
+
         </div>
       )}
     </header>
