@@ -467,7 +467,6 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
     </div>
 
     <div>
-      <label className="block font-semibold">Typ práce</label>
       <div>
         <label className="block font-semibold">
           Máte informace o typu a rozměru zeminy?
