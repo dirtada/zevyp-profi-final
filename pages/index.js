@@ -1,13 +1,8 @@
-// ČÁST 1/6
 import Head from "next/head";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
-  Bars3Icon,
-  XMarkIcon,
-  PlusCircleIcon,
-  PlusIcon,
-  XMarkIcon as CloseIcon,
   ScaleIcon,
   Cog6ToothIcon,
   ArrowsUpDownIcon,
@@ -15,112 +10,16 @@ import {
   BuildingOffice2Icon,
   TruckIcon,
   SquaresPlusIcon,
-} from "@heroicons/react/24/outline";
+  PlusCircleIcon,
+  XMarkIcon as CloseIcon,
+} from "@heroicons/react/24/solid";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-export default function Page() {
+function Header() {
   const [open, setOpen] = useState(false);
-  const [showAccessoriesBagr, setShowAccessoriesBagr] = useState(false);
-  const [showAccessoriesNakladac, setShowAccessoriesNakladac] = useState(false);
-  const [selectedAttachmentBagr, setSelectedAttachmentBagr] = useState("/images/bagr-lzice50.png");
-  const [selectedAttachmentNakladac, setSelectedAttachmentNakladac] = useState("/images/nakladac.png");
 
-  const [startDate, setStartDate] = useState(new Date());
-  const [customerName, setCustomerName] = useState("");
-  const [customerEmail, setCustomerEmail] = useState("");
-  const [customerPhone, setCustomerPhone] = useState("");
-  const [customerAddress, setCustomerAddress] = useState("");
-  const [distance, setDistance] = useState(null);
-  const [pozadavek, setPozadavek] = useState("");
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
-  const [msg, setMsg] = useState("");
-  const [obsazene, setObsazene] = useState([]);
-
-  const [nevimRozmery, setNevimRozmery] = useState(true);
-  const [znamRozmery, setZnamRozmery] = useState(false);
-  const [rozmery, setRozmery] = useState("");
-  const [typZeminy, setTypZeminy] = useState("");
-
-  useEffect(() => {
-    async function nactiObsazene() {
-      try {
-        const res = await fetch("/api/kalendare");
-        const data = await res.json();
-        setObsazene(data.obsazene || []);
-      } catch (e) {
-        console.error("Chyba při načítání obsazenosti:", e);
-      }
-    }
-    nactiObsazene();
-  }, []);
-// ČÁST 2/6 – Pomocné funkce
-
-  async function spocitatVzdalenost() {
-    if (!customerAddress) {
-      setMsg("Zadej prosím adresu.");
-      return;
-    }
-    try {
-      const res = await fetch("/api/vzdalenost", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ adresa: customerAddress }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setDistance(data.km);
-        setMsg(`Vzdálenost: ${data.km} km`);
-      } else {
-        setMsg(data.error || "Nepodařilo se zjistit vzdálenost.");
-      }
-    } catch (err) {
-      console.error(err);
-      setMsg("Chyba při komunikaci se serverem.");
-    }
-  }
-
-  async function odeslatPoptavku() {
-    if (!customerName || !customerEmail || !customerAddress || !dateFrom || !dateTo) {
-      setMsg("Vyplň prosím všechna pole a vyber rozsah dní.");
-      return;
-    }
-
-    const infoZemina = nevimRozmery
-      ? "Zákazník neví rozměr/rozsah a typ zeminy."
-      : `Rozměry: ${rozmery || "-"}, Typ zeminy: ${typZeminy || "-"}`;
-
-    try {
-      const res = await fetch("/api/objednavka", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          jmeno: customerName,
-          email: customerEmail,
-          telefon: customerPhone || "",
-          adresa: customerAddress,
-          datumOd: dateFrom,
-          datumDo: dateTo,
-          km: distance,
-          pozadavek,
-          infoZemina,
-        }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setMsg("Poptávka byla odeslána! Brzy se ti ozveme.");
-      } else {
-        setMsg(data.error || "Chyba při odesílání.");
-      }
-    } catch (err) {
-      console.error(err);
-      setMsg("Nepodařilo se připojit k serveru.");
-    }
-  }
-  // ČÁST 3/6 – Komponenty: Header, Hero, Sluzby, Cenik
-
-  const Header = () => (
+  return (
     <header className="bg-[#f9c600] text-black py-4 px-4 shadow-md relative z-50">
       <div className="container mx-auto flex justify-between items-center">
         <Image
@@ -136,419 +35,493 @@ export default function Page() {
           <a href="#cenik" className="hover:underline">CENÍK</a>
           <a href="#kontakt" className="hover:underline">KONTAKT</a>
         </nav>
-        <button
-          className="md:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
+        <button className="md:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu">
           {open ? <XMarkIcon className="w-8 h-8" /> : <Bars3Icon className="w-8 h-8" />}
         </button>
       </div>
       {open && (
         <div className="md:hidden bg-[#f9c600] py-4 px-6 flex flex-col gap-4 shadow-lg">
-           <a href="#cenik" onClick={(e) => {
-  e.preventDefault();
-  document.getElementById("sluzby")?.scrollIntoView({ behavior: "smooth" });
-  setOpen(false);
-}}>
-  NAŠE SLUŽBY
-</a>
-           <a href="#technika" onClick={(e) => {
-  e.preventDefault();
-  document.getElementById("technika")?.scrollIntoView({ behavior: "smooth" });
-  setOpen(false);
-}}>
-  TECHNIKA
-</a>
-          <a href="#cenik" onClick={(e) => {
-  e.preventDefault();
-  document.getElementById("cenik")?.scrollIntoView({ behavior: "smooth" });
-  setOpen(false);
-}}>
-  CENÍK
-</a>
-
-         <a href="#kontakt" onClick={(e) => {
-  e.preventDefault();
-  document.getElementById("kontakt")?.scrollIntoView({ behavior: "smooth" });
-  setOpen(false);
-}}>
-  KONTAKT
-</a>
-
+          <a href="#sluzby" onClick={() => setOpen(false)}>NAŠE SLUŽBY</a>
+          <a href="#technika" onClick={() => setOpen(false)}>TECHNIKA</a>
+          <a href="#cenik" onClick={() => setOpen(false)}>CENÍK</a>
+          <a href="#kontakt" onClick={() => setOpen(false)}>KONTAKT</a>
         </div>
       )}
     </header>
   );
-
-  const Hero = () => (
-  <section
-    className="relative text-white bg-cover bg-center pb-0"
-    style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
-  >
-    <div className="absolute inset-0 bg-black bg-opacity-40 z-0" />
-    <div className="relative z-10 container mx-auto px-4 py-20">
-      <div className="grid md:grid-cols-2 items-end gap-8">
-        {/* Text vlevo */}
-        <div className="text-left">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Zemní a výkopové práce
-          </h1>
-          <p className="text-lg md:text-2xl mb-8">
-            Profesionální služby s moderní technikou a zkušeným týmem
-          </p>
-          <a
-            href="#kontakt"
-            className="bg-[#f9c600] text-black px-6 py-3 rounded-lg font-bold hover:bg-yellow-400 transition"
-          >
-            Kontaktujte nás
-          </a>
-        </div>
-
-        {/* Obrázek vpravo */}
-        <div className="flex justify-center md:justify-end items-end">
-          <Image
-            src="/images/bagr-hero.png"
-            alt="Bagr"
-            width={500}
-            height={500}
-            className="max-w-[450px] w-full object-contain mb-[-1px]"
-            priority
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-);
+}
+export default function Home() {
+  const [jmeno, setJmeno] = useState("");
+  const [adresa, setAdresa] = useState("");
+  const [typPrace, setTypPrace] = useState("vykop");
+  const [datumOd, setDatumOd] = useState("");
+  const [datumDo, setDatumDo] = useState("");
+  const [obsazene, setObsazene] = useState([]);
+  const [msg, setMsg] = useState("");
+  const [km, setKm] = useState(null);
+  const [showAccessories, setShowAccessories] = useState(false);
+  const [showNakladac, setShowNakladac] = useState(false);
+  const [bagrImage, setBagrImage] = useState("/images/bagr-technik.png");
+  const [nakladacImage, setNakladacImage] = useState("/images/nakladac.png");
+    const [selectedAttachmentBagr, setSelectedAttachmentBagr] = useState(null);
+  const [selectedAttachmentLoader, setSelectedAttachmentLoader] = useState(null);
+  const [showAccessoriesBagr, setShowAccessoriesBagr] = useState(false);
+  const [showAccessoriesLoader, setShowAccessoriesLoader] = useState(false);
 
 
-  const Sluzby = () => (
-    <section id="sluzby" className="py-20 bg-gray-100">
-      <div className="container mx-auto text-center px-4">
-        <h2 className="text-3xl font-bold mb-10">Naše služby</h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 shadow rounded">
-            <TruckIcon className="w-12 h-12 mx-auto text-yellow-500 mb-4" />
-            <h3 className="font-bold text-xl mb-2">Výkopové práce</h3>
-            <p>Výkopy základů, přípojek, bazénů a další zemní práce.</p>
-          </div>
-          <div className="bg-white p-6 shadow rounded">
-            <BuildingOffice2Icon className="w-12 h-12 mx-auto text-yellow-500 mb-4" />
-            <h3 className="font-bold text-xl mb-2">Terénní úpravy</h3>
-            <p>Srovnání ploch, navezení materiálu a příprava pozemků.</p>
-          </div>
-          <div className="bg-white p-6 shadow rounded">
-            <SquaresPlusIcon className="w-12 h-12 mx-auto text-yellow-500 mb-4" />
-            <h3 className="font-bold text-xl mb-2">Pronájem strojů</h3>
-            <p>Pronájem bagru, nakladače a válce s obsluhou i bez ní.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-
-  const Cenik = () => (
-    <section id="cenik" className="bg-[#f9c600] text-black py-16">
-      <div className="container mx-auto px-4">
-        <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">CENÍK</h3>
-        <table className="w-full max-w-3xl mx-auto border border-gray-300 rounded-lg bg-white">
-          <tbody className="divide-y divide-gray-300">
-            <tr>
-              <td className="py-4 px-6 font-semibold">Bagr s obsluhou</td>
-              <td className="py-4 px-6 text-right font-bold">990 Kč / hod</td>
-            </tr>
-            <tr>
-              <td className="py-4 px-6 font-semibold">Doprava stroje</td>
-              <td className="py-4 px-6 text-right font-bold">30 Kč / km</td>
-            </tr>
-            <tr>
-              <td className="py-4 px-6 font-semibold">Výkop základů do 1 m</td>
-              <td className="py-4 px-6 text-right font-bold">od 66 Kč / m²</td>
-            </tr>
-            <tr>
-              <td className="py-4 px-6 font-semibold">Zásypy, zarovnání</td>
-              <td className="py-4 px-6 text-right font-bold">dle domluvy</td>
-            </tr>
-          </tbody>
-        </table>
-        <p className="text-sm text-gray-700 mt-6 text-center">
-          *Konečnou cenu stanovíme individuálně podle vzdálenosti a požadavků.
-        </p>
-      </div>
-    </section>
-  );
-  const Technika = () => (
-    <section id="technika" className="py-20 bg-white">
-      <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-10">Naše technika</h2>
-        <div className="grid md:grid-cols-3 gap-8 items-start">
-
-          {/* Válec */}
-          <div className="bg-gray-100 p-6 rounded shadow">
-            <div className="relative">
-              <img src="/images/valec.png" alt="Válec" className="mx-auto mb-4 w-full h-auto max-h-64 object-contain" />
-            </div>
-            <h3 className="font-bold text-xl">Válec</h3>
-            <ul className="text-sm text-gray-700 mt-3 space-y-2 text-left">
-              <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 2.7 t</li>
-              <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Kubota 33 kW</li>
-              <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Šířka válce: 1,2 m</li>
-              <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Pro asfalt, štěrk, zeminu</li>
-            </ul>
-          </div>
-
-          {/* Bagr */}
-          <div className="bg-gray-100 p-6 rounded shadow relative scale-105 z-10">
-            <div className="relative inline-block">
-              <img src={selectedAttachmentBagr} alt="Bagr" className="mx-auto mb-4 w-full h-auto max-h-72 object-contain" />
-              {/* Plus ikona přesně na lžíci (pravý dolní roh obrázku) */}
-              <button
-                onClick={() => setShowAccessoriesBagr(true)}
-                className="absolute bottom-6 right-6 bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
-              >
-                <PlusIcon className="w-6 h-6" />
-              </button>
-            </div>
-            <h3 className="font-bold text-xl">Bagr</h3>
-            <ul className="text-sm text-gray-700 mt-3 space-y-2 text-left">
-              <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 8 t</li>
-              <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Yanmar 55 kW</li>
-              <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Hloubka kopání: 4,2 m</li>
-              <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Příslušenství volitelné</li>
-            </ul>
-          </div>
-
-          {/* Nakladač */}
-          <div className="bg-gray-100 p-6 rounded shadow relative">
-            <div className="relative inline-block">
-              <img src={selectedAttachmentNakladac} alt="Nakladač" className="mx-auto mb-4 w-full h-auto max-h-64 object-contain" />
-              {/* Plus ikona na lžíci */}
-              <button
-                onClick={() => setShowAccessoriesNakladac(true)}
-                className="absolute bottom-6 right-6 bg-yellow-500 text-black p-2 rounded-full shadow hover:bg-yellow-400"
-              >
-                <PlusIcon className="w-6 h-6" />
-              </button>
-            </div>
-            <h3 className="font-bold text-xl">Nakladač</h3>
-            <ul className="text-sm text-gray-700 mt-3 space-y-2 text-left">
-              <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 5 t</li>
-              <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Perkins 45 kW</li>
-              <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Nosnost: 2,5 t</li>
-              <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Možnost pluhu</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Modal pro Bagr */}
-      {showAccessoriesBagr && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
-            <button onClick={() => setShowAccessoriesBagr(false)} className="absolute top-3 right-3 text-gray-600 hover:text-black">
-              <CloseIcon className="w-6 h-6" />
-            </button>
-            <h3 className="text-lg font-bold mb-4">Vyberte příslušenství pro bagr</h3>
-            <ul className="space-y-3 text-gray-800">
-              <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-vrtak.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Vrták</button></li>
-              <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-sbijecka.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Sbíječka</button></li>
-              <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-lzice30.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Lžíce 30 cm</button></li>
-        <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-lzice50.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Lžíce 50 cm</button></li>
-        <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-lzice60.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Lžíce 60 cm</button></li>
-              <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-lzice80.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Lžíce 80 cm</button></li>
-              <li><button onClick={() => { setSelectedAttachmentBagr("/images/bagr-lzicesvahova.png"); setShowAccessoriesBagr(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Lžíce svahová</button></li>
-            </ul>
-          </div>
-        </div>
-      )}
-
-      {/* Modal pro Nakladač */}
-      {showAccessoriesNakladac && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
-            <button onClick={() => setShowAccessoriesNakladac(false)} className="absolute top-3 right-3 text-gray-600 hover:text-black">
-              <CloseIcon className="w-6 h-6" />
-            </button>
-            <h3 className="text-lg font-bold mb-4">Vyberte příslušenství pro nakladač</h3>
-            <ul className="space-y-3 text-gray-800">
-              <li><button onClick={() => { setSelectedAttachmentNakladac("/images/nakladac.png"); setShowAccessoriesNakladac(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Standardní lopata</button></li>
-              <li><button onClick={() => { setSelectedAttachmentNakladac("/images/nakladac-pluh.png"); setShowAccessoriesNakladac(false); }} className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100">Pluh</button></li>
-            </ul>
-          </div>
-        </div>
-      )}
-    </section>
-  );
-  const Poptavka = () => (
-    <section id="kontakt" className="bg-white py-20">
-      <div className="container mx-auto px-4">
-        <h3 className="text-3xl font-bold mb-8 text-center">Poptávka</h3>
-
-        <div className="bg-[#f9f9f9] p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
-          <div className="text-center mb-4">
-            <p className="text-sm bg-yellow-200 text-black font-bold py-2 px-4 inline-block rounded">
-              📞 Volejte: <span className="underline">+420 728 388 993</span>
-            </p>
-          </div>
-
-          <div className="grid gap-4">
-            <input
-              type="text"
-              placeholder="Vaše jméno"
-              className="p-3 border rounded w-full"
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-            />
-            <input
-              type="email"
-              placeholder="Váš e-mail"
-              className="p-3 border rounded w-full"
-              value={customerEmail}
-              onChange={(e) => setCustomerEmail(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Telefon (nepovinné)"
-              className="p-3 border rounded w-full"
-              value={customerPhone}
-              onChange={(e) => setCustomerPhone(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Adresa realizace"
-              className="p-3 border rounded w-full"
-              value={customerAddress}
-              onChange={(e) => setCustomerAddress(e.target.value)}
-            />
-            <button
-              onClick={spocitatVzdalenost}
-              className="bg-[#f9c600] font-bold text-black p-3 rounded hover:bg-yellow-300"
-            >
-              Zjistit vzdálenost
-            </button>
-            {msg && <p className="text-center text-sm text-gray-600">{msg}</p>}
-
-            <div className="mt-6">
-  <label className="block font-medium mb-1">Zvol datum realizace (rozsah):</label>
- <Calendar
-  selectRange={true}
-  value={
-    dateFrom && dateTo
-      ? [new Date(dateFrom), new Date(dateTo)]
-      : null
-  }
-  onChange={(range) => {
-    if (Array.isArray(range)) {
-      const [from, to] = range;
-      setDateFrom(from.toISOString().split("T")[0]);
-      setDateTo(to.toISOString().split("T")[0]);
+  useEffect(() => {
+    const nactiObsazene = async () => {
+      try {
+        const res = await fetch("/api/obsazene");
+        const data = await res.json();
+        setObsazene(data.obsazene || []);
+      } catch (error) {
+        console.error("Chyba při načítání obsazených termínů:", error);
+      }
+    };
+    nactiObsazene();
+  }, []);
+  const spocitatVzdalenost = async () => {
+    try {
+      const res = await fetch("/api/vzdalenost", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ adresa }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setKm(data.km);
+        setMsg(`Vzdálenost: ${data.km} km`);
+      } else {
+        setMsg(data.error || "Nepodařilo se zjistit vzdálenost.");
+      }
+    } catch (error) {
+      console.error(error);
+      setMsg("Chyba při komunikaci se serverem.");
     }
-  }}
-  tileClassName={({ date }) =>
-    obsazene.includes(date.toISOString().split("T")[0])
-      ? "bg-red-300 text-white"
-      : ""
-  }
-/>
+  };
 
-</div>
-
-            {/* Výběr znalosti údajů */}
-            <div className="mt-6">
-              <p className="font-medium mb-2">
-                Znáte rozměry a typ zeminy?
-              </p>
-              <div className="flex gap-4">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    checked={nevimRozmery}
-                    onChange={() => {
-                      setNevimRozmery(true);
-                      setZnamRozmery(false);
-                    }}
-                  />
-                  Ne
-                </label>
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    checked={znamRozmery}
-                    onChange={() => {
-                      setNevimRozmery(false);
-                      setZnamRozmery(true);
-                    }}
-                  />
-                  Ano
-                </label>
-              </div>
-            </div>
-
-            {znamRozmery && (
-              <div className="mt-4 grid gap-4">
-                <input
-                  type="text"
-                  placeholder="Zadejte rozměry (např. 10 × 8 m)"
-                  className="p-3 border rounded w-full"
-                  value={rozmery}
-                  onChange={(e) => setRozmery(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Zadejte typ zeminy (např. hlína, písek)"
-                  className="p-3 border rounded w-full"
-                  value={typZeminy}
-                  onChange={(e) => setTypZeminy(e.target.value)}
-                />
-              </div>
-            )}
-
-            <textarea
-              rows={4}
-              placeholder="Poptávám výkop základové desky..."
-              className="p-3 border rounded w-full text-gray-600"
-              value={pozadavek}
-              onChange={(e) => setPozadavek(e.target.value)}
-            />
-
-            <button
-              onClick={odeslatPoptavku}
-              className="bg-[#f9c600] font-bold text-black p-4 rounded hover:bg-yellow-300 mt-4"
-            >
-              Odeslat poptávku
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-  const Footer = () => (
-    <footer className="bg-[#2f3237] text-white py-8 mt-16">
-      <div className="container mx-auto text-center">
-        <p>&copy; {new Date().getFullYear()} ZEVYP – Zemní a výkopové práce</p>
-        <p className="text-sm text-gray-400 mt-2">Vytvořeno s pomocí AI a ruční láskou</p>
-      </div>
-    </footer>
-  );
+  const odeslat = async () => {
+    if (!jmeno || !adresa || !datumOd || !datumDo) {
+      setMsg("Vyplňte prosím všechna pole.");
+      return;
+    }
+    try {
+      const res = await fetch("/api/objednavka", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jmeno, adresa, typPrace, datumOd, datumDo, km }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setMsg("Poptávka byla odeslána!");
+      } else {
+        setMsg(data.error || "Chyba při odesílání.");
+      }
+    } catch (error) {
+      console.error(error);
+      setMsg("Nepodařilo se připojit k serveru.");
+    }
+  };
 
   return (
     <>
       <Head>
-        <title>Zemní a Výkopové práce | Zevyp.cz</title>
-        <meta name="description" content="Profesionální výkopové a zemní práce s moderní technikou v Česku." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Zemní a výkopové práce – Zevyp.cz</title>
+        <meta name="description" content="Výkopové a zemní práce minibagrem Hitachi – Praha a okolí." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <Header />
-      <main>
-        <Hero />
-        <Sluzby />
-        <Technika />
-        <Cenik />
-        <Poptavka />
-      </main>
-      <Footer />
+
+      <div className="min-h-screen bg-[#f9c600] font-sans text-gray-900">
+        {/* Hero */}
+        <main className="bg-[#2f3237] text-white py-16">
+          <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+            <div className="md:w-1/2 text-left mb-12 md:mb-0 relative z-20">
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+                ZEMNÍ A VÝKOPOVÉ PRÁCE
+              </h2>
+              <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
+                Provádíme{" "}
+                <span className="text-[#f9c600] font-semibold">
+                  spolehlivé zemní a výkopové práce
+                </span>{" "}
+                minibagrem Hitachi v Praze a okolí.
+              </p>
+              <a href="#kontakt" className="inline-block bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition">
+                Nezávazná poptávka
+              </a>
+            </div>
+            <div className="md:w-1/2 flex justify-center relative z-10">
+              <Image src="/images/bagr-hero.png" alt="Bagr" width={700} height={500} className="object-contain -mb-24 md:-mb-32" />
+            </div>
+          </div>
+        </main>
+
+        {/* SLUŽBY */}
+        <section id="sluzby" className="bg-[#f9c600] text-black py-16">
+          <div className="container mx-auto px-4">
+            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">NAŠE SLUŽBY</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+                <BuildingOffice2Icon className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+                <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">Výkopy základů</h4>
+                <p className="text-gray-600 text-sm">Přesné a rychlé výkopy základů.</p>
+              </div>
+              <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+                <TruckIcon className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+                <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">Zásypy a zasypávání</h4>
+                <p className="text-gray-600 text-sm">Kvalitní a efektivní zásypy.</p>
+              </div>
+              <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+                <SquaresPlusIcon className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+                <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">Zarovnání terénu</h4>
+                <p className="text-gray-600 text-sm">Úpravy terénu a příjezdových cest.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+          {/* TECHNIKA */}
+        <section id="technika" className="bg-white text-black py-16 relative">
+          <div className="container mx-auto px-4 text-center">
+            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237]">TECHNIKA</h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start justify-center">
+              {/* Válec */}
+              <div className="bg-gray-50 rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+                <Image src="/images/valec.png" alt="Válec" width={300} height={200} className="mx-auto" />
+                <h4 className="text-xl font-bold mt-4 text-[#2f3237]">Válec</h4>
+                <ul className="text-sm text-gray-700 mt-3 space-y-2 text-left">
+                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 2.7 t</li>
+                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Kubota 33 kW</li>
+                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Šířka válce: 1,2 m</li>
+                  <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Pro hutnění zemin a štěrku</li>
+                </ul>
+              </div>
+
+              {/* Bagr – s příslušenstvím */}
+              <div className="relative bg-gray-50 rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+                <div className="relative">
+                  <Image
+                    src={`/images/${selectedAttachmentBagr || "bagr-technik"}.png`}
+                    alt="Bagr"
+                    width={400}
+                    height={300}
+                    className="mx-auto transition-all duration-300"
+                  />
+                  <button
+                    onClick={() => setShowAccessoriesBagr(true)}
+                    className="absolute top-3/4 left-[79%] transform -translate-x-1/2 -translate-y-1/2 animate-pulse"
+                  >
+                    <PlusCircleIcon className="w-12 h-12 text-yellow-500 hover:text-yellow-600 transition" />
+                  </button>
+                </div>
+                <h4 className="text-xl font-bold mt-4 text-[#2f3237]">Bagr Hitachi ZX 48-A5A</h4>
+                <ul className="text-sm text-gray-700 mt-3 space-y-2 text-left">
+                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 4.3 t</li>
+                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Yanmar 25.2 KW</li>
+                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Hloubka výkopu: 3.74 m</li>
+                  <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Pro výkopy a úpravy</li>
+                </ul>
+              </div>
+
+              {/* Nakladač – s příslušenstvím */}
+              <div className="relative bg-gray-50 rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+                <div className="relative">
+                  <Image
+                    src={`/images/${selectedAttachmentLoader || "nakladac"}.png`}
+                    alt="Nakladač"
+                    width={300}
+                    height={200}
+                    className="mx-auto transition-all duration-300"
+                  />
+                  <button
+                    onClick={() => setShowAccessoriesLoader(true)}
+                    className="absolute top-2/3 right-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-pulse"
+                  >
+                    <PlusCircleIcon className="w-12 h-12 text-yellow-500 hover:text-yellow-600 transition" />
+                  </button>
+                </div>
+                <h4 className="text-xl font-bold mt-4 text-[#2f3237]">Nakladač</h4>
+                <ul className="text-sm text-gray-700 mt-3 space-y-2 text-left">
+                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 4.5 t</li>
+                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Deutz 55 kW</li>
+                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Nosnost: 3,5 t</li>
+                  <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Pro přepravu a úpravy terénu</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+
+         {/* Modal příslušenství pro Bagr */}
+{showAccessoriesBagr && (
+  <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
+    <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
+      <button
+        onClick={() => setShowAccessoriesBagr(false)}
+        className="absolute top-3 right-3 text-gray-600 hover:text-black"
+      >
+        <CloseIcon className="w-6 h-6" />
+      </button>
+      <h3 className="text-lg font-bold mb-4">Vyberte příslušenství pro bagr</h3>
+      <ul className="space-y-3 text-gray-800">
+        {/* Vrták */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-vrtak.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-vrtak.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-vrtak.png" width={40} height={40} alt="Vrták" />
+            Vrták
+          </button>
+        </li>
+        {/* Sbíječka */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-sbijecka.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-sbijecka.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-sbijecka.png" width={40} height={40} alt="Sbíječka" />
+            Sbíječka
+          </button>
+        </li>
+        {/* Lžíce 30 cm */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice30.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice30.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-lzice30.png" width={40} height={40} alt="Lžíce 30 cm" />
+            Lžíce 30 cm
+          </button>
+        </li>
+        {/* Lžíce 50 cm (výchozí) */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice50.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice50.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-lzice50.png" width={40} height={40} alt="Lžíce 50 cm" />
+            Lžíce 50 cm
+          </button>
+        </li>
+        {/* Lžíce 60 cm */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice60.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice60.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-lzice60.png" width={40} height={40} alt="Lžíce 60 cm" />
+            Lžíce 60 cm
+          </button>
+        </li>
+        {/* Lžíce 80 cm */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice80.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice80.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-lzice80.png" width={40} height={40} alt="Lžíce 80 cm" />
+            Lžíce 80 cm
+          </button>
+        </li>
+        {/* Lžíce svahová */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice-svahova.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice-svahova.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzicesvahova.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzicesvahova.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-lzice-svahova.png" width={40} height={40} alt="Lžíce svahová" />
+            Lžíce svahová
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+)}
+
+          {/* Modal příslušenství pro Nakladač */}
+          {showAccessoriesLoader && (
+            <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
+              <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
+                <button
+                  onClick={() => setShowAccessoriesLoader(false)}
+                  className="absolute top-3 right-3 text-gray-600 hover:text-black"
+                >
+                  <CloseIcon className="w-6 h-6" />
+                </button>
+                <h3 className="text-lg font-bold mb-4">Vyberte příslušenství pro nakladač</h3>
+                <ul className="space-y-3 text-gray-800">
+                  <li>
+                    <button
+                      onClick={() => { setSelectedAttachmentLoader("nakladac-pluh"); setShowAccessoriesLoader(false); }}
+                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
+                    >
+                      Pluh
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => { setSelectedAttachmentLoader("nakladac-vidle"); setShowAccessoriesLoader(false); }}
+                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
+                    >
+                      Vidle na palety
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          )}
+        </section>
+
+{/* CENÍK */}
+        <section id="cenik" className="bg-[#f9c600] text-black py-16">
+          <div className="container mx-auto px-4">
+            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">
+              CENÍK
+            </h3>
+            <table className="w-full max-w-3xl mx-auto border border-gray-300 rounded-lg">
+              <tbody className="divide-y divide-gray-300">
+                <tr>
+                  <td className="py-4 px-6 font-semibold">Bagr s obsluhou</td>
+                  <td className="py-4 px-6 text-right font-bold">990 Kč / hod</td>
+                </tr>
+                <tr>
+                  <td className="py-4 px-6 font-semibold">Doprava stroje</td>
+                  <td className="py-4 px-6 text-right font-bold">30 Kč / km</td>
+                </tr>
+                <tr>
+                  <td className="py-4 px-6 font-semibold">Výkop základů do 1 m</td>
+                  <td className="py-4 px-6 text-right font-bold">od 66 Kč / m²</td>
+                </tr>
+                <tr>
+                  <td className="py-4 px-6 font-semibold">Zásypy, zarovnání</td>
+                  <td className="py-4 px-6 text-right font-bold">dle domluvy</td>
+                </tr>
+              </tbody>
+            </table>
+            <p className="text-sm text-gray-700 mt-6 text-center">
+              *Konečnou cenu stanovíme individuálně podle vzdálenosti a požadavků.
+            </p>
+          </div>
+        </section>
+
+        {/* KONTAKT + POPTÁVKA */}
+        <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
+          <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
+            KONTAKT A POPTÁVKA
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+            {/* Kontakt */}
+            <form className="bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800">
+              <div>
+                <label className="block font-semibold">Jméno</label>
+                <input type="text" className="w-full border px-4 py-2 rounded" />
+              </div>
+              <div>
+                <label className="block font-semibold">E-mail</label>
+                <input type="email" className="w-full border px-4 py-2 rounded" />
+              </div>
+              <div>
+                <label className="block font-semibold">Telefon</label>
+                <input type="tel" className="w-full border px-4 py-2 rounded" />
+              </div>
+              <div>
+                <label className="block font-semibold">Zpráva</label>
+                <textarea rows="4" className="w-full border px-4 py-2 rounded"></textarea>
+              </div>
+              <button type="submit" className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400">
+                ODESLAT
+              </button>
+            </form>
+
+            {/* Poptávka */}
+            <div className="bg-white rounded-lg shadow-lg p-6 space-y-4 text-gray-800">
+              <div>
+                <label className="block font-semibold">Název projektu</label>
+                <input
+                  type="text"
+                  className="w-full border px-4 py-2 rounded"
+                  value={jmeno}
+                  onChange={(e) => setJmeno(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="block font-semibold">Adresa zakázky</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    className="flex-1 border px-4 py-2 rounded"
+                    value={adresa}
+                    onChange={(e) => setAdresa(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={spocitatVzdalenost}
+                    className="bg-blue-600 text-white px-4 py-2 rounded"
+                  >
+                    Zjistit km
+                  </button>
+                </div>
+                {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
+              </div>
+              <div>
+                <label className="block font-semibold">Vyberte typ prací</label>
+                <div className="grid gap-2">
+                  <button
+                    onClick={() => setTypPrace("vykop")}
+                    className={`p-3 border rounded ${typPrace === "vykop" ? "bg-yellow-100 border-yellow-500" : ""}`}
+                  >
+                    Výkopové práce
+                  </button>
+                  <button
+                    onClick={() => setTypPrace("vykopZasyp")}
+                    className={`p-3 border rounded ${typPrace === "vykopZasyp" ? "bg-yellow-100 border-yellow-500" : ""}`}
+                  >
+                    Výkop + zásypové práce
+                  </button>
+                  <button
+                    onClick={() => setTypPrace("komplexni")}
+                    className={`p-3 border rounded ${typPrace === "komplexni" ? "bg-yellow-100 border-yellow-500" : ""}`}
+                  >
+                    Komplexní práce
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label className="block font-semibold">Vyberte termín</label>
+                <Calendar
+                  selectRange={true}
+                  tileDisabled={({ date }) =>
+                    obsazene.includes(date.toISOString().split("T")[0])
+                  }
+                  onChange={(range) => {
+                    if (Array.isArray(range) && range.length === 2) {
+                      setDatumOd(range[0].toISOString().split("T")[0]);
+                      setDatumDo(range[1].toISOString().split("T")[0]);
+                    }
+                  }}
+                />
+              </div>
+              <button
+                onClick={odeslat}
+                className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400"
+              >
+                ODESLAT OBJEDNÁVKU
+              </button>
+              {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
+          Zemní a Výkopové Práce • IČO:73377619 • info@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
+        </footer>
+</div>  {/* <- uzavření hlavního wrapperu */}
     </>
   );
 }
