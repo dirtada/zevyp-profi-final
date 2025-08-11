@@ -17,6 +17,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 function Header() {
+  
   const [open, setOpen] = useState(false);
 
   return (
@@ -55,6 +56,9 @@ export default function Home() {
   const [typPrace, setTypPrace] = useState("vykop");
   const [datumOd, setDatumOd] = useState("");
   const [datumDo, setDatumDo] = useState("");
+const [znameRozmery, setZnameRozmery] = useState(false);
+const [typZeminy, setTypZeminy] = useState("");
+const [rozmerZeminy, setRozmerZeminy] = useState("");
   const [obsazene, setObsazene] = useState([]);
   const [popisZK, setpopisZK] = useState("");
   const [km, setKm] = useState(null);
@@ -101,16 +105,24 @@ export default function Home() {
   };
 
   const odeslat = async () => {
-    if (!jmeno || !adresa || !datumOd || !datumDo) {
+    if (!popisZK || !adresa || !datumOd || !datumDo) {
       setMsg("Vyplňte prosím všechna pole.");
       return;
     }
     try {
       const res = await fetch("/api/objednavka", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jmeno, adresa, typPrace, datumOd, datumDo, km }),
-      });
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    jmeno,
+    adresa,
+    datumOd,
+    datumDo,
+    typZeminy: znameRozmery ? typZeminy : null,
+    rozmerZeminy: znameRozmery ? rozmerZeminy : null,
+    km,
+  }),
+});
       const data = await res.json();
       if (res.ok) {
         setMsg("Poptávka byla odeslána!");
@@ -120,7 +132,7 @@ export default function Home() {
     } catch (error) {
       console.error(error);
       setMsg("Nepodařilo se připojit k serveru.");
-    }
+   y }
   };
 
   return (
@@ -452,30 +464,50 @@ export default function Home() {
     </div>
     <div>
       <label className="block font-semibold">Typ práce</label>
-      <div className="grid gap-2">
-        <button
-          onClick={() => setTypPrace("vykop")}
-          type="button"
-          className={`p-3 border rounded ${typPrace === "vykop" ? "bg-yellow-100 border-yellow-500" : ""}`}
-        >
-          Výkopové práce
-        </button>
-        <button
-          onClick={() => setTypPrace("vykopZasyp")}
-          type="button"
-          className={`p-3 border rounded ${typPrace === "vykopZasyp" ? "bg-yellow-100 border-yellow-500" : ""}`}
-        >
-          Výkop + zásypové práce
-        </button>
-        <button
-          onClick={() => setTypPrace("komplexni")}
-          type="button"
-          className={`p-3 border rounded ${typPrace === "komplexni" ? "bg-yellow-100 border-yellow-500" : ""}`}
-        >
-          Komplexní práce
-        </button>
-      </div>
+  <div>
+  <label className="block font-semibold">Máte informace o typu a rozměru zeminy?</label>
+  <div className="grid gap-2 mt-2">
+    <button
+      onClick={() => setZnameRozmery(false)}
+      type="button"
+      className={`p-3 border rounded ${!znameRozmery ? "bg-yellow-100 border-yellow-500" : ""}`}
+    >
+      Ne, neznám rozměry
+    </button>
+    <button
+      onClick={() => setZnameRozmery(true)}
+      type="button"
+      className={`p-3 border rounded ${znameRozmery ? "bg-yellow-100 border-yellow-500" : ""}`}
+    >
+      Ano, znám rozměr a typ zeminy
+    </button>
+  </div>
+</div>
+
+{znameRozmery && (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+    <div>
+      <label className="block font-semibold">Typ zeminy</label>
+      <input
+        type="text"
+        className="w-full border px-4 py-2 rounded"
+        value={typZeminy}
+        onChange={(e) => setTypZeminy(e.target.value)}
+        placeholder="např. jíl, hlína, štěrk"
+      />
     </div>
+    <div>
+      <label className="block font-semibold">Rozměr zeminy</label>
+      <input
+        type="text"
+        className="w-full border px-4 py-2 rounded"
+        value={rozmerZeminy}
+        onChange={(e) => setRozmerZeminy(e.target.value)}
+        placeholder="např. 15 m³"
+      />
+    </div>
+  </div>
+)}
     <div>
       <label className="block font-semibold">Zvolte termín</label>
       <Calendar
