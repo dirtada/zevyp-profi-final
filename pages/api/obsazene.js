@@ -1,5 +1,24 @@
 import { google } from "googleapis";
 
+// Přidá 1 den k datu ve formátu YYYY-MM-DD
+function nextDay(ymd) {
+  const [y, m, d] = ymd.split("-").map(Number);
+  const date = new Date(y, m - 1, d);
+  date.setDate(date.getDate() + 1);
+  return date.toISOString().split("T")[0];
+}
+
+// Vrátí pole dat mezi start (včetně) a end (exkluzivně)
+function expandRange(startYMD, endYMD) {
+  const result = [];
+  let cur = startYMD;
+  while (cur < endYMD) {
+    result.push(cur);
+    cur = nextDay(cur);
+  }
+  return result;
+}
+
 export default async function handler(req, res) {
   try {
     const oauth2Client = new google.auth.OAuth2(
@@ -26,21 +45,17 @@ export default async function handler(req, res) {
     const obsazene = [];
 
     for (const ev of events.data.items) {
-      const nazev = ev.summary?.toUpperCase().trim() || "";
+      const summary = ev.summary?.toUpperCase().trim() || "";
 
-      // ⚠️ Přeskočíme všechny s názvem začínajícím "NÁVRH"
-      if (nazev.startsWith("NÁVRH")) continue;
+      // Přeskočíme události s názvem začínajícím na "NÁVRH"
+      if (summary.startsWith("NÁVRH")) continue;
 
       if (ev.start?.date && ev.end?.date) {
-        // celodenní událost
-        let current = new Date(ev.start.date);
-        const end = new Date(ev.end.date);
-        while (current < end) {
-          obsazene.push(current.toISOString().split("T")[0]);
-          current.setDate(current.getDate() + 1);
-        }
+        // Celodenní událost: end je EXCLUSIVE
+        const days = expandRange(ev.start.date, ev.end.date);
+        obsazene.push(...days);
       } else if (ev.start?.dateTime) {
-        // událost s časem
+        // Časová událost: přidáme datum začátku
         const den = new Date(ev.start.dateTime).toISOString().split("T")[0];
         obsazene.push(den);
       }
