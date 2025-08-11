@@ -6,6 +6,7 @@ import {
   Bars3Icon,
   XMarkIcon,
   PlusCircleIcon,
+  PlusIcon,
   XMarkIcon as CloseIcon,
   ScaleIcon,
   Cog6ToothIcon,
