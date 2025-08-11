@@ -383,36 +383,24 @@ export default function Home() {
             </button>
             {msg && <p className="text-center text-sm text-gray-600">{msg}</p>}
 
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <label className="block font-medium mb-1">Od:</label>
-                <Calendar
-                  onChange={(value) =>
-                    setDateFrom(value.toISOString().split("T")[0])
-                  }
-                  value={startDate}
-                  tileClassName={({ date }) =>
-                    obsazene.includes(date.toISOString().split("T")[0])
-                      ? "bg-red-300 text-white"
-                      : ""
-                  }
-                />
-              </div>
-              <div>
-                <label className="block font-medium mb-1">Do:</label>
-                <Calendar
-                  onChange={(value) =>
-                    setDateTo(value.toISOString().split("T")[0])
-                  }
-                  value={startDate}
-                  tileClassName={({ date }) =>
-                    obsazene.includes(date.toISOString().split("T")[0])
-                      ? "bg-red-300 text-white"
-                      : ""
-                  }
-                />
-              </div>
-            </div>
+            <div className="mt-6">
+  <label className="block font-medium mb-1">Zvol datum realizace (rozsah):</label>
+  <Calendar
+    selectRange={true}
+    onChange={(range) => {
+      if (Array.isArray(range)) {
+        const [from, to] = range;
+        setDateFrom(from.toISOString().split("T")[0]);
+        setDateTo(to.toISOString().split("T")[0]);
+      }
+    }}
+    tileClassName={({ date }) =>
+      obsazene.includes(date.toISOString().split("T")[0])
+        ? "bg-red-300 text-white" // styl obsazeného dne
+        : ""
+    }
+  />
+</div>
 
             {/* Výběr znalosti údajů */}
             <div className="mt-6">
