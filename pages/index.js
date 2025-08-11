@@ -329,8 +329,8 @@ export default function Home() {
         {/* Lžíce svahová */}
         <li>
           <button
-            onClick={() => { setSelectedAttachmentBagr("bagr-lzice-svahova.png"); setShowAccessoriesBagr(false); }}
-            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice-svahova.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzicesvahova.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzicesvahova.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
           >
             <Image src="/images/bagr-lzice-svahova.png" width={40} height={40} alt="Lžíce svahová" />
             Lžíce svahová
