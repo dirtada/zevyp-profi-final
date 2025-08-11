@@ -254,7 +254,7 @@ export default function Home() {
           </div>
 
 
-          {/* Modal příslušenství pro Bagr */}
+         {/* Modal příslušenství pro Bagr */}
 {showAccessoriesBagr && (
   <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
     <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
@@ -296,14 +296,14 @@ export default function Home() {
             Lžíce 30 cm
           </button>
         </li>
-        {/* Lžíce 40 cm (výchozí) */}
+        {/* Lžíce 50 cm (výchozí) */}
         <li>
           <button
-            onClick={() => { setSelectedAttachmentBagr("bagr-lzice40.png"); setShowAccessoriesBagr(false); }}
-            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice40.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice50.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice50.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
           >
-            <Image src="/images/bagr-lzice40.png" width={40} height={40} alt="Lžíce 40 cm" />
-            Lžíce 40 cm
+            <Image src="/images/bagr-lzice50.png" width={40} height={40} alt="Lžíce 50 cm" />
+            Lžíce 50 cm
           </button>
         </li>
         {/* Lžíce 60 cm */}
@@ -314,6 +314,26 @@ export default function Home() {
           >
             <Image src="/images/bagr-lzice60.png" width={40} height={40} alt="Lžíce 60 cm" />
             Lžíce 60 cm
+          </button>
+        </li>
+        {/* Lžíce 80 cm */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice80.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice80.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-lzice80.png" width={40} height={40} alt="Lžíce 80 cm" />
+            Lžíce 80 cm
+          </button>
+        </li>
+        {/* Lžíce svahová */}
+        <li>
+          <button
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice-svahova.png"); setShowAccessoriesBagr(false); }}
+            className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice-svahova.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
+          >
+            <Image src="/images/bagr-lzice-svahova.png" width={40} height={40} alt="Lžíce svahová" />
+            Lžíce svahová
           </button>
         </li>
       </ul>
