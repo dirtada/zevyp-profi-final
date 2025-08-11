@@ -19,7 +19,7 @@ import {
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-export default function Home() {
+export default function Page() {
   const [open, setOpen] = useState(false);
   const [showAccessoriesBagr, setShowAccessoriesBagr] = useState(false);
   const [showAccessoriesNakladac, setShowAccessoriesNakladac] = useState(false);
