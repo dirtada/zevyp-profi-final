@@ -444,7 +444,7 @@ function TechnikaVideoPanel({ equip, attachment, attachmentKey, onOpenModal }) {
           {hasVideo ? (
             <video
               ref={videoRef}
-              key={attachmentKey || attachment?.mp4} // NOTE: remount při změně příslušenství
+              key={attachmentKey || attachment?.mp4} 
               className="absolute inset-0 w-full h-full object-cover"
               muted
               loop
