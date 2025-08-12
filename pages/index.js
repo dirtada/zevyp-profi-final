@@ -558,5 +558,5 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
 </footer>
 </div> {/* <- uzavření hlavního wrapperu */}
 </>
-);   // ← chyběl závěr returnu
+);   
 }   
