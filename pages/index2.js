@@ -241,7 +241,7 @@ const EQUIPMENT = {
       },
       lzicesvahova: {
         label: "Lžíce svahová",
-        poster: "/images/bagr-lzice-svahova.png",
+        poster: "/images/bagr-lzicesvahova.png",
         mp4: "/videos/bagr-zasyp.mp4",
         about: "Zarovnání, svahy a finální úpravy povrchu.",
         tags: ["Zarovnání", "Svahy", "Finální úpravy"],
