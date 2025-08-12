@@ -71,6 +71,9 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
   const [showAccessoriesBagr, setShowAccessoriesBagr] = useState(false);
   const [showAccessoriesLoader, setShowAccessoriesLoader] = useState(false);
   const [msg, setMsg] = useState("");
+const [loadingKm, setLoadingKm] = useState(false);
+const [sending, setSending] = useState(false);
+  
 
 // Pomocná funkce pro lokální YYYY-MM-DD (bez toISOString)
 const formatLocalDate = (d) => {
@@ -93,56 +96,67 @@ const formatLocalDate = (d) => {
     };
     nactiObsazene();
   }, []);
-  const spocitatVzdalenost = async () => {
-    try {
-      const res = await fetch("/api/vzdalenost", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ adresa }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setKm(data.km);
-        setMsg(`Vzdálenost: ${data.km} km`);
-      } else {
-        setMsg(data.error || "Nepodařilo se zjistit vzdálenost.");
-      }
-    } catch (error) {
-      console.error(error);
-      setMsg("Chyba při komunikaci se serverem.");
+ const spocitatVzdalenost = async () => {
+  if (!adresa) { setMsg("Zadejte prosím adresu."); return; }
+  setLoadingKm(true);
+  setMsg("");
+  try {
+    const res = await fetch("/api/vzdalenost", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ adresa }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      setKm(data.km);
+      setMsg(`Vzdálenost: ${data.km} km`);
+    } else {
+      setMsg(data.error || "Nepodařilo se zjistit vzdálenost.");
     }
-  };
+  } catch (e) {
+    console.error(e);
+    setMsg("Chyba při komunikaci se serverem.");
+  } finally {
+    setLoadingKm(false);
+  }
+};
 
-  const odeslat = async () => {
-    if (!popisZK || !adresa || !datumOd || !datumDo) {
-      setMsg("Vyplňte prosím všechna pole.");
-      return;
+ const odeslat = async () => {
+  if (sending) return; // ochrana proti dvojkliku
+  if (!popisZK || !adresa || !datumOd || !datumDo) {
+    setMsg("Vyplňte prosím všechna povinná pole.");
+    return;
+  }
+  setSending(true);
+  setMsg("");
+  try {
+    const res = await fetch("/api/objednavka", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        popisZK,
+        adresa,
+        datumOd,
+        datumDo,
+        typZeminy: znameRozmery ? typZeminy : null,
+        rozmerZeminy: znameRozmery ? rozmerZeminy : null,
+        km,
+      }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      setMsg("Poptávka byla odeslána!");
+      // případně vyčištění formuláře tady…
+    } else {
+      setMsg(data.error || "Chyba při odesílání.");
     }
-    try {
-      const res = await fetch("/api/objednavka", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    popisZK,
-    adresa,
-    datumOd,
-    datumDo,
-    typZeminy: znameRozmery ? typZeminy : null,
-    rozmerZeminy: znameRozmery ? rozmerZeminy : null,
-    km,
-  }),
-});
-      const data = await res.json();
-      if (res.ok) {
-        setMsg("Poptávka byla odeslána!");
-      } else {
-        setMsg(data.error || "Chyba při odesílání.");
-      }
-    } catch (error) {
-      console.error(error);
-      setMsg("Nepodařilo se připojit k serveru.");
-    }
-  };
+  } catch (e) {
+    console.error(e);
+    setMsg("Nepodařilo se připojit k serveru.");
+  } finally {
+    setSending(false);
+  }
+};
 
   return (
     <>
@@ -289,7 +303,7 @@ const formatLocalDate = (d) => {
         {/* Vrták */}
         <li>
           <button
-            onClick={() => { setSelectedAttachmentBagr("bagr-vrtak.png"); setShowAccessoriesBagr(false); }}
+            onClick={() => { setSelectedAttachmentBagr("bagr-vrtak"); setShowAccessoriesBagr(false); }}
             className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-vrtak.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
           >
             <Image src="/images/bagr-vrtak.png" width={40} height={40} alt="Vrták" />
@@ -299,7 +313,7 @@ const formatLocalDate = (d) => {
         {/* Sbíječka */}
         <li>
           <button
-            onClick={() => { setSelectedAttachmentBagr("bagr-sbijecka.png"); setShowAccessoriesBagr(false); }}
+            onClick={() => { setSelectedAttachmentBagr("bagr-sbijecka"); setShowAccessoriesBagr(false); }}
             className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-sbijecka.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
           >
             <Image src="/images/bagr-sbijecka.png" width={40} height={40} alt="Sbíječka" />
@@ -309,7 +323,7 @@ const formatLocalDate = (d) => {
         {/* Lžíce 30 cm */}
         <li>
           <button
-            onClick={() => { setSelectedAttachmentBagr("bagr-lzice30.png"); setShowAccessoriesBagr(false); }}
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice30"); setShowAccessoriesBagr(false); }}
             className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice30.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
           >
             <Image src="/images/bagr-lzice30.png" width={40} height={40} alt="Lžíce 30 cm" />
@@ -319,7 +333,7 @@ const formatLocalDate = (d) => {
         {/* Lžíce 50 cm (výchozí) */}
         <li>
           <button
-            onClick={() => { setSelectedAttachmentBagr("bagr-lzice50.png"); setShowAccessoriesBagr(false); }}
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice50"); setShowAccessoriesBagr(false); }}
             className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice50.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
           >
             <Image src="/images/bagr-lzice50.png" width={40} height={40} alt="Lžíce 50 cm" />
@@ -329,7 +343,7 @@ const formatLocalDate = (d) => {
         {/* Lžíce 60 cm */}
         <li>
           <button
-            onClick={() => { setSelectedAttachmentBagr("bagr-lzice60.png"); setShowAccessoriesBagr(false); }}
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice60"); setShowAccessoriesBagr(false); }}
             className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice60.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
           >
             <Image src="/images/bagr-lzice60.png" width={40} height={40} alt="Lžíce 60 cm" />
@@ -339,7 +353,7 @@ const formatLocalDate = (d) => {
         {/* Lžíce 80 cm */}
         <li>
           <button
-            onClick={() => { setSelectedAttachmentBagr("bagr-lzice80.png"); setShowAccessoriesBagr(false); }}
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzice80"); setShowAccessoriesBagr(false); }}
             className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzice80.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
           >
             <Image src="/images/bagr-lzice80.png" width={40} height={40} alt="Lžíce 80 cm" />
@@ -349,7 +363,7 @@ const formatLocalDate = (d) => {
         {/* Lžíce svahová */}
         <li>
           <button
-            onClick={() => { setSelectedAttachmentBagr("bagr-lzice-svahova.png"); setShowAccessoriesBagr(false); }}
+            onClick={() => { setSelectedAttachmentBagr("bagr-lzicesvahova"); setShowAccessoriesBagr(false); }}
             className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${selectedAttachmentBagr === "bagr-lzicesvahova.png" ? "bg-yellow-200 border-yellow-500" : ""}`}
           >
             <Image src="/images/bagr-lzice-svahova.png" width={40} height={40} alt="Lžíce svahová" />
@@ -467,12 +481,14 @@ const formatLocalDate = (d) => {
           onChange={(e) => setAdresa(e.target.value)}
         />
         <button
-          type="button"
-          onClick={spocitatVzdalenost}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          Zjistit km
-        </button>
+  type="button"
+  onClick={spocitatVzdalenost}
+  disabled={loadingKm}
+  aria-busy={loadingKm}
+  className={`bg-blue-600 text-white px-4 py-2 rounded ${loadingKm ? "opacity-60 cursor-not-allowed" : ""}`}
+>
+  {loadingKm ? "Počítám…" : "Zjistit km"}
+</button>
       </div>
       {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
     </div>
@@ -542,11 +558,13 @@ const formatLocalDate = (d) => {
     </div>
 
     <button
-      onClick={odeslat}
-      className="w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400"
-    >
-      ODESLAT OBJEDNÁVKU
-    </button>
+  onClick={odeslat}
+  disabled={sending}
+  aria-busy={sending}
+  className={`w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400 ${sending ? "opacity-60 cursor-not-allowed" : ""}`}
+>
+  {sending ? "Odesílám…" : "ODESLAT OBJEDNÁVKU"}
+</button>
     {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
   </div>
 </section>
