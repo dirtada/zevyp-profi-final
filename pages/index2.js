@@ -13,7 +13,9 @@ import {
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-/* -------------------- helpers (safe for SSR) -------------------- */
+/* ------------------------------------------------------------------
+   helpers (safe for SSR)
+   ------------------------------------------------------------------ */
 function usePrefersReducedMotion() {
   const [prefers, setPrefers] = useState(false);
   useEffect(() => {
@@ -45,7 +47,9 @@ const formatLocalDate = (d) => {
   return `${y}-${m}-${day}`;
 };
 
-/* -------------------- mini components -------------------- */
+/* ------------------------------------------------------------------
+   mini components (Header, MobileMenu, SideDots)
+   ------------------------------------------------------------------ */
 function Header({ onOpenMobile }) {
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-[#f9c600]/90 backdrop-blur supports-[backdrop-filter]:bg-[#f9c600]/80 border-b border-black/5">
@@ -141,7 +145,9 @@ function SideDots({ sections, activeId, onClickId }) {
   );
 }
 
-/* -------------------- služby – video karty -------------------- */
+/* ------------------------------------------------------------------
+   SLUŽBY – video karty (hover preview na desktopu)
+   ------------------------------------------------------------------ */
 function useIsHoverOnly() {
   const prefersReduced = usePrefersReducedMotion();
   const isHoverDevice = useIsHoverDevice();
@@ -206,7 +212,9 @@ function VideoCard({ title, desc, poster, mp4, onCTA }) {
   );
 }
 
-/* -------------------- TECHNIKA – data -------------------- */
+/* ------------------------------------------------------------------
+   TECHNIKA – data (nezměněno, názvy souborů zachovány)
+   ------------------------------------------------------------------ */
 const EQUIPMENT = {
   bagr: {
     key: "bagr",
@@ -316,7 +324,9 @@ const EQUIPMENT = {
   },
 };
 
-/* -------------------- TECHNIKA – UI -------------------- */
+/* ------------------------------------------------------------------
+   TECHNIKA – UI (CardStack + TechnikaVideoPanel + AttachmentModal)
+   ------------------------------------------------------------------ */
 function CardStack({ machines, activeKey, onChange }) {
   const idx = machines.findIndex((m) => m.key === activeKey);
 
@@ -404,29 +414,28 @@ function CardStack({ machines, activeKey, onChange }) {
   );
 }
 
-+ function TechnikaVideoPanel({ equip, attachment, attachmentKey, onOpenModal }) {
+// NOTE: hlavní panel s videem – zajišťuje přepínání videa při změně příslušenství
+function TechnikaVideoPanel({ equip, attachment, attachmentKey, onOpenModal }) {
   const videoRef = useRef(null);
   const prefersReduced = usePrefersReducedMotion();
   const isHoverDevice = useIsHoverDevice();
+  const hasVideo = !!attachment?.mp4;
 
   useEffect(() => {
+    // NOTE: při změně zdroje provedeme hard reload videa (load) + bezpečné autoplay
     const v = videoRef.current;
-    if (!v) return;
-    if (prefersReduced) return;
-  try {
-v.pause?.();
-v.currentTime = 0;
-
-v.load?.();
-} catch {}
-const t = setTimeout(() => v.play().catch(() => {}), 150);
+    if (!v || !hasVideo || prefersReduced) return;
+    try {
+      v.pause?.();
+      v.currentTime = 0;
+      v.load?.(); // načti nový <source>
+    } catch {}
+    const t = setTimeout(() => v.play().catch(() => {}), 150);
     return () => {
       clearTimeout(t);
       v.pause?.();
     };
-  }, [attachment?.mp4, prefersReduced]);
-
-  const hasVideo = !!attachment?.mp4;
+  }, [attachment?.mp4, prefersReduced, hasVideo]);
 
   return (
     <aside className="relative flex flex-col justify-center">
@@ -435,7 +444,7 @@ const t = setTimeout(() => v.play().catch(() => {}), 150);
           {hasVideo ? (
             <video
               ref={videoRef}
-              key={attachmentKey || attachment?.mp4}
+              key={attachmentKey || attachment?.mp4} // NOTE: remount při změně příslušenství
               className="absolute inset-0 w-full h-full object-cover"
               muted
               loop
@@ -541,7 +550,9 @@ function AttachmentModal({ equip, currentKey, onClose, onPick }) {
   );
 }
 
-/* -------------------- PAGE -------------------- */
+/* ------------------------------------------------------------------
+   PAGE
+   ------------------------------------------------------------------ */
 export default function Index2() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -566,6 +577,7 @@ export default function Index2() {
   const [showAttachmentModal, setShowAttachmentModal] = useState(false);
 
   useEffect(() => {
+    // NOTE: při změně stroje přepneme na jeho defaultní příslušenství
     setAttachmentKey(EQUIPMENT[selectedMachine].defaultAttachment);
   }, [selectedMachine]);
 
@@ -793,6 +805,7 @@ export default function Index2() {
             <TechnikaVideoPanel
               equip={equip}
               attachment={attachment}
+              attachmentKey={attachmentKey} {/* NOTE: důležité pro remount */}
               onOpenModal={() => setShowAttachmentModal(true)}
             />
           </div>
@@ -803,6 +816,7 @@ export default function Index2() {
               currentKey={attachmentKey}
               onClose={() => setShowAttachmentModal(false)}
               onPick={(key) => {
+                // NOTE: po výběru se změní klíč, video panel se přemountuje a efekt zavolá load()
                 setAttachmentKey(key);
                 setShowAttachmentModal(false);
               }}
