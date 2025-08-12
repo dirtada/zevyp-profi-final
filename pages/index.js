@@ -425,6 +425,7 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
   <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
     KONTAKTNÍ FORMULÁŘ
   </h3>
+   <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800">
 <div>
   <label className="block font-semibold">Popis požadovaných prací</label>
   <textarea
