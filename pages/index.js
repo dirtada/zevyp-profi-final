@@ -72,6 +72,13 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
   const [showAccessoriesLoader, setShowAccessoriesLoader] = useState(false);
   const [msg, setMsg] = useState("");
 
+// Pomocná funkce pro lokální YYYY-MM-DD (bez toISOString)
+const formatLocalDate = (d) => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+};
 
 
   useEffect(() => {
@@ -420,24 +427,26 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
           </div>
         </section>
 
-      {/* KONTAKT + POPTÁVKA */}
+     {/* KONTAKT + POPTÁVKA */}
 <section id="kontakt" className="bg-[#2f3237] text-white px-6 py-12">
   <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
     KONTAKTNÍ FORMULÁŘ
   </h3>
-   <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800">
-<div>
-  <label className="block font-semibold">Popis požadovaných prací</label>
-  <textarea
-    className="w-full border px-4 py-3 rounded min-h-[140px] resize-y placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-    value={popisZK}
-    onChange={(e) => setpopisZK(e.target.value)}
-    placeholder={`Např.: Poptávám výkop rýhy pro elektriku cca 12 m, hloubka 70 cm, šířka 30 cm.\nOdvoz přebytečné zeminy, zarovnání terénu. Místo: Praha 5.`}
-  />
-  <p className="text-xs text-gray-500 mt-1">
-    Tip: uveďte rozměry (délka/šířka/hloubka), místo realizace a případně odvoz zeminy.
-  </p>
-</div>
+
+  <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800">
+    <div>
+      <label className="block font-semibold">Popis požadovaných prací</label>
+      <textarea
+        className="w-full border px-4 py-3 rounded min-h-[140px] resize-y placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+        value={popisZK}
+        onChange={(e) => setpopisZK(e.target.value)}
+        placeholder={`Např.: Poptávám výkop rýhy pro elektriku cca 12 m, hloubka 70 cm, šířka 30 cm.\nOdvoz přebytečné zeminy, zarovnání terénu. Místo: Praha 5.`}
+      />
+      <p className="text-xs text-gray-500 mt-1">
+        Tip: uveďte rozměry (délka/šířka/hloubka), místo realizace a případně odvoz zeminy.
+      </p>
+    </div>
+
     <div>
       <label className="block font-semibold">E-mail</label>
       <input type="email" className="w-full border px-4 py-2 rounded" />
@@ -469,30 +478,22 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
     </div>
 
     <div>
-      <div>
-        <label className="block font-semibold">
-          Máte informace o typu a rozměru zeminy?
-        </label>
-        <div className="grid gap-2 mt-2">
-          <button
-            onClick={() => setZnameRozmery(false)}
-            type="button"
-            className={`p-3 border rounded ${
-              !znameRozmery ? "bg-yellow-100 border-yellow-500" : ""
-            }`}
-          >
-            Ne, neznám rozměry
-          </button>
-          <button
-            onClick={() => setZnameRozmery(true)}
-            type="button"
-            className={`p-3 border rounded ${
-              znameRozmery ? "bg-yellow-100 border-yellow-500" : ""
-            }`}
-          >
-            Ano, znám rozměr a typ zeminy
-          </button>
-        </div>
+      <label className="block font-semibold">Máte informace o typu a rozměru zeminy?</label>
+      <div className="grid gap-2 mt-2">
+        <button
+          onClick={() => setZnameRozmery(false)}
+          type="button"
+          className={`p-3 border rounded ${!znameRozmery ? "bg-yellow-100 border-yellow-500" : ""}`}
+        >
+          Ne, neznám rozměry
+        </button>
+        <button
+          onClick={() => setZnameRozmery(true)}
+          type="button"
+          className={`p-3 border rounded ${znameRozmery ? "bg-yellow-100 border-yellow-500" : ""}`}
+        >
+          Ano, znám rozměr a typ zeminy
+        </button>
       </div>
 
       {znameRozmery && (
@@ -519,19 +520,17 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
           </div>
         </div>
       )}
-    </div> {/* ← uzavření wrapperu „Typ práce“ */}
+    </div>
 
     <div>
       <label className="block font-semibold">Zvolte termín</label>
       <Calendar
-        selectRange={true}
-        tileDisabled={({ date }) =>
-          obsazene.includes(date.toISOString().split("T")[0])
-        }
+        selectRange
+        tileDisabled={({ date }) => obsazene.includes(formatLocalDate(date))}
         onChange={(range) => {
           if (Array.isArray(range) && range.length === 2) {
-            setDatumOd(range[0].toISOString().split("T")[0]);
-            setDatumDo(range[1].toISOString().split("T")[0]);
+            setDatumOd(formatLocalDate(range[0]));
+            setDatumDo(formatLocalDate(range[1]));
           }
         }}
       />
@@ -551,6 +550,7 @@ const [rozmerZeminy, setRozmerZeminy] = useState("");
     {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
   </div>
 </section>
+
 
 {/* Footer */}
 <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
