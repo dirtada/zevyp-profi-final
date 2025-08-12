@@ -46,6 +46,15 @@ function Header() {
             <a href="#technika" className="hover:underline">TECHNIKA</a>
             <a href="#cenik" className="hover:underline">CENÍK</a>
             <a href="#kontakt" className="hover:underline">KONTAKT</a>
+            {/* Přepínač verze */}
+  <Link
+    href="/index2"              // v index.js dej "/index2"; v index2.js dej "/"
+    className="ml-2 inline-flex items-center rounded-full bg-white/90 hover:bg-white text-[#2f3237] px-3 py-1.5 font-semibold shadow-sm ring-1 ring-black/10 transition"
+  >
+    {typeof window !== "undefined" && window.location.pathname === "/index2"
+      ? "Klasická verze"
+      : "Fullpage verze"}
+  </Link>
           </nav>
 
           <a
