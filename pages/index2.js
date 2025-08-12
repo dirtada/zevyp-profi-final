@@ -1,150 +1,568 @@
 // pages/index2.js
 import Head from "next/head";
-import Link from "next/link";
 import Image from "next/image";
-import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Inter } from "next/font/google";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { motion } from "framer-motion";
+import { Bars3Icon, XMarkIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import {
-  ScaleIcon,
-  Cog6ToothIcon,
-  ArrowsUpDownIcon,
-  WrenchScrewdriverIcon,
   BuildingOffice2Icon,
   TruckIcon,
   SquaresPlusIcon,
-  PlusCircleIcon,
-  PhoneIcon,
-  XMarkIcon as CloseIcon,
 } from "@heroicons/react/24/solid";
+import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-const Calendar = dynamic(() => import("react-calendar"), { ssr: false });
-const inter = Inter({ subsets: ["latin", "latin-ext"] });
+/* -------------------- helpers (safe for SSR) -------------------- */
+function usePrefersReducedMotion() {
+  const [prefers, setPrefers] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const m = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setPrefers(m.matches);
+    onChange();
+    m.addEventListener?.("change", onChange);
+    return () => m.removeEventListener?.("change", onChange);
+  }, []);
+  return prefers;
+}
+function useIsHoverDevice() {
+  const [isHover, setIsHover] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const onChange = () => setIsHover(mq.matches);
+    onChange();
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+  }, []);
+  return isHover;
+}
+const formatLocalDate = (d) => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+};
 
-function Header() {
-  const [open, setOpen] = useState(false);
+/* -------------------- mini components -------------------- */
+function Header({ onOpenMobile }) {
   return (
-    <header className="fixed top-0 left-0 right-0 bg-[#f9c600]/90 backdrop-blur supports-[backdrop-filter]:bg-[#f9c600]/80 border-b border-black/5 z-50">
-      <div className="container mx-auto flex justify-between items-center px-4 py-2">
-        <Image
-          src="/images/logo_update.png"
-          alt="Zevyp logo"
-          width={150}
-          height={150}
-          priority
-          sizes="150px"
-          className="h-12 w-auto"
-        />
-        <div className="hidden md:flex items-center gap-6">
-          <nav className="flex gap-6 text-base md:text-lg">
-            <a href="#hero" className="hover:underline">ÚVOD</a>
-            <a href="#sluzby" className="hover:underline">SLUŽBY</a>
-            <a href="#technika" className="hover:underline">TECHNIKA</a>
-            <a href="#cenik" className="hover:underline">CENÍK</a>
-            <a href="#kontakt" className="hover:underline">KONTAKT</a>
+    <header className="fixed top-0 inset-x-0 z-50 bg-[#f9c600]/90 backdrop-blur supports-[backdrop-filter]:bg-[#f9c600]/80 border-b border-black/5">
+      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Image
+            src="/images/logo_update.png"
+            alt="Zevyp logo"
+            width={120}
+            height={36}
+            className="h-9 w-auto"
+            priority
+          />
+          <nav className="hidden md:flex gap-6 text-sm font-medium">
+            <a href="#hero" className="hover:underline">Úvod</a>
+            <a href="#sluzby" className="hover:underline">Služby</a>
+            <a href="#technika" className="hover:underline">Technika</a>
+            <a href="#cenik" className="hover:underline">Ceník</a>
+            <a href="#kontakt" className="hover:underline">Kontakt</a>
+            <Link href="/" className="hover:underline">Klasická verze</Link>
           </nav>
-          <a
-            href="tel:+420777123456"
-            aria-label="Zavolat +420 777 123 456"
-            className="inline-flex items-center gap-2 bg-white/90 hover:bg-white text-[#2f3237] font-semibold px-4 py-2 rounded-full shadow-sm ring-1 ring-black/10 transition whitespace-nowrap"
-          >
-            <PhoneIcon className="w-5 h-5" />
-            <span>+420&nbsp;777&nbsp;123&nbsp;456</span>
-          </a>
         </div>
-        <button className="md:hidden" onClick={() => setOpen(!open)} aria-label="Otevřít menu">
-          {open ? <XMarkIcon className="w-8 h-8" /> : <Bars3Icon className="w-8 h-8" />}
+
+        {/* phone CTA */}
+        <a
+          href="tel:+420777888999"
+          className="hidden sm:inline-flex items-center gap-2 rounded-full bg-white/90 hover:bg-white text-[#2f3237] px-3 py-1.5 font-semibold shadow-sm ring-1 ring-black/10 transition"
+        >
+          <PhoneIcon className="w-4 h-4" />
+          <span>+420&nbsp;777&nbsp;888&nbsp;999</span>
+        </a>
+
+        <button
+          className="md:hidden inline-flex items-center justify-center rounded-md p-2 hover:bg-black/5"
+          onClick={onOpenMobile}
+          aria-label="Otevřít menu"
+        >
+          <Bars3Icon className="w-6 h-6" />
         </button>
       </div>
-      {open && (
-        <div className="md:hidden bg-[#f9c600] py-4 px-6 flex flex-col gap-4 shadow-lg">
-          <a href="#hero" onClick={() => setOpen(false)}>ÚVOD</a>
-          <a href="#sluzby" onClick={() => setOpen(false)}>SLUŽBY</a>
-          <a href="#technika" onClick={() => setOpen(false)}>TECHNIKA</a>
-          <a href="#cenik" onClick={() => setOpen(false)}>CENÍK</a>
-          <a href="#kontakt" onClick={() => setOpen(false)}>KONTAKT</a>
-          <a
-            href="tel:+420777123456"
-            className="mt-2 inline-flex items-center justify-center gap-2 bg-white text-[#2f3237] font-semibold px-4 py-3 rounded-lg shadow ring-1 ring-black/10"
-          >
-            <PhoneIcon className="w-5 h-5" />
-            Zavolat
-          </a>
-        </div>
-      )}
     </header>
   );
 }
 
-function SideSteps({ sections, active, onGo }) {
+function MobileMenu({ open, onClose }) {
+  if (!open) return null;
   return (
-    <aside className="hidden md:flex fixed left-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-3">
-      {sections.map((s) => {
-        const isActive = active === s.id;
-        return (
-          <button
-            key={s.id}
-            onClick={() => onGo(s.id)}
-            className={`group flex items-center gap-2`}
-            aria-current={isActive ? "step" : undefined}
-          >
-            <span
-              className={`w-2.5 h-2.5 rounded-full transition ${
-                isActive ? "bg-[#f9c600]" : "bg-white/60 border border-white/50"
-              }`}
-              aria-hidden
-            />
-            <span
-              className={`text-xs uppercase tracking-wide transition ${
-                isActive ? "text-white/90" : "text-white/50 group-hover:text-white/80"
-              }`}
-            >
-              {s.label}
-            </span>
+    <div className="fixed inset-0 z-50 md:hidden">
+      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute top-0 right-0 h-full w-72 bg-[#f9c600] shadow-xl p-4">
+        <div className="flex items-center justify-between">
+          <span className="font-bold">Menu</span>
+          <button onClick={onClose} aria-label="Zavřít">
+            <XMarkIcon className="w-6 h-6" />
           </button>
-        );
-      })}
+        </div>
+        <nav className="mt-6 grid gap-3">
+          {[
+            ["Úvod", "#hero"],
+            ["Služby", "#sluzby"],
+            ["Technika", "#technika"],
+            ["Ceník", "#cenik"],
+            ["Kontakt", "#kontakt"],
+          ].map(([label, href]) => (
+            <a key={href} href={href} onClick={onClose} className="py-2">
+              {label}
+            </a>
+          ))}
+          <Link href="/" onClick={onClose} className="py-2 font-semibold">
+            Klasická verze
+          </Link>
+          <a href="tel:+420777888999" className="mt-2 inline-flex items-center gap-2 rounded-full bg-white text-[#2f3237] px-3 py-2 font-semibold shadow ring-1 ring-black/10">
+            <PhoneIcon className="w-4 h-4" /> +420 777 888 999
+          </a>
+        </nav>
+      </div>
+    </div>
+  );
+}
+
+function SideDots({ sections, activeId, onClickId }) {
+  return (
+    <div className="fixed left-3 md:left-6 top-1/2 -translate-y-1/2 z-40 hidden sm:flex flex-col gap-2">
+      {sections.map((s) => (
+        <button
+          key={s.id}
+          onClick={() => onClickId(s.id)}
+          className={`h-2.5 w-2.5 rounded-full transition-all ${activeId === s.id ? "bg-[#2f3237] w-8" : "bg-black/30 hover:bg-black/60"}`}
+          aria-label={`Přejít na ${s.label}`}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* -------------------- služby – video karty -------------------- */
+function useIsHoverOnly() {
+  const prefersReduced = usePrefersReducedMotion();
+  const isHoverDevice = useIsHoverDevice();
+  return isHoverDevice && !prefersReduced;
+}
+
+function VideoCard({ title, desc, poster, mp4, onCTA }) {
+  const videoRef = useRef(null);
+  const isHoverOnly = useIsHoverOnly();
+
+  const enter = () => {
+    if (!isHoverOnly) return;
+    const v = videoRef.current;
+    if (!v) return;
+    v.currentTime = 0;
+    v.play().catch(() => {});
+  };
+  const leave = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.pause();
+    v.currentTime = 0;
+  };
+
+  return (
+    <article
+      className="group relative rounded-2xl overflow-hidden ring-1 ring-black/10 bg-white shadow-sm hover:shadow-md transition"
+      onMouseEnter={enter}
+      onMouseLeave={leave}
+    >
+      <div className="relative w-full pb-[56.25%] bg-black">
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={poster}
+        >
+          <source src={mp4} type="video/mp4" />
+        </video>
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="absolute left-0 right-0 bottom-0 p-4 text-white">
+          <h3 className="text-lg font-semibold">{title}</h3>
+          <p className="text-sm text-white/80 mt-1">{desc}</p>
+          <button
+            onClick={onCTA}
+            className="mt-3 inline-flex items-center rounded-full bg-[#f9c600] text-[#2f3237] font-semibold px-3 py-1.5 shadow-sm hover:bg-yellow-400 transition"
+          >
+            Poptat službu
+          </button>
+        </div>
+      </div>
+      {!isHoverOnly && (
+        <div className="absolute top-2 right-2 text-[10px] px-2 py-1 rounded-full bg-black/60 text-white/90">
+          Náhled videa na PC
+        </div>
+      )}
+    </article>
+  );
+}
+
+/* -------------------- TECHNIKA – data -------------------- */
+const EQUIPMENT = {
+  bagr: {
+    key: "bagr",
+    title: "Bagr Hitachi ZX 48-A5A",
+    bullet: [
+      "Hmotnost 4,3 t • Motor Yanmar 25,2 kW",
+      "Hloubka výkopu až 3,74 m",
+      "Pro výkopy základů, rýhy a modelaci terénu",
+    ],
+    defaultAttachment: "lzice50",
+    attachments: {
+      lzice30: {
+        label: "Lžíce 30 cm",
+        poster: "/images/bagr-lzice30.png",
+        mp4: "/videos/bagr-lzice30.mp4",
+        about: "Úzké rýhy pro kabeláž a vodu; přesné kopání v těsných místech.",
+        tags: ["Úzké rýhy", "Instalace sítí", "Přesnost"],
+      },
+      lzice50: {
+        label: "Lžíce 50 cm",
+        poster: "/images/bagr-lzice50.png",
+        mp4: "/videos/bagr-lzice50.mp4",
+        about: "Univerzální šířka pro většinu výkopových prací v hlíně a jílu.",
+        tags: ["Univerzální", "Základy", "Rýhy"],
+      },
+      lzice60: {
+        label: "Lžíce 60 cm",
+        poster: "/images/bagr-lzice60.png",
+        mp4: "/videos/bagr-lzice60.mp4",
+        about: "Větší objem pro rychlejší postup v měkkých zeminách.",
+        tags: ["Rychlost", "Měkké zeminy"],
+      },
+      lzicesvahova: {
+        label: "Lžíce svahová",
+        poster: "/images/bagr-lzice-svahova.png",
+        mp4: "/videos/bagr-lzicesvahova.mp4",
+        about: "Zarovnání, svahy a finální úpravy povrchu.",
+        tags: ["Zarovnání", "Svahy", "Finální úpravy"],
+      },
+      vrtak: {
+        label: "Vrták",
+        poster: "/images/bagr-vrtak.png",
+        mp4: "/videos/bagr-vrtak.mp4",
+        about: "Vrtání děr na sloupky, ploty a patky.",
+        tags: ["Sloupky", "Ploty", "Patky"],
+      },
+      sbijecka: {
+        label: "Hydraulická sbíječka",
+        poster: "/images/bagr-sbijecka.png",
+        mp4: "/videos/bagr-sbijecka.mp4",
+        about: "Bourání betonu a kameniva, rozpojování tvrdých vrstev.",
+        tags: ["Beton", "Bourání", "Kamenivo"],
+      },
+    },
+  },
+  nakladac: {
+    key: "nakladac",
+    title: "Nakladač",
+    bullet: [
+      "Hmotnost 4,5 t • Motor Deutz 55 kW",
+      "Nosnost až 3,5 t",
+      "Přesun materiálu, paletizace, úpravy terénu",
+    ],
+    defaultAttachment: "lopa",
+    attachments: {
+      lopa: {
+        label: "Lopata",
+        poster: "/images/nakladac.png",
+        mp4: "/videos/nakladac-lopata.mp4",
+        about: "Nakládání a přesun zemin, štěrku a suti.",
+        tags: ["Přesun materiálu", "Štěrk", "Zemina"],
+      },
+      vidle: {
+        label: "Vidle na palety",
+        poster: "/images/nakladac-vidle.png",
+        mp4: "/videos/nakladac-vidle.mp4",
+        about: "Manipulace s paletami a materiálem na stavbě.",
+        tags: ["Palety", "Manipulace"],
+      },
+      pluh: {
+        label: "Pluh",
+        poster: "/images/nakladac-pluh.png",
+        mp4: "/videos/nakladac-pluh.mp4",
+        about: "Odklízení sněhu a sypkého materiálu.",
+        tags: ["Sníh", "Úklid"],
+      },
+    },
+  },
+  valec: {
+    key: "valec",
+    title: "Válec",
+    bullet: [
+      "Hmotnost 2,7 t • Motor Kubota 33 kW",
+      "Šířka válce 1,2 m",
+      "Hutnění zemin a štěrků pro podkladní vrstvy",
+    ],
+    defaultAttachment: "vibracni-buben",
+    attachments: {
+      "vibracni-buben": {
+        label: "Vibrační buben",
+        poster: "/images/valec.png",
+        mp4: "/videos/valec.mp4",
+        about: "Zhutnění podkladních vrstev pro komunikace a plochy.",
+        tags: ["Hutnění", "Podklad", "Štěrk"],
+      },
+    },
+  },
+};
+
+/* -------------------- TECHNIKA – UI -------------------- */
+function CardStack({ machines, activeKey, onChange }) {
+  const idx = machines.findIndex((m) => m.key === activeKey);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      e.preventDefault();
+      if (e.key === "ArrowRight") {
+        const next = machines[(idx + 1) % machines.length];
+        onChange(next.key);
+      } else {
+        const prev = machines[(idx - 1 + machines.length) % machines.length];
+        onChange(prev.key);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [idx, machines, onChange]);
+
+  return (
+    <div className="relative flex flex-col justify-center">
+      <div className="relative h-[420px]">
+        {machines.map((m, i) => {
+          const offset = i - idx;
+          const wrap =
+            offset > machines.length / 2
+              ? offset - machines.length
+              : offset < -machines.length / 2
+              ? offset + machines.length
+              : offset;
+
+          const isActive = m.key === activeKey;
+          const z = 50 - Math.abs(wrap);
+          const x = wrap * 24;
+          const y = Math.abs(wrap) * 10;
+          const s = isActive ? 1 : 0.94;
+          const rot = wrap * 2;
+
+          return (
+            <motion.button
+              key={m.key}
+              onClick={() => onChange(m.key)}
+              className="absolute inset-0 w-full h-full origin-center rounded-2xl overflow-hidden text-left"
+              style={{ zIndex: z }}
+              initial={false}
+              animate={{ x, y, scale: s, rotate: rot }}
+              transition={{ type: "spring", stiffness: 260, damping: 26 }}
+            >
+              <div className={`h-full w-full rounded-2xl ring-1 ${isActive ? "ring-[#2f3237]" : "ring-black/10"} bg-white shadow-sm`}>
+                <div className="p-6">
+                  <div className="text-sm text-gray-500">{m.title.split(" ")[0]}</div>
+                  <h3 className="text-xl font-bold text-[#2f3237]">{m.title}</h3>
+                  <ul className="mt-3 space-y-1 text-gray-700">
+                    {m.bullet.map((b, bi) => (
+                      <li key={bi} className="flex gap-2">
+                        <span>•</span><span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  {!isActive && <div className="absolute inset-0 bg-black/35 transition-opacity" />}
+                  {!isActive && (
+                    <div className="absolute bottom-4 right-4 text-xs text-white/90">
+                      Klikni pro detail
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.button>
+          );
+        })}
+      </div>
+
+      <div className="mt-4 flex items-center gap-2">
+        {machines.map((m) => (
+          <button
+            key={m.key}
+            onClick={() => onChange(m.key)}
+            className={`h-2 rounded-full transition-all ${m.key === activeKey ? "w-8 bg-[#2f3237]" : "w-2 bg-black/20"}`}
+            aria-label={`Přepnout na ${m.title}`}
+          />
+        ))}
+      </div>
+      <p className="mt-2 text-xs text-gray-500">Tip: přepínej šipkami ← →</p>
+    </div>
+  );
+}
+
+function TechnikaVideoPanel({ equip, attachment, onOpenModal }) {
+  const videoRef = useRef(null);
+  const prefersReduced = usePrefersReducedMotion();
+  const isHoverDevice = useIsHoverDevice();
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (prefersReduced) return;
+    v.currentTime = 0;
+    const t = setTimeout(() => v.play().catch(() => {}), 150);
+    return () => {
+      clearTimeout(t);
+      v.pause?.();
+    };
+  }, [attachment?.mp4, prefersReduced]);
+
+  const hasVideo = !!attachment?.mp4;
+
+  return (
+    <aside className="relative flex flex-col justify-center">
+      <div className="relative rounded-2xl overflow-hidden ring-1 ring-black/10 bg-black">
+        <div className="relative w-full pb-[56.25%]">
+          {hasVideo ? (
+            <video
+              ref={videoRef}
+              className="absolute inset-0 w-full h-full object-cover"
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={attachment.poster}
+              controls={false}
+            >
+              <source src={attachment.mp4} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              src={attachment?.poster}
+              alt={attachment?.label}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          )}
+
+          {(prefersReduced || !isHoverDevice) && hasVideo && (
+            <button
+              onClick={() => videoRef.current?.play().catch(() => {})}
+              className="absolute inset-0 grid place-items-center text-white/90"
+              aria-label="Přehrát video"
+            >
+              <span className="rounded-full px-4 py-2 bg-black/60 ring-1 ring-white/20">Přehrát náhled</span>
+            </button>
+          )}
+        </div>
+
+        <div className="p-4 text-white bg-gradient-to-t from-black/70 via-black/30 to-transparent absolute left-0 right-0 bottom-0">
+          <h3 className="text-lg font-semibold">{attachment?.label}</h3>
+          <p className="text-sm text-white/80 mt-1">{attachment?.about}</p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {(attachment?.tags ?? []).map((t) => (
+              <span key={t} className="text-[11px] px-2 py-1 rounded-full bg-white/15 ring-1 ring-white/20">
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-center justify-between">
+        <div className="text-sm text-gray-600">
+          <span className="font-semibold text-[#2f3237]">{equip.title}</span> — {attachment?.label}
+        </div>
+        <button
+          onClick={onOpenModal}
+          className="inline-flex items-center rounded-full bg-[#f9c600] text-[#2f3237] font-semibold px-4 py-2 shadow-sm hover:bg-yellow-400 transition"
+        >
+          Vybrat příslušenství
+        </button>
+      </div>
     </aside>
   );
 }
 
+function AttachmentModal({ equip, currentKey, onClose, onPick }) {
+  return (
+    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose} role="dialog" aria-modal="true">
+      <div
+        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-600 hover:text-black"
+          aria-label="Zavřít"
+        >
+          ×
+        </button>
+        <h3 className="text-xl font-bold text-[#2f3237]">Vyberte příslušenství</h3>
+        <p className="text-sm text-gray-600 mb-4">{equip.title}</p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {Object.entries(equip.attachments).map(([key, a]) => {
+            const active = key === currentKey;
+            return (
+              <button
+                key={key}
+                onClick={() => onPick(key)}
+                className={`text-left rounded-xl ring-1 p-3 transition hover:shadow ${active ? "ring-yellow-500 bg-yellow-50" : "ring-black/10 bg-white"}`}
+              >
+                <div className="relative w-full pb-[56%] rounded-lg overflow-hidden bg-gray-100 mb-2">
+                  <img src={a.poster} alt={a.label} className="absolute inset-0 w-full h-full object-cover" />
+                </div>
+                <div className="font-semibold text-[#2f3237]">{a.label}</div>
+                <div className="text-sm text-gray-600">{a.about}</div>
+                <div className="mt-2 flex flex-wrap gap-1">
+                  {(a.tags ?? []).map((t) => (
+                    <span key={t} className="text-[10px] px-2 py-0.5 rounded-full bg-black/5">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* -------------------- PAGE -------------------- */
 export default function Index2() {
-  // --- původní stavy / logika ---
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // kontakt form state
   const [adresa, setAdresa] = useState("");
-  const [datumOd, setDatumOd] = useState("");
-  const [datumDo, setDatumDo] = useState("");
   const [znameRozmery, setZnameRozmery] = useState(false);
   const [typZeminy, setTypZeminy] = useState("");
   const [rozmerZeminy, setRozmerZeminy] = useState("");
   const [obsazene, setObsazene] = useState([]);
   const [popisZK, setpopisZK] = useState("");
   const [km, setKm] = useState(null);
-  const [selectedAttachmentBagr, setSelectedAttachmentBagr] = useState(null);
-  const [selectedAttachmentLoader, setSelectedAttachmentLoader] = useState(null);
-  const [showAccessoriesBagr, setShowAccessoriesBagr] = useState(false);
-  const [showAccessoriesLoader, setShowAccessoriesLoader] = useState(false);
+  const [datumOd, setDatumOd] = useState("");
+  const [datumDo, setDatumDo] = useState("");
   const [msg, setMsg] = useState("");
   const [loadingKm, setLoadingKm] = useState(false);
   const [sending, setSending] = useState(false);
 
-  const sections = [
-    { id: "hero", label: "Úvod" },
-    { id: "sluzby", label: "Služby" },
-    { id: "technika", label: "Technika" },
-    { id: "cenik", label: "Ceník" },
-    { id: "kontakt", label: "Kontakt" },
-  ];
+  // technika state
+  const machines = useMemo(() => Object.values(EQUIPMENT), []);
+  const [selectedMachine, setSelectedMachine] = useState("bagr");
+  const [attachmentKey, setAttachmentKey] = useState(EQUIPMENT.bagr.defaultAttachment);
+  const [showAttachmentModal, setShowAttachmentModal] = useState(false);
 
-  // YYYY-MM-DD bez UTC
-  const formatLocalDate = (d) => {
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
-    return `${y}-${m}-${day}`;
-  };
+  useEffect(() => {
+    setAttachmentKey(EQUIPMENT[selectedMachine].defaultAttachment);
+  }, [selectedMachine]);
 
+  // obsazené z API
   useEffect(() => {
     const nactiObsazene = async () => {
       try {
@@ -157,8 +575,6 @@ export default function Index2() {
     };
     nactiObsazene();
   }, []);
-
-  const occupiedSet = useMemo(() => new Set(obsazene), [obsazene]);
 
   const spocitatVzdalenost = async () => {
     if (!adresa) { setMsg("Zadejte prosím adresu."); return; }
@@ -218,307 +634,181 @@ export default function Index2() {
     }
   };
 
-  // --- full-page scroll snap + aktivní sekce ---
-  const scrollRef = useRef(null);
-  const [active, setActive] = useState(sections[0].id);
+  // snap nav tracking
+  const containerRef = useRef(null);
+  const [activeId, setActiveId] = useState("hero");
+  const sections = useMemo(() => [
+    { id: "hero", label: "Úvod" },
+    { id: "sluzby", label: "Služby" },
+    { id: "technika", label: "Technika" },
+    { id: "cenik", label: "Ceník" },
+    { id: "kontakt", label: "Kontakt" },
+  ], []);
 
   useEffect(() => {
-    const root = scrollRef.current;
-    if (!root) return;
-    const opts = { root, threshold: 0.6 };
-    const obs = new IntersectionObserver((entries) => {
-      const vis = entries
-        .filter((e) => e.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-      if (vis[0]) setActive(vis[0].target.id);
-    }, opts);
+    if (!containerRef.current) return;
+    const root = containerRef.current;
+    const els = sections.map(s => document.getElementById(s.id)).filter(Boolean);
+    const io = new IntersectionObserver(
+      (entries) => {
+        const vis = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (vis[0]?.target?.id) setActiveId(vis[0].target.id);
+      },
+      { root, threshold: [0.5, 0.75, 1] }
+    );
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, [sections]);
 
-    sections.forEach((s) => {
-      const el = root.querySelector(`#${s.id}`);
-      if (el) obs.observe(el);
-    });
-
-    return () => obs.disconnect();
-  }, []);
-
-  const goTo = (id) => {
-    const root = scrollRef.current;
-    const el = root?.querySelector(`#${id}`);
-    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const scrollToId = (id) => {
+    const el = document.getElementById(id);
+    if (!el || !containerRef.current) return;
+    el.scrollIntoView({ behavior: "smooth" });
   };
+
+  const serviceVideos = [
+    {
+      key: "vykopy",
+      title: "Výkopy základů",
+      desc: "Přesné a rychlé výkopy pro základy a přípojky.",
+      poster: "/images/vykopy-poster.jpg",
+      mp4: "/videos/vykopy.mp4",
+    },
+    {
+      key: "zasypy",
+      title: "Zásypy a odvoz zeminy",
+      desc: "Efektivní zásypy a odvoz přebytečného materiálu.",
+      poster: "/images/zasypy-poster.jpg",
+      mp4: "/videos/zasypy.mp4",
+    },
+    {
+      key: "zarovnani",
+      title: "Zarovnání terénu",
+      desc: "Úpravy pozemků a příjezdových cest do finální podoby.",
+      poster: "/images/zarovnani-poster.jpg",
+      mp4: "/videos/zarovnani.mp4",
+    },
+  ];
+
+  const equip = EQUIPMENT[selectedMachine];
+  const attachment = EQUIPMENT[selectedMachine].attachments[attachmentKey];
 
   return (
     <>
       <Head>
-        <title>Zevyp.cz – Fullpage</title>
+        <title>Zevyp – Fullpage verze</title>
+        <meta name="description" content="Zemní a výkopové práce – fullpage prezentace služeb, techniky a ceníku." />
+        {/* nechceme duplicitu se / (klasikou) */}
         <meta name="robots" content="noindex,follow" />
+        <link rel="canonical" href="https://zevyp-profi-final.vercel.app/" />
       </Head>
 
-      <Header />
+      <Header onOpenMobile={() => setMobileOpen(true)} />
+      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <SideDots sections={sections} activeId={activeId} onClickId={scrollToId} />
 
-      {/* scroll kontejner */}
-      <div
-        ref={scrollRef}
-        className={`${inter.className} h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth bg-black`}
+      {/* scroll container */}
+      <main
+        ref={containerRef}
+        className="snap-y snap-mandatory h-screen overflow-y-scroll scroll-smooth"
       >
-        {/* side steps */}
-        <SideSteps sections={sections} active={active} onGo={goTo} />
-
         {/* HERO */}
-        <section
-          id="hero"
-          className="snap-start h-screen relative bg-gradient-to-br from-[#2f3237] via-[#2f3237] to-black text-white"
-        >
-          <div className="container mx-auto px-4 h-full flex items-center justify-between gap-6">
-            <div className="md:w-1/2 z-10">
+        <section id="hero" className="snap-start min-h-screen bg-[#2f3237] text-white pt-16 flex items-center">
+          <div className="container mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
+            <div>
               <h1 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
                 ZEMNÍ A VÝKOPOVÉ PRÁCE
               </h1>
-              <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8 max-w-[60ch]">
-                Provádíme <span className="text-[#f9c600] font-semibold">spolehlivé zemní a výkopové práce</span> minibagrem Hitachi v Praze a okolí.
+              <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
+                Spolehlivé zemní a výkopové práce minibagrem Hitachi v Praze a okolí.
               </p>
-              <a
-                href="#kontakt"
-                onClick={(e) => { e.preventDefault(); goTo("kontakt"); }}
-                className="inline-block bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition
-                           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#f9c600] focus-visible:ring-offset-[#2f3237]"
-              >
-                Nezávazná poptávka
-              </a>
+              <div className="flex items-center gap-3">
+                <a
+                  href="#kontakt"
+                  className="inline-block bg-[#f9c600] text-[#2f3237] font-bold px-6 py-3 rounded-lg shadow hover:bg-yellow-400 transition"
+                >
+                  Nezávazná poptávka
+                </a>
+                <a
+                  href="tel:+420777888999"
+                  className="inline-flex items-center gap-2 rounded-lg bg-white/10 hover:bg-white/15 px-4 py-3 ring-1 ring-white/20"
+                >
+                  <PhoneIcon className="w-5 h-5" />
+                  Zavolat
+                </a>
+              </div>
             </div>
-            <div className="hidden md:flex md:w-1/2 justify-center">
+            <div className="relative">
               <Image
                 src="/images/bagr-hero.png"
-                alt="Minibagr Hitachi při práci"
-                width={700}
-                height={500}
-                priority
-                sizes="(min-width: 768px) 700px, 100vw"
+                alt="Bagr"
+                width={800}
+                height={600}
                 className="object-contain"
+                priority
               />
             </div>
           </div>
         </section>
 
-        {/* SLUŽBY */}
-        <section id="sluzby" className="snap-start min-h-screen bg-[#f9c600] text-black flex items-center py-16">
+        {/* SLUŽBY – video karty */}
+        <section id="sluzby" className="snap-start min-h-screen bg-[#f9c600] text-black pt-20 flex items-center">
           <div className="container mx-auto px-4 w-full">
-            <h2 className="text-2xl md:text-3xl font-bold mb-10 text-[#2f3237] text-center">
-              NAŠE SLUŽBY
-            </h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-10 text-[#2f3237] text-center">NAŠE SLUŽBY</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6">
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 rounded-lg bg-yellow-100 p-3">
-                    <BuildingOffice2Icon className="w-7 h-7 text-[#2f3237]" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-[#2f3237]">Výkopy základů</h3>
-                    <p className="mt-1 text-sm text-gray-600">Přesné a rychlé výkopy základů.</p>
-                  </div>
-                </div>
-              </article>
-
-              <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6">
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 rounded-lg bg-yellow-100 p-3">
-                    <TruckIcon className="w-7 h-7 text-[#2f3237]" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-[#2f3237]">Zásypy a zasypávání</h3>
-                    <p className="mt-1 text-sm text-gray-600">Kvalitní a efektivní zásypy.</p>
-                  </div>
-                </div>
-              </article>
-
-              <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6">
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 rounded-lg bg-yellow-100 p-3">
-                    <SquaresPlusIcon className="w-7 h-7 text-[#2f3237]" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-[#2f3237]">Zarovnání terénu</h3>
-                    <p className="mt-1 text-sm text-gray-600">Úpravy terénu a příjezdových cest.</p>
-                  </div>
-                </div>
-              </article>
+              {serviceVideos.map((s) => (
+                <VideoCard
+                  key={s.key}
+                  title={s.title}
+                  desc={s.desc}
+                  poster={s.poster}
+                  mp4={s.mp4}
+                  onCTA={() => scrollToId("kontakt")}
+                />
+              ))}
             </div>
+            <p className="mt-6 text-center text-sm text-[#2f3237]/70">
+              Videa jsou ilustrační. Na vyžádání pošleme galerii realizací.
+            </p>
           </div>
         </section>
 
-        {/* TECHNIKA */}
-        <section id="technika" className="snap-start min-h-screen bg-white text-black flex items-center py-16">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237]">TECHNIKA</h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start justify-center">
-              <div className="bg-gray-50 rounded-xl shadow-lg p-6">
-                <Image src="/images/valec.png" alt="Válec" width={300} height={200} className="mx-auto" />
-                <h3 className="text-xl font-bold mt-4 text-[#2f3237]">Válec</h3>
-                <ul className="text-sm text-gray-700 mt-3 space-y-2 text-left">
-                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 2.7 t</li>
-                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Kubota 33 kW</li>
-                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Šířka válce: 1,2 m</li>
-                  <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Pro hutnění zemin a štěrku</li>
-                </ul>
-              </div>
-
-              {/* Bagr */}
-              <div className="relative bg-gray-50 rounded-xl shadow-lg p-6">
-                <div className="relative">
-                  <Image
-                    src={`/images/${selectedAttachmentBagr || "bagr-technik"}.png`}
-                    alt="Bagr"
-                    width={400}
-                    height={300}
-                    loading="lazy"
-                    sizes="(min-width: 768px) 400px, 80vw"
-                    className="mx-auto transition-all duration-300"
-                  />
-                  <button
-                    onClick={() => setShowAccessoriesBagr(true)}
-                    className="absolute top-3/4 left-[79%] -translate-x-1/2 -translate-y-1/2"
-                    aria-label="Vybrat příslušenství bagru"
-                  >
-                    <PlusCircleIcon className="w-12 h-12 text-yellow-500 hover:text-yellow-600 transition" />
-                  </button>
-                </div>
-                <h3 className="text-xl font-bold mt-4 text-[#2f3237]">Bagr Hitachi ZX 48-A5A</h3>
-                <ul className="text-sm text-gray-700 mt-3 space-y-2 text-left">
-                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 4.3 t</li>
-                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Yanmar 25.2 kW</li>
-                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Hloubka výkopu: 3.74 m</li>
-                  <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Pro výkopy a úpravy</li>
-                </ul>
-              </div>
-
-              {/* Nakladač */}
-              <div className="relative bg-gray-50 rounded-xl shadow-lg p-6">
-                <div className="relative">
-                  <Image
-                    src={`/images/${selectedAttachmentLoader || "nakladac"}.png`}
-                    alt="Nakladač"
-                    width={300}
-                    height={200}
-                    loading="lazy"
-                    sizes="(min-width: 768px) 300px, 80vw"
-                    className="mx-auto transition-all duration-300"
-                  />
-                  <button
-                    onClick={() => setShowAccessoriesLoader(true)}
-                    className="absolute top-2/3 right-[60%] -translate-x-1/2 -translate-y-1/2"
-                    aria-label="Vybrat příslušenství nakladače"
-                  >
-                    <PlusCircleIcon className="w-12 h-12 text-yellow-500 hover:text-yellow-600 transition" />
-                  </button>
-                </div>
-                <h3 className="text-xl font-bold mt-4 text-[#2f3237]">Nakladač</h3>
-                <ul className="text-sm text-gray-700 mt-3 space-y-2 text-left">
-                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 4.5 t</li>
-                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Deutz 55 kW</li>
-                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Nosnost: 3,5 t</li>
-                  <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Pro přepravu a úpravy terénu</li>
-                </ul>
-              </div>
-            </div>
+        {/* TECHNIKA – stack karet + video panel */}
+        <section id="technika" className="snap-start min-h-screen bg-gradient-to-br from-white to-gray-50 text-black pt-20 flex items-stretch">
+          <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch w-full">
+            <CardStack
+              machines={machines}
+              activeKey={selectedMachine}
+              onChange={(k) => setSelectedMachine(k)}
+            />
+            <TechnikaVideoPanel
+              equip={equip}
+              attachment={attachment}
+              onOpenModal={() => setShowAttachmentModal(true)}
+            />
           </div>
 
-          {/* Modal Bagr */}
-          {showAccessoriesBagr && (
-            <div
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
-              onClick={() => setShowAccessoriesBagr(false)}
-              role="dialog"
-              aria-modal="true"
-            >
-              <div
-                className="relative bg-white/95 border border-white/60 rounded-2xl shadow-2xl p-6 max-w-md w-full"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button
-                  onClick={() => setShowAccessoriesBagr(false)}
-                  className="absolute top-3 right-3 text-gray-600 hover:text-black"
-                  aria-label="Zavřít"
-                >
-                  <CloseIcon className="w-6 h-6" />
-                </button>
-                <h3 className="text-lg font-bold mb-4">Vyberte příslušenství pro bagr</h3>
-                <ul className="space-y-3 text-gray-800">
-                  {[
-                    ["bagr-vrtak", "Vrták", "/images/bagr-vrtak.png"],
-                    ["bagr-sbijecka", "Sbíječka", "/images/bagr-sbijecka.png"],
-                    ["bagr-lzice30", "Lžíce 30 cm", "/images/bagr-lzice30.png"],
-                    ["bagr-lzice50", "Lžíce 50 cm", "/images/bagr-lzice50.png"],
-                    ["bagr-lzice60", "Lžíce 60 cm", "/images/bagr-lzice60.png"],
-                    ["bagr-lzice80", "Lžíce 80 cm", "/images/bagr-lzice80.png"],
-                    ["bagr-lzicesvahova", "Lžíce svahová", "/images/bagr-lzice-svahova.png"],
-                  ].map(([key, label, img]) => (
-                    <li key={key}>
-                      <button
-                        onClick={() => { setSelectedAttachmentBagr(key); setShowAccessoriesBagr(false); }}
-                        className={`w-full text-left px-4 py-2 border rounded flex items-center gap-2 hover:bg-yellow-100 ${
-                          selectedAttachmentBagr === key ? "bg-yellow-200 border-yellow-500" : ""
-                        }`}
-                      >
-                        <Image src={img} width={40} height={40} alt={label} />
-                        {label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          )}
-
-          {/* Modal Nakladač */}
-          {showAccessoriesLoader && (
-            <div
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
-              onClick={() => setShowAccessoriesLoader(false)}
-              role="dialog"
-              aria-modal="true"
-            >
-              <div
-                className="relative bg-white/95 border border-white/60 rounded-2xl shadow-2xl p-6 max-w-md w-full"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button
-                  onClick={() => setShowAccessoriesLoader(false)}
-                  className="absolute top-3 right-3 text-gray-600 hover:text-black"
-                  aria-label="Zavřít"
-                >
-                  <CloseIcon className="w-6 h-6" />
-                </button>
-                <h3 className="text-lg font-bold mb-4">Vyberte příslušenství pro nakladač</h3>
-                <ul className="space-y-3 text-gray-800">
-                  <li>
-                    <button
-                      onClick={() => { setSelectedAttachmentLoader("nakladac-pluh"); setShowAccessoriesLoader(false); }}
-                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
-                    >
-                      Pluh
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => { setSelectedAttachmentLoader("nakladac-vidle"); setShowAccessoriesLoader(false); }}
-                      className="w-full text-left px-4 py-2 border rounded hover:bg-yellow-100"
-                    >
-                      Vidle na palety
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
+          {showAttachmentModal && (
+            <AttachmentModal
+              equip={equip}
+              currentKey={attachmentKey}
+              onClose={() => setShowAttachmentModal(false)}
+              onPick={(key) => {
+                setAttachmentKey(key);
+                setShowAttachmentModal(false);
+              }}
+            />
           )}
         </section>
 
         {/* CENÍK */}
-        <section id="cenik" className="snap-start min-h-screen bg-[#f9c600] text-black flex items-center py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">CENÍK</h2>
-            <table className="w-full max-w-3xl mx-auto rounded-xl overflow-hidden border border-black/10 bg-white">
-              <tbody className="[&_tr]:border-b [&_tr:last-child]:border-none border-black/10">
+        <section id="cenik" className="snap-start min-h-screen bg-[#f9c600] text-black pt-20 flex items-center">
+          <div className="container mx-auto px-4 w-full">
+            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">CENÍK</h3>
+            <table className="w-full max-w-3xl mx-auto border border-gray-300 rounded-lg bg-white">
+              <tbody className="divide-y divide-gray-300">
                 <tr>
                   <td className="py-4 px-6 font-semibold">Bagr s obsluhou</td>
                   <td className="py-4 px-6 text-right font-bold">990 Kč / hod</td>
@@ -537,23 +827,17 @@ export default function Index2() {
                 </tr>
               </tbody>
             </table>
-            <p className="text-sm text-gray-700 mt-6 text-center">
+            <p className="text-sm text-[#2f3237] mt-6 text-center">
               *Konečnou cenu stanovíme individuálně podle vzdálenosti a požadavků.
             </p>
           </div>
         </section>
 
-        {/* KONTAKT + POPTÁVKA */}
-        <section id="kontakt" className="snap-start min-h-screen bg-[#2f3237] text-white py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
-              KONTAKTNÍ FORMULÁŘ
-            </h2>
-
-            <form
-              onSubmit={(e) => { e.preventDefault(); odeslat(); }}
-              className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800"
-            >
+        {/* KONTAKT */}
+        <section id="kontakt" className="snap-start min-h-screen bg-[#2f3237] text-white pt-20 flex items-center">
+          <div className="container mx-auto px-4 w-full">
+            <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">KONTAKTNÍ FORMULÁŘ</h3>
+            <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800">
               <div>
                 <label className="block font-semibold">Popis požadovaných prací</label>
                 <textarea
@@ -648,8 +932,7 @@ export default function Index2() {
                 <label className="block font-semibold">Zvolte termín</label>
                 <Calendar
                   selectRange
-                  className="brand-calendar"
-                  tileDisabled={({ date }) => occupiedSet.has(formatLocalDate(date))}
+                  tileDisabled={({ date }) => obsazene.includes(formatLocalDate(date))}
                   onChange={(range) => {
                     if (Array.isArray(range) && range.length === 2) {
                       setDatumOd(formatLocalDate(range[0]));
@@ -665,7 +948,7 @@ export default function Index2() {
               </div>
 
               <button
-                type="submit"
+                onClick={odeslat}
                 disabled={sending}
                 aria-busy={sending}
                 className={`w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400 ${sending ? "opacity-60 cursor-not-allowed" : ""}`}
@@ -673,18 +956,14 @@ export default function Index2() {
                 {sending ? "Odesílám…" : "ODESLAT OBJEDNÁVKU"}
               </button>
               {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
-            </form>
+            </div>
 
-            <p className="text-center text-xs text-white/60 mt-4">
-              Pozn.: Tato sekce může být delší než výška okna – scrollujte v rámci stránky.
-            </p>
+            <footer className="text-center text-white/70 text-sm mt-8">
+              Zemní a Výkopové Práce • IČO:73377619 • info@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
+            </footer>
           </div>
-
-          <footer className="text-white text-center py-6 text-sm opacity-80">
-            Zemní a Výkopové Práce • IČO:73377619 • info@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
-          </footer>
         </section>
-      </div>
+      </main>
     </>
   );
 }
