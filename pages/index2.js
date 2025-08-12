@@ -1,5 +1,6 @@
 // pages/index2.js
 import Head from "next/head";
+import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState } from "react";
