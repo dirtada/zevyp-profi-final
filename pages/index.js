@@ -291,8 +291,8 @@ const formatLocalDate = (d) => {
 
          {/* Modal příslušenství pro Bagr */}
 {showAccessoriesBagr && (
-  <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-    <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
+<div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+  <div className="bg-white/95 border border-white/60 rounded-2xl shadow-2xl p-6">
       <button
         onClick={() => setShowAccessoriesBagr(false)}
         className="absolute top-3 right-3 text-gray-600 hover:text-black"
@@ -378,8 +378,8 @@ const formatLocalDate = (d) => {
 
           {/* Modal příslušenství pro Nakladač */}
           {showAccessoriesLoader && (
-            <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-              <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative">
+           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+  <div className="bg-white/95 border border-white/60 rounded-2xl shadow-2xl p-6">
                 <button
                   onClick={() => setShowAccessoriesLoader(false)}
                   className="absolute top-3 right-3 text-gray-600 hover:text-black"
