@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Inter } from "next/font/google";
 import {
   ScaleIcon,
   Cog6ToothIcon,
@@ -21,7 +22,7 @@ function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="bg-[#f9c600] text-black py-4 px-4 shadow-md relative z-50">
+    <header className="sticky top-0 bg-[#f9c600]/90 backdrop-blur supports-[backdrop-filter]:bg-[#f9c600]/80 border-b border-black/5 z-50">
       <div className="container mx-auto flex justify-between items-center">
         <Image
           src="/images/logo_update.png"
@@ -196,19 +197,19 @@ const formatLocalDate = (d) => {
         <section id="sluzby" className="bg-[#f9c600] text-black py-16">
           <div className="container mx-auto px-4">
             <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">NAŠE SLUŽBY</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white rounded-xl shadow-lg p-6 text-center">
-                <BuildingOffice2Icon className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+            <div className="group bg-white rounded-xl shadow-sm ring-1 ring-black/5 hover:shadow-xl hover:-translate-y-0.5 transition p-6">
+  <div className="rounded-lg bg-yellow-50 p-3 w-fit group-hover:scale-105 transition">
+    <BuildingOffice2Icon className="w-6 h-6 text-yellow-600" />
                 <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">Výkopy základů</h4>
                 <p className="text-gray-600 text-sm">Přesné a rychlé výkopy základů.</p>
               </div>
-              <div className="bg-white rounded-xl shadow-lg p-6 text-center">
-                <TruckIcon className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
-                <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">Zásypy a zasypávání</h4>
+             <div className="rounded-lg bg-yellow-50 p-3 w-fit group-hover:scale-105 transition">
+    <TruckIcon className="w-6 h-6 text-yellow-600" />
+                <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">Výkopy a zásyp</h4>
                 <p className="text-gray-600 text-sm">Kvalitní a efektivní zásypy.</p>
               </div>
-              <div className="bg-white rounded-xl shadow-lg p-6 text-center">
-                <SquaresPlusIcon className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+             <div className="rounded-lg bg-yellow-50 p-3 w-fit group-hover:scale-105 transition">
+    <SquaresPlusIcon className="w-6 h-6 text-yellow-600" />
                 <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">Zarovnání terénu</h4>
                 <p className="text-gray-600 text-sm">Úpravy terénu a příjezdových cest.</p>
               </div>
