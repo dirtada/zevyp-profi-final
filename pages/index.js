@@ -193,29 +193,53 @@ const formatLocalDate = (d) => {
           </div>
         </main>
 
-        {/* SLUŽBY */}
-        <section id="sluzby" className="bg-[#f9c600] text-black py-16">
-          <div className="container mx-auto px-4">
-            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">NAŠE SLUŽBY</h3>
-            <div className="group bg-white rounded-xl shadow-sm ring-1 ring-black/5 hover:shadow-xl hover:-translate-y-0.5 transition p-6">
-  <div className="rounded-lg bg-yellow-50 p-3 w-fit group-hover:scale-105 transition">
-    <BuildingOffice2Icon className="w-6 h-6 text-yellow-600" />
-                <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">Výkopy základů</h4>
-                <p className="text-gray-600 text-sm">Přesné a rychlé výkopy základů.</p>
-              </div>
-             <div className="rounded-lg bg-yellow-50 p-3 w-fit group-hover:scale-105 transition">
-    <TruckIcon className="w-6 h-6 text-yellow-600" />
-                <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">Výkopy a zásyp</h4>
-                <p className="text-gray-600 text-sm">Kvalitní a efektivní zásypy.</p>
-              </div>
-             <div className="rounded-lg bg-yellow-50 p-3 w-fit group-hover:scale-105 transition">
-    <SquaresPlusIcon className="w-6 h-6 text-yellow-600" />
-                <h4 className="text-xl font-semibold mb-2 text-[#2f3237]">Zarovnání terénu</h4>
-                <p className="text-gray-600 text-sm">Úpravy terénu a příjezdových cest.</p>
-              </div>
-            </div>
+       {/* SLUŽBY – minimalistická verze */}
+<section id="sluzby" className="bg-[#f9c600] text-black py-16">
+  <div className="container mx-auto px-4">
+    <h3 className="text-2xl md:text-3xl font-bold mb-10 text-[#2f3237] text-center">
+      NAŠE SLUŽBY
+    </h3>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-colors hover:ring-black/20">
+        <div className="flex items-start gap-4">
+          <div className="shrink-0 rounded-lg bg-yellow-100 p-3">
+            <BuildingOffice2Icon className="w-7 h-7 text-[#2f3237]" />
           </div>
-        </section>
+          <div>
+            <h4 className="text-lg font-semibold text-[#2f3237]">Výkopy základů</h4>
+            <p className="mt-1 text-sm text-gray-600">Přesné a rychlé výkopy základů.</p>
+          </div>
+        </div>
+      </article>
+
+      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-colors hover:ring-black/20">
+        <div className="flex items-start gap-4">
+          <div className="shrink-0 rounded-lg bg-yellow-100 p-3">
+            <TruckIcon className="w-7 h-7 text-[#2f3237]" />
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold text-[#2f3237]">Zásypy a zasypávání</h4>
+            <p className="mt-1 text-sm text-gray-600">Kvalitní a efektivní zásypy.</p>
+          </div>
+        </div>
+      </article>
+
+      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-colors hover:ring-black/20">
+        <div className="flex items-start gap-4">
+          <div className="shrink-0 rounded-lg bg-yellow-100 p-3">
+            <SquaresPlusIcon className="w-7 h-7 text-[#2f3237]" />
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold text-[#2f3237]">Zarovnání terénu</h4>
+            <p className="mt-1 text-sm text-gray-600">Úpravy terénu a příjezdových cest.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
           {/* TECHNIKA */}
         <section id="technika" className="bg-white text-black py-16 relative">
           <div className="container mx-auto px-4 text-center">
