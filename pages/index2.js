@@ -404,7 +404,7 @@ function CardStack({ machines, activeKey, onChange }) {
   );
 }
 
-function TechnikaVideoPanel({ equip, attachment, onOpenModal }) {
++ function TechnikaVideoPanel({ equip, attachment, attachmentKey, onOpenModal }) {
   const videoRef = useRef(null);
   const prefersReduced = usePrefersReducedMotion();
   const isHoverDevice = useIsHoverDevice();
@@ -413,8 +413,13 @@ function TechnikaVideoPanel({ equip, attachment, onOpenModal }) {
     const v = videoRef.current;
     if (!v) return;
     if (prefersReduced) return;
-    v.currentTime = 0;
-    const t = setTimeout(() => v.play().catch(() => {}), 150);
+  try {
+v.pause?.();
+v.currentTime = 0;
+
+v.load?.();
+} catch {}
+const t = setTimeout(() => v.play().catch(() => {}), 150);
     return () => {
       clearTimeout(t);
       v.pause?.();
@@ -430,6 +435,7 @@ function TechnikaVideoPanel({ equip, attachment, onOpenModal }) {
           {hasVideo ? (
             <video
               ref={videoRef}
+              key={attachmentKey || attachment?.mp4}
               className="absolute inset-0 w-full h-full object-cover"
               muted
               loop
@@ -442,6 +448,7 @@ function TechnikaVideoPanel({ equip, attachment, onOpenModal }) {
             </video>
           ) : (
             <img
+              key={attachmentKey || attachment?.poster}
               src={attachment?.poster}
               alt={attachment?.label}
               className="absolute inset-0 w-full h-full object-cover"
