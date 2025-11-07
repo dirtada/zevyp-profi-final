@@ -599,7 +599,7 @@ export default function Home() {
           onClick={spocitatVzdalenost}
           disabled={loadingKm}
           aria-busy={loadingKm}
-          className={`bg-blue-600 text-white px-4 py-2 rounded ${loadingKm ? "opacity-60 cursor-not-allowed" : ""}`}
+          className={`bg-[#f4c700] text-black px-4 py-2 rounded ${loadingKm ? "opacity-60 cursor-not-allowed" : ""}`}
         >
           {loadingKm ? "Počítám…" : "Zjistit km"}
         </button>
@@ -607,51 +607,6 @@ export default function Home() {
       {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
     </div>
     
-    {/* 4. Rozměry zeminy (ponecháno v jednom sloupci, jako v originále) */}
-    <div>
-      <label className="block font-semibold">Máte informace o typu a rozměru zeminy?</label>
-      <div className="grid gap-2 mt-2">
-        <button
-          onClick={() => setZnameRozmery(false)}
-          type="button"
-          className={`p-3 border rounded ${!znameRozmery ? "bg-yellow-100 border-yellow-500" : ""}`}
-        >
-          Ne, neznám rozměry
-        </button>
-        <button
-          onClick={() => setZnameRozmery(true)}
-          type="button"
-          className={`p-3 border rounded ${znameRozmery ? "bg-yellow-100 border-yellow-500" : ""}`}
-        >
-          Ano, znám rozměr a typ zeminy
-        </button>
-      </div>
-
-      {znameRozmery && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div>
-            <label className="block font-semibold">Typ zeminy</label>
-            <input
-              type="text"
-              className="w-full border px-4 py-2 rounded"
-              value={typZeminy}
-              onChange={(e) => setTypZeminy(e.target.value)}
-              placeholder="např. jíl, hlína, štěrk"
-            />
-          </div>
-          <div>
-            <label className="block font-semibold">Rozměr zeminy</label>
-            <input
-              type="text"
-              className="w-full border px-4 py-2 rounded"
-              value={rozmerZeminy}
-              onChange={(e) => setRozmerZeminy(e.target.value)}
-              placeholder="např. 15 m³"
-            />
-          </div>
-        </div>
-      )}
-    </div>
 
     {/* 5. Zvolte termín */}
     <div>
@@ -668,7 +623,7 @@ export default function Home() {
         }}
       />
       {datumOd && datumDo && (
-        <p className="text-sm mt-2 text-gray-600">
+        <p className="text-sm mt-2 text-[#f4c700]">
           Vybraný termín: {datumOd} až {datumDo}
         </p>
       )}
