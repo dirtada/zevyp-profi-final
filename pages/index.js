@@ -623,7 +623,7 @@ export default function Home() {
         }}
       />
       {datumOd && datumDo && (
-        <p className="text-sm mt-2 text-[#f4c700]">
+        <p className="text-sm mt-2 text-[#000000]">
           Vybraný termín: {datumOd} až {datumDo}
         </p>
       )}
