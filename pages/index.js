@@ -52,12 +52,12 @@ function Header() {
           </nav>
 
           <a
-            href="tel:+420777123456"
+            href="tel:+420725319300"
             aria-label="Zavolat +420 725 319 300"
             className="inline-flex items-center gap-2 bg-white/90 hover:bg-white text-[#2f3237] font-semibold px-4 py-2 rounded-full shadow-sm ring-1 ring-black/10 transition whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2f3237] focus-visible:ring-offset-[#f9c600]"
           >
             <PhoneIcon className="w-5 h-5" />
-            <span>+420&nbsp;777&nbsp;123&nbsp;456</span>
+            <span>+420&nbsp;725&nbsp;531&nbsp;300</span>
           </a>
         </div>
 
@@ -624,7 +624,7 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
-          Zemní a Výkopové Práce • IČO:73377619 • info@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
+          Zemní a Výkopové Práce • IČO:73377619 • kontakt@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
         </footer>
       </div>
     </>
