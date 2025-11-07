@@ -32,7 +32,7 @@ function Header() {
     <header className="sticky top-0 bg-[#f9c600]/90 backdrop-blur supports-[backdrop-filter]:bg-[#f9c600]/80 border-b border-black/5 z-50">
       <div className="container mx-auto flex justify-between items-center px-4 py-2">
         <Image
-          src="/images/logo_update.png"
+          src="/images/zevyp-newlogo.png"
           alt="Zevyp logo"
           width={150}
           height={150}
@@ -441,7 +441,7 @@ export default function Home() {
                     ["bagr-lzice50", "Lžíce 50 cm", "/images/bagr-lzice50.png"],
                     ["bagr-lzice60", "Lžíce 60 cm", "/images/bagr-lzice60.png"],
                     ["bagr-lzice80", "Lžíce 80 cm", "/images/bagr-lzice80.png"],
-                    ["bagr-lzicesvahova", "Lžíce svahová", "/images/bagr-lzice-svahova.png"],
+                    ["bagr-lzicesvahova", "Lžíce svahová", "/images/bagr-lzicesvahova.png"],
                   ].map(([key, label, img]) => (
                     <li key={key}>
                       <button
