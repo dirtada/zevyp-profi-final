@@ -7,3 +7,37 @@ html, body {
   font-family: 'Rubik', sans-serif;
   scroll-behavior: smooth;
 }
+
+/* Barva OBSAZENÝCH/DEAKTIVOVANÝCH dnů */
+.brand-calendar button[disabled] {
+  /* Nastavuje textovou barvu pro obsazené dny */
+  color: #a0a0a0 !important; /* Můžete zvolit tmavší šedou */ 
+  background-color: #f2f2f2 !important; /* Světle šedé pozadí pro odlišení */
+  /* Volitelné: odstranění hover efektu, pokud je stále aktivní */
+  pointer-events: none;
+}
+/* Barva VYBRANÉHO ROZSAHU (Dny uprostřed) */
+.brand-calendar .react-calendar__tile--range {
+  background-color: #f4c700 !important;
+  color: #2f3237 !important; /* Tmavá barva textu pro kontrast */
+}
+
+/* Barva ZAČÁTKU a KONCE rozsahu */
+.brand-calendar .react-calendar__tile--rangeStart,
+.brand-calendar .react-calendar__tile--rangeEnd {
+  background-color: #e5b800 !important; /* Mírně tmavší žlutá pro zvýraznění krajů */
+  color: #2f3237 !important;
+  /* Důležité: Smaže výchozí zaoblení u rangeEnd, pokud by se aplikovalo */
+  border-radius: 0; 
+}
+
+/* Barva pouze jednoho vybraného dne */
+.brand-calendar .react-calendar__tile--active {
+  background-color: #e5b800 !important;
+  color: #2f3237 !important;
+}
+
+/* Styl pro datum, na které se ukazuje myší (při výběru rozsahu) */
+.brand-calendar .react-calendar__tile:enabled:hover {
+  background-color: #ffe680; /* Světlejší žlutá na hover */
+}
