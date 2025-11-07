@@ -555,17 +555,23 @@ export default function Home() {
                 Tip: uveďte rozměry (délka/šířka/hloubka), místo realizace a případně odvoz zeminy.
               </p>
             </div>
-
+                
+<div className="grid **grid-cols-1** **md:grid-cols-2** **gap-4**">
+            
+            {/* BLOK PRO E-MAIL (na mobilech zabírá 1/1, na PC 1/2) */}
             <div>
-              <label className="block font-semibold">E-mail</label>
-              <input type="email" className="w-full border px-4 py-2 rounded" />
+                <label className="block font-semibold">E-mail</label>
+                <input type="email" className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" />
             </div>
 
+            {/* BLOK PRO TELEFON (na mobilech zabírá 1/1, na PC 1/2) */}
             <div>
-              <label className="block font-semibold">Telefon</label>
-              <input type="tel" className="w-full border px-4 py-2 rounded" />
+                <label className="block font-semibold">Telefon</label>
+                <input type="tel" className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" />
             </div>
-
+            
+        </div>
+              
             <div>
               <label className="block font-semibold">Adresa zakázky</label>
               <div className="flex gap-2">
