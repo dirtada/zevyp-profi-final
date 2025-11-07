@@ -11,15 +11,15 @@ html, body {
 /* Barva OBSAZENÝCH/DEAKTIVOVANÝCH dnů */
 .brand-calendar button[disabled] {
   /* Nastavuje textovou barvu pro obsazené dny */
-  color: #a0a0a0 !important; /* Můžete zvolit tmavší šedou */ 
-  background-color: #f2f2f2 !important; /* Světle šedé pozadí pro odlišení */
+  color: #FF0000 !important; /* Můžete zvolit tmavší šedou */ 
+  background-color: #FF0000 !important; /* Světle šedé pozadí pro odlišení */
   /* Volitelné: odstranění hover efektu, pokud je stále aktivní */
   pointer-events: none;
 }
 /* Barva VYBRANÉHO ROZSAHU (Dny uprostřed) */
 .brand-calendar .react-calendar__tile--range {
   background-color: #f4c700 !important;
-  color: #2f3237 !important; /* Tmavá barva textu pro kontrast */
+  color: #f4c700 !important; /* Tmavá barva textu pro kontrast */
 }
 
 /* Barva ZAČÁTKU a KONCE rozsahu */
