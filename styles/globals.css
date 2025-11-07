@@ -17,14 +17,16 @@ html, body {
   pointer-events: none;
 }
 /* Barva VYBRANÉHO ROZSAHU (Dny uprostřed) */
-.brand-calendar .react-calendar__tile--range {
+.brand-calendar .react-calendar__tile:enabled:hover,
+.brand-calendar .react-calendar__tile--hover {
   background-color: #f4c700 !important;
   color: #000000 !important; /* Tmavá barva textu pro kontrast */
 }
 
 /* Barva ZAČÁTKU a KONCE rozsahu */
 .brand-calendar .react-calendar__tile--rangeStart,
-.brand-calendar .react-calendar__tile--rangeEnd {
+.brand-calendar .react-calendar__tile--rangeEnd,
+.brand-calendar .react-calendar__tile--active {
   background-color: #f4c700 !important; /* Mírně tmavší žlutá pro zvýraznění krajů */
   color: #000000 !important;
   /* Důležité: Smaže výchozí zaoblení u rangeEnd, pokud by se aplikovalo */
