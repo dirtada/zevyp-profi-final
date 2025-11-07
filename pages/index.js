@@ -75,7 +75,7 @@ function Header() {
           <a href="#cenik" onClick={() => setOpen(false)}>CENÍK</a>
           <a href="#kontakt" onClick={() => setOpen(false)}>KONTAKT</a>
           <a
-            href="tel:+420777123456"
+            href="tel:+420725319300"
             className="mt-2 inline-flex items-center justify-center gap-2 bg-white text-[#2f3237] font-semibold px-4 py-3 rounded-lg shadow ring-1 ring-black/10"
           >
             <PhoneIcon className="w-5 h-5" />
