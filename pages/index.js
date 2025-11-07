@@ -533,100 +533,159 @@ export default function Home() {
           </div>
         </section>
 
-        {/* KONTAKT + POPTÁVKA */}
-        <section id="kontakt" className="scroll-mt-24 bg-[#2f3237] text-white px-6 py-12">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
-            KONTAKTNÍ FORMULÁŘ
-          </h2>
+{/* KONTAKT + POPTÁVKA */}
+<section id="kontakt" className="scroll-mt-24 bg-[#2f3237] text-white px-6 py-12">
+  <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
+    KONTAKTNÍ FORMULÁŘ
+  </h2>
 
-          <form
-            onSubmit={(e) => { e.preventDefault(); odeslat(); }}
-            className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800"
-          >
-            <div>
-              <label className="block font-semibold">Popis požadovaných prací</label>
-              <textarea
-                className="w-full border px-4 py-3 rounded min-h-[140px] resize-y placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                value={popisZK}
-                onChange={(e) => setpopisZK(e.target.value)}
-                placeholder={`Např.: Poptávám výkop rýhy pro elektriku cca 12 m, hloubka 70 cm, šířka 30 cm.\nOdvoz přebytečné zeminy, zarovnání terénu. Místo: Karlovy Vary.`}
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Tip: uveďte rozměry (délka/šířka/hloubka), místo realizace a případně odvoz zeminy.
-              </p>
-            </div>
-                
-<div className="grid **grid-cols-1** **md:grid-cols-2** **gap-4**">
-            
-            {/* BLOK PRO E-MAIL (na mobilech zabírá 1/1, na PC 1/2) */}
-            <div>
-                <label className="block font-semibold">E-mail</label>
-                <input type="email" className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" />
-            </div>
+  <form
+    onSubmit={(e) => { e.preventDefault(); odeslat(); }}
+    className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800"
+  >
+    
+    {/* 1. Popis požadovaných prací */}
+    <div>
+      <label className="block font-semibold">Popis požadovaných prací</label>
+      <textarea
+        className="w-full border px-4 py-3 rounded min-h-[140px] resize-y placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+        value={popisZK}
+        onChange={(e) => setpopisZK(e.target.value)}
+        placeholder={`Např.: Poptávám výkop rýhy pro elektriku cca 12 m, hloubka 70 cm, šířka 30 cm.\nOdvoz přebytečné zeminy, zarovnání terénu. Místo: Karlovy Vary.`}
+      />
+      <p className="text-xs text-gray-500 mt-1">
+        Tip: uveďte rozměry (délka/šířka/hloubka), místo realizace a případně odvoz zeminy.
+      </p>
+    </div>
 
-            {/* BLOK PRO TELEFON (na mobilech zabírá 1/1, na PC 1/2) */}
-            <div>
-                <label className="block font-semibold">Telefon</label>
-                <input type="tel" className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" />
-            </div>
-            
+    {/* 2. E-mail a Telefon: ZABALENO V GRIDU PRO RESPONZIVNÍ ROZLOŽENÍ */}
+    <div className="grid **grid-cols-1 md:grid-cols-2 gap-4**">
+      
+      {/* E-mail (bude 1. sloupec na PC) */}
+      <div>
+        <label className="block font-semibold">E-mail</label>
+        <input 
+          type="email" 
+          className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400"
+          // POZNÁMKA: Chybí useState/onChange pro E-mail. Doplňte si:
+          // value={email} onChange={(e) => setEmail(e.target.value)} 
+        />
+      </div>
+
+      {/* Telefon (bude 2. sloupec na PC) */}
+      <div>
+        <label className="block font-semibold">Telefon</label>
+        <input 
+          type="tel" 
+          className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" 
+          // POZNÁMKA: Chybí useState/onChange pro Telefon. Doplňte si:
+          // value={telefon} onChange={(e) => setTelefon(e.target.value)} 
+        />
+      </div>
+    </div>
+    
+    {/* 3. Adresa zakázky */}
+    <div>
+      <label className="block font-semibold">Adresa zakázky</label>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          className="flex-1 border px-4 py-2 rounded"
+          value={adresa}
+          onChange={(e) => setAdresa(e.target.value)}
+        />
+        <button
+          type="button"
+          onClick={spocitatVzdalenost}
+          disabled={loadingKm}
+          aria-busy={loadingKm}
+          className={`bg-blue-600 text-white px-4 py-2 rounded ${loadingKm ? "opacity-60 cursor-not-allowed" : ""}`}
+        >
+          {loadingKm ? "Počítám…" : "Zjistit km"}
+        </button>
+      </div>
+      {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
+    </div>
+    
+    {/* 4. Rozměry zeminy (ponecháno v jednom sloupci, jako v originále) */}
+    <div>
+      <label className="block font-semibold">Máte informace o typu a rozměru zeminy?</label>
+      <div className="grid gap-2 mt-2">
+        <button
+          onClick={() => setZnameRozmery(false)}
+          type="button"
+          className={`p-3 border rounded ${!znameRozmery ? "bg-yellow-100 border-yellow-500" : ""}`}
+        >
+          Ne, neznám rozměry
+        </button>
+        <button
+          onClick={() => setZnameRozmery(true)}
+          type="button"
+          className={`p-3 border rounded ${znameRozmery ? "bg-yellow-100 border-yellow-500" : ""}`}
+        >
+          Ano, znám rozměr a typ zeminy
+        </button>
+      </div>
+
+      {znameRozmery && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div>
+            <label className="block font-semibold">Typ zeminy</label>
+            <input
+              type="text"
+              className="w-full border px-4 py-2 rounded"
+              value={typZeminy}
+              onChange={(e) => setTypZeminy(e.target.value)}
+              placeholder="např. jíl, hlína, štěrk"
+            />
+          </div>
+          <div>
+            <label className="block font-semibold">Rozměr zeminy</label>
+            <input
+              type="text"
+              className="w-full border px-4 py-2 rounded"
+              value={rozmerZeminy}
+              onChange={(e) => setRozmerZeminy(e.target.value)}
+              placeholder="např. 15 m³"
+            />
+          </div>
         </div>
-              
-            <div>
-              <label className="block font-semibold">Adresa zakázky</label>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  className="flex-1 border px-4 py-2 rounded"
-                  value={adresa}
-                  onChange={(e) => setAdresa(e.target.value)}
-                />
-                <button
-                  type="button"
-                  onClick={spocitatVzdalenost}
-                  disabled={loadingKm}
-                  aria-busy={loadingKm}
-                  className={`bg-blue-600 text-white px-4 py-2 rounded ${loadingKm ? "opacity-60 cursor-not-allowed" : ""}`}
-                >
-                  {loadingKm ? "Počítám…" : "Zjistit km"}
-                </button>
-              </div>
-              {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
-            </div>
+      )}
+    </div>
 
-            
+    {/* 5. Zvolte termín */}
+    <div>
+      <label className="block font-semibold">Zvolte termín</label>
+      <Calendar
+        selectRange
+        className="brand-calendar"
+        tileDisabled={({ date }) => occupiedSet.has(formatLocalDate(date))}
+        onChange={(range) => {
+          if (Array.isArray(range) && range.length === 2) {
+            setDatumOd(formatLocalDate(range[0]));
+            setDatumDo(formatLocalDate(range[1]));
+          }
+        }}
+      />
+      {datumOd && datumDo && (
+        <p className="text-sm mt-2 text-gray-600">
+          Vybraný termín: {datumOd} až {datumDo}
+        </p>
+      )}
+    </div>
 
-            <div>
-              <label className="block font-semibold">Zvolte termín</label>
-              <Calendar
-                selectRange
-                className="brand-calendar"
-                tileDisabled={({ date }) => occupiedSet.has(formatLocalDate(date))}
-                onChange={(range) => {
-                  if (Array.isArray(range) && range.length === 2) {
-                    setDatumOd(formatLocalDate(range[0]));
-                    setDatumDo(formatLocalDate(range[1]));
-                  }
-                }}
-              />
-              {datumOd && datumDo && (
-                <p className="text-sm mt-2 text-gray-600">
-                  Vybraný termín: {datumOd} až {datumDo}
-                </p>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              disabled={sending}
-              aria-busy={sending}
-              className={`w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400 ${sending ? "opacity-60 cursor-not-allowed" : ""}`}
-            >
-              {sending ? "Odesílám…" : "ODESLAT OBJEDNÁVKU"}
-            </button>
-            {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
-          </form>
-        </section>
+    {/* 6. ODESLAT tlačítko */}
+    <button
+      type="submit"
+      disabled={sending}
+      aria-busy={sending}
+      className={`w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400 ${sending ? "opacity-60 cursor-not-allowed" : ""}`}
+    >
+      {sending ? "Odesílám…" : "ODESLAT OBJEDNÁVKU"}
+    </button>
+    {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
+  </form>
+</section>
 
         {/* Footer */}
         <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
