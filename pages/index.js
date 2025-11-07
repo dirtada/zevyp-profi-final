@@ -53,7 +53,7 @@ function Header() {
 
           <a
             href="tel:+420777123456"
-            aria-label="Zavolat +420 777 123 456"
+            aria-label="Zavolat +420 725 319 300"
             className="inline-flex items-center gap-2 bg-white/90 hover:bg-white text-[#2f3237] font-semibold px-4 py-2 rounded-full shadow-sm ring-1 ring-black/10 transition whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2f3237] focus-visible:ring-offset-[#f9c600]"
           >
             <PhoneIcon className="w-5 h-5" />
@@ -206,7 +206,7 @@ export default function Home() {
       "addressCountry": "CZ"
     },
     "areaServed": ["Praha", "Středočeský kraj"],
-    "description": "Profesionální zemní a výkopové práce minibagrem v Praze a okolí. Výkopy základů, zásypy, úpravy terénu.",
+    "description": "Profesionální zemní a výkopové práce minibagrem v Karlových Varech, Sokolově a okolí.",
     "geo": { "@type": "GeoCoordinates", "latitude": 50.181, "longitude": 12.634 } // volitelně – klidně smaž, pokud nechceš
   };
 
@@ -216,7 +216,7 @@ export default function Home() {
         <title>Zemní a výkopové práce Praha a okolí | Zevyp.cz</title>
         <meta
           name="description"
-          content="Zemní a výkopové práce minibagrem Hitachi – Praha a okolí. Výkopy základů, zásypy, úpravy terénu. Rychle a spolehlivě. Zavolejte +420 777 123 456."
+          content="Zemní a výkopové práce minibagrem Hitachi – Karlovy Vary, Sokolov a okolí. Výkopy základů, zásypy, úpravy terénu. Rychle a spolehlivě. Zavolejte +420 725 319 300."
         />
         <meta name="robots" content="index,follow" />
         <link rel="canonical" href="https://www.zevyp.cz/" />
@@ -226,10 +226,10 @@ export default function Home() {
         <meta property="og:locale" content="cs_CZ" />
         <meta property="og:site_name" content="Zevyp.cz" />
         <meta property="og:url" content="https://www.zevyp.cz/" />
-        <meta property="og:title" content="Zemní a výkopové práce Praha a okolí | Zevyp.cz" />
+        <meta property="og:title" content="Zemní a výkopové práce Karlovy Vary, Sokolov a okolí | Zevyp.cz" />
         <meta
           property="og:description"
-          content="Výkopové a zemní práce minibagrem Hitachi v Praze a okolí. Výkopy základů, zásypy, zarovnání terénu."
+          content="Výkopové a zemní práce minibagrem Hitachi v Karlových Varech, Sokolově a okolí."
         />
         <meta property="og:image" content="https://www.zevyp.cz/images/bagr-hero.png" />
         <meta property="og:image:width" content="1200" />
@@ -237,10 +237,10 @@ export default function Home() {
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Zemní a výkopové práce Praha a okolí | Zevyp.cz" />
+        <meta name="twitter:title" content="Zemní a výkopové práce Karlovy Vary, Sokolov a okolí | Zevyp.cz" />
         <meta
           name="twitter:description"
-          content="Výkopové a zemní práce minibagrem Hitachi v Praze a okolí. Zavolejte +420 777 123 456."
+          content="Výkopové a zemní práce minibagrem Hitachi v Karlových Varech, Sokolově a okolí. Zavolejte +420 725 319 300."
         />
         <meta name="twitter:image" content="https://www.zevyp.cz/images/bagr-hero.png" />
 
@@ -264,7 +264,7 @@ export default function Home() {
               <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8 max-w-[60ch]">
                 Provádíme{" "}
                 <span className="text-[#f9c600] font-semibold">spolehlivé zemní a výkopové práce</span>{" "}
-                minibagrem Hitachi v Praze a okolí.
+                minibagrem Hitachi v Karlových Varech, Sokolově a okolí.
               </p>
               <a
                 href="#kontakt"
@@ -518,11 +518,11 @@ export default function Home() {
                   <td className="py-4 px-6 text-right font-bold">30 Kč / km</td>
                 </tr>
                 <tr>
-                  <td className="py-4 px-6 font-semibold">Výkop základů do 1 m</td>
-                  <td className="py-4 px-6 text-right font-bold">od 66 Kč / m²</td>
+                  <td className="py-4 px-6 font-semibold">Terenní úpravy</td>
+                  <td className="py-4 px-6 text-right font-bold">dle domluvy</td>
                 </tr>
                 <tr>
-                  <td className="py-4 px-6 font-semibold">Zásypy, zarovnání</td>
+                  <td className="py-4 px-6 font-semibold">Odvoz a likvidace zeminy</td>
                   <td className="py-4 px-6 text-right font-bold">dle domluvy</td>
                 </tr>
               </tbody>
@@ -549,7 +549,7 @@ export default function Home() {
                 className="w-full border px-4 py-3 rounded min-h-[140px] resize-y placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 value={popisZK}
                 onChange={(e) => setpopisZK(e.target.value)}
-                placeholder={`Např.: Poptávám výkop rýhy pro elektriku cca 12 m, hloubka 70 cm, šířka 30 cm.\nOdvoz přebytečné zeminy, zarovnání terénu. Místo: Praha 5.`}
+                placeholder={`Např.: Poptávám výkop rýhy pro elektriku cca 12 m, hloubka 70 cm, šířka 30 cm.\nOdvoz přebytečné zeminy, zarovnání terénu. Místo: Karlovy Vary.`}
               />
               <p className="text-xs text-gray-500 mt-1">
                 Tip: uveďte rozměry (délka/šířka/hloubka), místo realizace a případně odvoz zeminy.
@@ -588,50 +588,7 @@ export default function Home() {
               {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
             </div>
 
-            <div>
-              <label className="block font-semibold">Máte informace o typu a rozměru zeminy?</label>
-              <div className="grid gap-2 mt-2">
-                <button
-                  onClick={() => setZnameRozmery(false)}
-                  type="button"
-                  className={`p-3 border rounded ${!znameRozmery ? "bg-yellow-100 border-yellow-500" : ""}`}
-                >
-                  Ne, neznám rozměry
-                </button>
-                <button
-                  onClick={() => setZnameRozmery(true)}
-                  type="button"
-                  className={`p-3 border rounded ${znameRozmery ? "bg-yellow-100 border-yellow-500" : ""}`}
-                >
-                  Ano, znám rozměr a typ zeminy
-                </button>
-              </div>
-
-              {znameRozmery && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <div>
-                    <label className="block font-semibold">Typ zeminy</label>
-                    <input
-                      type="text"
-                      className="w-full border px-4 py-2 rounded"
-                      value={typZeminy}
-                      onChange={(e) => setTypZeminy(e.target.value)}
-                      placeholder="např. jíl, hlína, štěrk"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-semibold">Rozměr zeminy</label>
-                    <input
-                      type="text"
-                      className="w-full border px-4 py-2 rounded"
-                      value={rozmerZeminy}
-                      onChange={(e) => setRozmerZeminy(e.target.value)}
-                      placeholder="např. 15 m³"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
+            
 
             <div>
               <label className="block font-semibold">Zvolte termín</label>
