@@ -302,8 +302,8 @@ export default function Home() {
                     <BuildingOffice2Icon className="w-7 h-7 text-[#2f3237]" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-[#2f3237]">Výkopy základů</h3>
-                    <p className="mt-1 text-sm text-gray-600">Přesné a rychlé výkopy základů.</p>
+                    <h3 className="text-lg font-semibold text-[#2f3237]">Výkopové práce</h3>
+                    <p className="mt-1 text-sm text-gray-600">Profesionální výkopové práce na klíč.</p>
                   </div>
                 </div>
               </article>
@@ -314,8 +314,8 @@ export default function Home() {
                     <TruckIcon className="w-7 h-7 text-[#2f3237]" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-[#2f3237]">Zásypy a zasypávání</h3>
-                    <p className="mt-1 text-sm text-gray-600">Kvalitní a efektivní zásypy.</p>
+                    <h3 className="text-lg font-semibold text-[#2f3237]">Terenní úpravy</h3>
+                    <p className="mt-1 text-sm text-gray-600">Efektivní a rychlé terenní úpravy i složitého terénu.</p>
                   </div>
                 </div>
               </article>
@@ -326,8 +326,8 @@ export default function Home() {
                     <SquaresPlusIcon className="w-7 h-7 text-[#2f3237]" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-[#2f3237]">Zarovnání terénu</h3>
-                    <p className="mt-1 text-sm text-gray-600">Úpravy terénu a příjezdových cest.</p>
+                    <h3 className="text-lg font-semibold text-[#2f3237]">Stavební práce</h3>
+                    <p className="mt-1 text-sm text-gray-600">Pokládání zámkové dlažby, realizace kanalizací a mnoho další.</p>
                   </div>
                 </div>
               </article>
