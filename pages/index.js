@@ -192,9 +192,9 @@ export default function Home() {
   const jsonLdLocalBusiness = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": "https://www.zevyp.cz/#company",
+    "@id": "https://www.zevyp-kp.cz/#company",
     "name": "Zevyp – Zemní a výkopové práce",
-    "url": "https://www.zevyp.cz/",
+    "url": "https://www.zevyp-kp.cz/",
     "telephone": "+420777123456",
     "image": "https://www.zevyp.cz/images/bagr-hero.png",
     "priceRange": "$$",
@@ -213,7 +213,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Zemní a výkopové práce Karlovarský kraj a okolí | Zevyp.cz</title>
+        <title>Zemní a výkopové práce Karlovarský kraj a okolí | Zevyp-kp.cz</title>
         <meta
           name="description"
           content="Zemní a výkopové práce minibagrem Hitachi – Karlovarský kraj a okolí. Výkopy základů, zásypy, úpravy terénu. Rychle a spolehlivě. Zavolejte +420 725 319 300."
