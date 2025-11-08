@@ -205,31 +205,31 @@ export default function Home() {
       "postalCode": "357 09",
       "addressCountry": "CZ"
     },
-    "areaServed": ["Praha", "Středočeský kraj"],
-    "description": "Profesionální zemní a výkopové práce minibagrem v Karlových Varech, Sokolově a okolí.",
+    "areaServed": ["Karlovy Vary", "Karlovarský kraj"],
+    "description": "Profesionální zemní a výkopové práce minibagrem v Karlovarském kraji a okolí.",
     "geo": { "@type": "GeoCoordinates", "latitude": 50.181, "longitude": 12.634 } // volitelně – klidně smaž, pokud nechceš
   };
 
   return (
     <>
       <Head>
-        <title>Zemní a výkopové práce Praha a okolí | Zevyp.cz</title>
+        <title>Zemní a výkopové práce Karlovarský kraj a okolí | Zevyp.cz</title>
         <meta
           name="description"
-          content="Zemní a výkopové práce minibagrem Hitachi – Karlovy Vary, Sokolov a okolí. Výkopy základů, zásypy, úpravy terénu. Rychle a spolehlivě. Zavolejte +420 725 319 300."
+          content="Zemní a výkopové práce minibagrem Hitachi – Karlovarský kraj a okolí. Výkopy základů, zásypy, úpravy terénu. Rychle a spolehlivě. Zavolejte +420 725 319 300."
         />
         <meta name="robots" content="index,follow" />
-        <link rel="canonical" href="https://www.zevyp.cz/" />
+        <link rel="canonical" href="https://www.zevyp-kp.cz/" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="cs_CZ" />
-        <meta property="og:site_name" content="Zevyp.cz" />
-        <meta property="og:url" content="https://www.zevyp.cz/" />
-        <meta property="og:title" content="Zemní a výkopové práce Karlovy Vary, Sokolov a okolí | Zevyp.cz" />
+        <meta property="og:site_name" content="zevyp-kp.cz" />
+        <meta property="og:url" content="https://www.zevyp-kp.cz/" />
+        <meta property="og:title" content="Zemní a výkopové práce Karlovarský kraj a okolí | Zevyp.cz" />
         <meta
           property="og:description"
-          content="Výkopové a zemní práce minibagrem Hitachi v Karlových Varech, Sokolově a okolí."
+          content="Výkopové a zemní práce minibagrem Hitachi v Karlovarském kraji a okolí."
         />
         <meta property="og:image" content="https://www.zevyp.cz/images/bagr-hero.png" />
         <meta property="og:image:width" content="1200" />
@@ -237,10 +237,10 @@ export default function Home() {
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Zemní a výkopové práce Karlovy Vary, Sokolov a okolí | Zevyp.cz" />
+        <meta name="twitter:title" content="Zemní a výkopové práce Karlovarský kraj a okolí | Zevyp.cz" />
         <meta
           name="twitter:description"
-          content="Výkopové a zemní práce minibagrem Hitachi v Karlových Varech, Sokolově a okolí. Zavolejte +420 725 319 300."
+          content="Výkopové a zemní práce minibagrem Hitachi v Karlovarském kraji a okolí. Zavolejte +420 725 319 300."
         />
         <meta name="twitter:image" content="https://www.zevyp.cz/images/bagr-hero.png" />
 
@@ -264,7 +264,7 @@ export default function Home() {
               <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8 max-w-[60ch]">
                 Provádíme{" "}
                 <span className="text-[#f9c600] font-semibold">spolehlivé zemní a výkopové práce</span>{" "}
-                minibagrem Hitachi v Karlových Varech, Sokolově a okolí.
+                minibagrem Hitachi v Karlovarském kraji a okolí.
               </p>
               <a
                 href="#kontakt"
