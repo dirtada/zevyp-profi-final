@@ -288,52 +288,84 @@ export default function Home() {
           </div>
         </main>
 
-        {/* SLUŽBY – minimalistická verze */}
-        <section id="sluzby" className="scroll-mt-24 bg-[#f9c600] text-black py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold mb-10 text-[#2f3237] text-center">
-              NAŠE SLUŽBY
-            </h2>
+{/* SLUŽBY – verze s videem */}
+<section id="sluzby" className="scroll-mt-24 bg-[#f9c600] text-black py-16">
+  <div className="container mx-auto px-4">
+    <h2 className="text-2xl md:text-3xl font-bold mb-10 text-[#2f3237] text-center">
+      NAŠE SLUŽBY
+    </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-colors hover:ring-black/20">
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 rounded-lg bg-yellow-100 p-3">
-                    <BuildingOffice2Icon className="w-7 h-7 text-[#2f3237]" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-[#2f3237]">Výkopové práce</h3>
-                    <p className="mt-1 text-sm text-gray-600">Profesionální výkopové práce na klíč.</p>
-                  </div>
-                </div>
-              </article>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      {/* 1. Výkopové práce */}
+      <article 
+        className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
+        onMouseEnter={(e) => e.currentTarget.querySelector('video')?.play()}
+        onMouseLeave={(e) => e.currentTarget.querySelector('video')?.pause()}
+      >
+        <div>
+          <h3 className="text-lg font-semibold text-[#2f3237]">Výkopové práce</h3>
+          <p className="mt-1 text-sm text-gray-600">Profesionální výkopové práce na klíč.</p>
+        </div>
 
-              <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-colors hover:ring-black/20">
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 rounded-lg bg-yellow-100 p-3">
-                    <TruckIcon className="w-7 h-7 text-[#2f3237]" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-[#2f3237]">Terenní úpravy</h3>
-                    <p className="mt-1 text-sm text-gray-600">Efektivní a rychlé terenní úpravy i složitého terénu.</p>
-                  </div>
-                </div>
-              </article>
+        <video 
+          src="/videos/vykopove_prace.mp4" 
+          loop 
+          muted 
+          playsInline
+          className="w-full rounded-lg mt-4 aspect-video object-cover"
+        >
+          Váš prohlížeč nepodporuje přehrávání videa.
+        </video>
+      </article>
 
-              <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-colors hover:ring-black/20">
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 rounded-lg bg-yellow-100 p-3">
-                    <SquaresPlusIcon className="w-7 h-7 text-[#2f3237]" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-[#2f3237]">Stavební práce</h3>
-                    <p className="mt-1 text-sm text-gray-600">Pokládání zámkové dlažby, realizace kanalizací a mnoho další.</p>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
+      {/* 2. Terenní úpravy */}
+      <article 
+        className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
+        onMouseEnter={(e) => e.currentTarget.querySelector('video')?.play()}
+        onMouseLeave={(e) => e.currentTarget.querySelector('video')?.pause()}
+      >
+        <div>
+          <h3 className="text-lg font-semibold text-[#2f3237]">Terenní úpravy</h3>
+          <p className="mt-1 text-sm text-gray-600">Efektivní a rychlé terenní úpravy i složitého terénu.</p>
+        </div>
+
+        <video 
+          src="/videos/terenni_upravy.mp4" 
+          loop 
+          muted 
+          playsInline
+          className="w-full rounded-lg mt-4 aspect-video object-cover"
+        >
+          Váš prohlížeč nepodporuje přehrávání videa.
+        </video>
+      </article>
+
+      {/* 3. Stavební práce */}
+      <article 
+        className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
+        onMouseEnter={(e) => e.currentTarget.querySelector('video')?.play()}
+        onMouseLeave={(e) => e.currentTarget.querySelector('video')?.pause()}
+      >
+        <div>
+          <h3 className="text-lg font-semibold text-[#2f3237]">Stavební práce</h3>
+          <p className="mt-1 text-sm text-gray-600">Pokládání zámkové dlažby, realizace kanalizací a mnoho další.</p>
+        </div>
+        
+        <video 
+          src="/videos/stavebni_prace.mp4" 
+          loop 
+          muted 
+          playsInline
+          className="w-full rounded-lg mt-4 aspect-video object-cover"
+        >
+          Váš prohlížeč nepodporuje přehrávání videa.
+        </video>
+      </article>
+
+    </div>
+  </div>
+</section>
 
         {/* TECHNIKA */}
         <section id="technika" className="scroll-mt-24 bg-white text-black py-16 relative">
