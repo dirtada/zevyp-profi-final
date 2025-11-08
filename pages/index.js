@@ -288,7 +288,7 @@ export default function Home() {
           </div>
         </main>
 
-{/* SLUŽBY – verze s videem */}
+{/* SLUŽBY – verze s GIFy */}
 <section id="sluzby" className="scroll-mt-24 bg-[#f9c600] text-black py-16">
   <div className="container mx-auto px-4">
     <h2 className="text-2xl md:text-3xl font-bold mb-10 text-[#2f3237] text-center">
@@ -300,67 +300,53 @@ export default function Home() {
       {/* 1. Výkopové práce */}
       <article 
         className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
-        onMouseEnter={(e) => e.currentTarget.querySelector('video')?.play()}
-        onMouseLeave={(e) => e.currentTarget.querySelector('video')?.pause()}
+        /* Odstraněny onMouseEnter a onMouseLeave, protože <img> přehrává GIF automaticky */
       >
         <div>
           <h3 className="text-lg font-semibold text-[#2f3237]">Výkopové práce</h3>
           <p className="mt-1 text-sm text-gray-600">Profesionální výkopové práce na klíč.</p>
         </div>
 
-        <video 
-          src="/videos/vykopove_prace.gif" 
-          loop 
-          muted 
-          playsInline
+        {/* ÚPRAVA: Použit <img> tag místo <video> */}
+        <img 
+          src="/videos/vykopove_prace.gif" /* Cesta k vašemu GIFu */
+          alt="Animace výkopových prací"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
-        >
-          Váš prohlížeč nepodporuje přehrávání videa.
-        </video>
+        />
       </article>
 
       {/* 2. Terenní úpravy */}
       <article 
         className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
-        onMouseEnter={(e) => e.currentTarget.querySelector('video')?.play()}
-        onMouseLeave={(e) => e.currentTarget.querySelector('video')?.pause()}
       >
         <div>
           <h3 className="text-lg font-semibold text-[#2f3237]">Terenní úpravy</h3>
           <p className="mt-1 text-sm text-gray-600">Efektivní a rychlé terenní úpravy i složitého terénu.</p>
         </div>
 
-        <video 
-          src="/videos/terenni_upravy.gif" 
-          loop 
-          muted 
-          playsInline
+        {/* ÚPRAVA: Použit <img> tag místo <video> */}
+        <img 
+          src="/videos/terenni_upravy.gif" /* Cesta k vašemu GIFu */
+          alt="Animace terenních úprav"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
-        >
-          Váš prohlížeč nepodporuje přehrávání videa.
-        </video>
+        />
       </article>
 
       {/* 3. Stavební práce */}
       <article 
         className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
-        onMouseEnter={(e) => e.currentTarget.querySelector('video')?.play()}
-        onMouseLeave={(e) => e.currentTarget.querySelector('video')?.pause()}
       >
         <div>
           <h3 className="text-lg font-semibold text-[#2f3237]">Stavební práce</h3>
           <p className="mt-1 text-sm text-gray-600">Pokládání zámkové dlažby, realizace kanalizací a mnoho další.</p>
         </div>
         
-        <video 
-          src="/videos/stavebni_prace.gif" 
-          loop 
-          muted 
-          playsInline
+        {/* ÚPRAVA: Použit <img> tag místo <video> */}
+        <img 
+          src="/videos/stavebni_prace.gif" /* Cesta k vašemu GIFu */
+          alt="Animace stavebních prací"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
-        >
-          Váš prohlížeč nepodporuje přehrávání videa.
-        </video>
+        />
       </article>
 
     </div>
