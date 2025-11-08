@@ -541,25 +541,14 @@ export default function Home() {
 
   <form
     onSubmit={(e) => { e.preventDefault(); odeslat(); }}
+    /* Ponecháváme 'space-y-5', protože většina prvků je stále pod sebou */
     className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800"
   >
     
-    {/* 1. Popis požadovaných prací */}
-    <div>
-      <label className="block font-semibold">Popis požadovaných prací</label>
-      <textarea
-        className="w-full border px-4 py-3 rounded min-h-[140px] resize-y placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-        value={popisZK}
-        onChange={(e) => setpopisZK(e.target.value)}
-        placeholder={`Např.: Poptávám výkop rýhy pro elektriku cca 12 m, hloubka 70 cm, šířka 30 cm.\nOdvoz přebytečné zeminy, zarovnání terénu. Místo: Karlovy Vary.`}
-      />
-      <p className="text-xs text-gray-500 mt-1">
-        Tip: uveďte rozměry (délka/šířka/hloubka), místo realizace a případně odvoz zeminy.
-      </p>
-    </div>
-
-    {/* 2. E-mail a Telefon: ZABALENO V GRIDU PRO RESPONZIVNÍ ROZLOŽENÍ */}
-    <div className="grid **grid-cols-1 md:grid-cols-2 gap-4**">
+    {/* 1. E-mail a Telefon: ZABALENO V GRIDU PRO RESPONZIVNÍ ROZLOŽENÍ
+        (Původně bylo jako bod 2, nyní je první)
+    */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       
       {/* E-mail (bude 1. sloupec na PC) */}
       <div>
@@ -567,8 +556,7 @@ export default function Home() {
         <input 
           type="email" 
           className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          // POZNÁMKA: Chybí useState/onChange pro E-mail. Doplňte si:
-          // value={email} onChange={(e) => setEmail(e.target.value)} 
+          // POZNÁMKA: Chybí useState/onChange pro E-mail.
         />
       </div>
 
@@ -578,13 +566,12 @@ export default function Home() {
         <input 
           type="tel" 
           className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" 
-          // POZNÁMKA: Chybí useState/onChange pro Telefon. Doplňte si:
-          // value={telefon} onChange={(e) => setTelefon(e.target.value)} 
+          // POZNÁMKA: Chybí useState/onChange pro Telefon.
         />
       </div>
     </div>
     
-    {/* 3. Adresa zakázky */}
+    {/* 2. Adresa zakázky (Původně bod 3) */}
     <div>
       <label className="block font-semibold">Adresa zakázky</label>
       <div className="flex gap-2">
@@ -606,30 +593,57 @@ export default function Home() {
       </div>
       {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
     </div>
+
+    {/* 3. NOVÝ GRID PRO KALENDÁŘ A POPIS PRACÍ 
+        - Na mobilu (grid-cols-1): Bude vše pod sebou.
+        - Na PC (md:grid-cols-2): Budou vedle sebe.
+    */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      {/* 3a. LEVÝ SLOUPEC: Kalendář (Původně bod 5) */}
+      <div>
+        <label className="block font-semibold">Zvolte termín</label>
+        <Calendar
+          selectRange
+          className="brand-calendar"
+          tileDisabled={({ date }) => occupiedSet.has(formatLocalDate(date))}
+          onChange={(range) => {
+            if (Array.isArray(range) && range.length === 2) {
+              setDatumOd(formatLocalDate(range[0]));
+              setDatumDo(formatLocalDate(range[1]));
+            }
+          }}
+        />
+        {datumOd && datumDo && (
+          <p className="text-sm mt-2 text-[#000000]">
+            Vybraný termín: {datumOd} až {datumDo}
+          </p>
+        )}
+      </div>
+
+      {/* 3b. PRAVÝ SLOUPEC: Popis požadovaných prací (PŘESUNUTO ZDE) */}
+      {/* ÚPRAVA: 'flex flex-col h-full' zajistí, že se tento div
+        snaží být stejně vysoký jako kalendář, a 'flex-grow' na textarea
+        způsobí, že textové pole vyplní dostupnou výšku.
+      */}
+      <div className="flex flex-col h-full">
+        <label className="block font-semibold">Popis požadovaných prací</label>
+        <textarea
+          className="w-full border px-4 py-3 rounded min-h-[140px] resize-y placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 flex-grow"
+          value={popisZK}
+          onChange={(e) => setpopisZK(e.target.value)}
+          placeholder={`Např.: Poptávám výkop rýhy pro elektriku cca 12 m, hloubka 70 cm, šířka 30 cm.\nOdvoz přebytečné zeminy, zarovnání terénu. Místo: Karlovy Vary.`}
+        />
+        <p className="text-xs text-gray-500 mt-1">
+          Tip: uveďte rozměry (délka/šířka/hloubka), místo realizace a případně odvoz zeminy.
+        </p>
+      </div>
+
+    </div> 
+    {/* KONEC GRIDU PRO KALENDÁŘ A POPIS */}
     
 
-    {/* 5. Zvolte termín */}
-    <div>
-      <label className="block font-semibold">Zvolte termín</label>
-      <Calendar
-        selectRange
-        className="brand-calendar"
-        tileDisabled={({ date }) => occupiedSet.has(formatLocalDate(date))}
-        onChange={(range) => {
-          if (Array.isArray(range) && range.length === 2) {
-            setDatumOd(formatLocalDate(range[0]));
-            setDatumDo(formatLocalDate(range[1]));
-          }
-        }}
-      />
-      {datumOd && datumDo && (
-        <p className="text-sm mt-2 text-[#000000]">
-          Vybraný termín: {datumOd} až {datumDo}
-        </p>
-      )}
-    </div>
-
-    {/* 6. ODESLAT tlačítko */}
+    {/* 4. ODESLAT tlačítko (Původně bod 6) */}
     <button
       type="submit"
       disabled={sending}
@@ -639,9 +653,9 @@ export default function Home() {
       {sending ? "Odesílám…" : "ODESLAT NEZÁVAZNĚ OBJEDNÁVKU"}
     </button>
     {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
+
   </form>
 </section>
-
         {/* Footer */}
         <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
           Zemní a Výkopové Práce • IČO:73377619 • kontakt@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
