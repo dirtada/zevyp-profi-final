@@ -57,7 +57,7 @@ function Header() {
             className="inline-flex items-center gap-2 bg-white/90 hover:bg-white text-[#2f3237] font-semibold px-4 py-2 rounded-full shadow-sm ring-1 ring-black/10 transition whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2f3237] focus-visible:ring-offset-[#f9c600]"
           >
             <PhoneIcon className="w-5 h-5" />
-            <span>+420&nbsp;725&nbsp;531&nbsp;300</span>
+            <span>+420&nbsp;725&nbsp;319&nbsp;300</span>
           </a>
         </div>
 
@@ -636,7 +636,7 @@ export default function Home() {
       aria-busy={sending}
       className={`w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400 ${sending ? "opacity-60 cursor-not-allowed" : ""}`}
     >
-      {sending ? "Odesílám…" : "ODESLAT OBJEDNÁVKU"}
+      {sending ? "Odesílám…" : "ODESLAT NEZÁVAZNĚ OBJEDNÁVKU"}
     </button>
     {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
   </form>
