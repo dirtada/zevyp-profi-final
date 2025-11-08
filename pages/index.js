@@ -309,7 +309,7 @@ export default function Home() {
         </div>
 
         <video 
-          src="/videos/vykopove_prace.mp4" 
+          src="/videos/vykopove_prace.gif" 
           loop 
           muted 
           playsInline
@@ -331,7 +331,7 @@ export default function Home() {
         </div>
 
         <video 
-          src="/videos/terenni_upravy.mp4" 
+          src="/videos/terenni_upravy.gif" 
           loop 
           muted 
           playsInline
@@ -353,7 +353,7 @@ export default function Home() {
         </div>
         
         <video 
-          src="/videos/stavebni_prace.mp4" 
+          src="/videos/stavebni_prace.gif" 
           loop 
           muted 
           playsInline
