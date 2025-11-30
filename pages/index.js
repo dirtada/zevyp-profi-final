@@ -288,109 +288,95 @@ export default function Home() {
           </div>
         </main>
 
-{/* SLUŽBY – verze s GIFy */}
 <section id="sluzby" className="scroll-mt-24 bg-[#f9c600] text-black py-16">
   <div className="container mx-auto px-4">
     <h2 className="text-2xl md:text-3xl font-bold mb-10 text-[#2f3237] text-center">
       NAŠE SLUŽBY
     </h2>
 
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      
-      {/* 1. Výkopové práce */}
-      <article 
-        className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
-        /* Odstraněny onMouseEnter a onMouseLeave, protože <img> přehrává GIF automaticky */
-      >
-        <div>
-          <h3 className="text-lg font-semibold text-[#2f3237]">Výkopové práce</h3>
-          <p className="mt-1 text-sm text-gray-600">Výkopy základových pasů a patek, výkopy pro inženýrské sítě, bazény, jímky a další.</p>
-        </div>
+    {/* ---------- PRVNÍ ŘADA (2 VĚTŠÍ BOXY) ---------- */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
 
-        {/* ÚPRAVA: Použit <img> tag místo <video> */}
+      {/* 1. Výkopové práce */}
+      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-8 shadow-sm hover:shadow-lg transition-all">
+        <h3 className="text-xl font-semibold text-[#2f3237]">Výkopové práce</h3>
+        <p className="mt-2 text-sm text-gray-600">
+          Výkopy základových pasů a patek, výkopy pro inženýrské sítě, bazény, jímky a další.
+        </p>
+
         <img 
-          src="/videos/vykopove_prace.gif" /* Cesta k vašemu GIFu */
+          src="/videos/vykopove_prace.gif"
           alt="Animace výkopových prací"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
         />
       </article>
 
-      {/* 2. Terenní úpravy */}
-      <article 
-        className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
-      >
-        <div>
-          <h3 className="text-lg font-semibold text-[#2f3237]">Terenní úpravy</h3>
-          <p className="mt-1 text-sm text-gray-600">Svahování, zarovnávání a skrývka ornice.
-Příprava pozemku pro stavbu nebo finální úpravu terénu</p>
-        </div>
+      {/* 2. Terénní úpravy */}
+      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-8 shadow-sm hover:shadow-lg transition-all">
+        <h3 className="text-xl font-semibold text-[#2f3237]">Terénní úpravy</h3>
+        <p className="mt-2 text-sm text-gray-600">
+          Svahování, zarovnávání a skrývka ornice. Příprava pozemku pro stavbu nebo finální úpravu terénu.
+        </p>
 
-        {/* ÚPRAVA: Použit <img> tag místo <video> */}
         <img 
-          src="/videos/terenni_upravy.gif" /* Cesta k vašemu GIFu */
+          src="/videos/terenni_upravy.gif"
           alt="Animace terenních úprav"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
         />
       </article>
 
+    </div>
+
+
+    {/* ---------- DRUHÁ ŘADA (3 MENŠÍ BOXY) ---------- */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
       {/* 3. Stavební práce */}
-      <article 
-        className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
-      >
-        <div>
-          <h3 className="text-lg font-semibold text-[#2f3237]">Stavební práce</h3>
-          <p className="mt-1 text-sm text-gray-600">Stavební příprava pro pokládky chodníků, dlažby a dalších povrchů.</p>
-        </div>
-        
-        {/* ÚPRAVA: Použit <img> tag místo <video> */}
+      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-lg transition-all">
+        <h3 className="text-lg font-semibold text-[#2f3237]">Stavební práce</h3>
+        <p className="mt-1 text-sm text-gray-600">
+          Stavební příprava pro pokládky chodníků, dlažby a dalších povrchů.
+        </p>
+
         <img 
-          src="/videos/stavebni_prace.gif" /* Cesta k vašemu GIFu */
+          src="/videos/stavebni_prace.gif"
           alt="Animace stavebních prací"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
         />
       </article>
 
-            {/* 4. Bourací práce */}
-      <article 
-        className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
-      >
-        <div>
-          <h3 className="text-lg font-semibold text-[#2f3237]">Bourací práce</h3>
-          <p className="mt-1 text-sm text-gray-600">Bourání menších objektů, betonových konstrukcí, základů, plotů a zpevněných ploch.</p>
-        </div>
-        
-        {/* ÚPRAVA: Použit <img> tag místo <video> */}
+      {/* 4. Bourací práce */}
+      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-lg transition-all">
+        <h3 className="text-lg font-semibold text-[#2f3237]">Bourací práce</h3>
+        <p className="mt-1 text-sm text-gray-600">
+          Bourání menších objektů, betonových konstrukcí, základů, plotů a zpevněných ploch.
+        </p>
+
         <img 
-          src="/images/bourani.png" /* Cesta k vašemu GIFu */
-          alt="Animace stavebních prací"
+          src="/images/bourani.png"
+          alt="Animace bouracích prací"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
         />
       </article>
 
+      {/* 5. Bagr s vrtákem */}
+      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-lg transition-all">
+        <h3 className="text-lg font-semibold text-[#2f3237]">Bagr s vrtákem</h3>
+        <p className="mt-1 text-sm text-gray-600">
+          Vrtání děr pro plotové sloupky, patky, piloty a další drobné stavební prvky.
+        </p>
 
-            {/* 5. Bagr s vrtakem */}
-      <article 
-        className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
-      >
-        <div>
-          <h3 className="text-lg font-semibold text-[#2f3237]">Bagr s vrtákem</h3>
-          <p className="mt-1 text-sm text-gray-600">Bagr s vrtákem
-Vrtání děr pro plotové sloupky, základové patky, piloty a další drobné stavební prvky.
-Vhodné pro přípravu plotů, pergol nebo drobných základů.</p>
-        </div>
-        
-        {/* ÚPRAVA: Použit <img> tag místo <video> */}
         <img 
-          src="/images/vrtani.png" /* Cesta k vašemu GIFu */
-          alt="Animace stavebních prací"
+          src="/images/vrtani.png"
+          alt="Animace vrtání"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
         />
       </article>
-
 
     </div>
   </div>
 </section>
+
 
         {/* TECHNIKA */}
         <section id="technika" className="scroll-mt-24 bg-white text-black py-16 relative">
