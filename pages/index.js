@@ -701,7 +701,7 @@ export default function Home() {
 </section>
         {/* Footer */}
         <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
-          Zemní a Výkopové Práce • IČO:73377619 • kontakt@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
+          Zemní a Výkopové Práce • IČO:73377619 • Milan Popov • kontakt@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
         </footer>
       </div>
     </>
