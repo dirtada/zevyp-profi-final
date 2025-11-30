@@ -304,7 +304,7 @@ export default function Home() {
       >
         <div>
           <h3 className="text-lg font-semibold text-[#2f3237]">Výkopové práce</h3>
-          <p className="mt-1 text-sm text-gray-600">Profesionální výkopové práce na klíč.</p>
+          <p className="mt-1 text-sm text-gray-600">Výkopy základových pasů a patek, výkopy pro inženýrské sítě, bazény, jímky a další.</p>
         </div>
 
         {/* ÚPRAVA: Použit <img> tag místo <video> */}
@@ -321,7 +321,8 @@ export default function Home() {
       >
         <div>
           <h3 className="text-lg font-semibold text-[#2f3237]">Terenní úpravy</h3>
-          <p className="mt-1 text-sm text-gray-600">Efektivní a rychlé terenní úpravy i složitého terénu.</p>
+          <p className="mt-1 text-sm text-gray-600">Svahování, zarovnávání a skrývka ornice.
+Příprava pozemku pro stavbu nebo finální úpravu terénu</p>
         </div>
 
         {/* ÚPRAVA: Použit <img> tag místo <video> */}
@@ -338,7 +339,7 @@ export default function Home() {
       >
         <div>
           <h3 className="text-lg font-semibold text-[#2f3237]">Stavební práce</h3>
-          <p className="mt-1 text-sm text-gray-600">Pokládání zámkové dlažby, realizace kanalizací a mnoho další.</p>
+          <p className="mt-1 text-sm text-gray-600">Stavební příprava pro pokládky chodníků, dlažby a dalších povrchů.</p>
         </div>
         
         {/* ÚPRAVA: Použit <img> tag místo <video> */}
@@ -348,6 +349,44 @@ export default function Home() {
           className="w-full rounded-lg mt-4 aspect-video object-cover"
         />
       </article>
+
+            {/* 4. Bourací práce */}
+      <article 
+        className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
+      >
+        <div>
+          <h3 className="text-lg font-semibold text-[#2f3237]">Bourací práce</h3>
+          <p className="mt-1 text-sm text-gray-600">Bourání menších objektů, betonových konstrukcí, základů, plotů a zpevněných ploch.</p>
+        </div>
+        
+        {/* ÚPRAVA: Použit <img> tag místo <video> */}
+        <img 
+          src="/videos/stavebni_prace.gif" /* Cesta k vašemu GIFu */
+          alt="Animace stavebních prací"
+          className="w-full rounded-lg mt-4 aspect-video object-cover"
+        />
+      </article>
+
+
+            {/* 5. Bagr s vrtakem */}
+      <article 
+        className="rounded-2xl bg-white ring-1 ring-black/10 p-6 transition-all hover:ring-black/20 shadow-sm hover:shadow-lg"
+      >
+        <div>
+          <h3 className="text-lg font-semibold text-[#2f3237]">Bagr s vrtákem</h3>
+          <p className="mt-1 text-sm text-gray-600">Bagr s vrtákem
+Vrtání děr pro plotové sloupky, základové patky, piloty a další drobné stavební prvky.
+Vhodné pro přípravu plotů, pergol nebo drobných základů.</p>
+        </div>
+        
+        {/* ÚPRAVA: Použit <img> tag místo <video> */}
+        <img 
+          src="/videos/stavebni_prace.gif" /* Cesta k vašemu GIFu */
+          alt="Animace stavebních prací"
+          className="w-full rounded-lg mt-4 aspect-video object-cover"
+        />
+      </article>
+
 
     </div>
   </div>
