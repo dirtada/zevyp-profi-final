@@ -361,7 +361,7 @@ Příprava pozemku pro stavbu nebo finální úpravu terénu</p>
         
         {/* ÚPRAVA: Použit <img> tag místo <video> */}
         <img 
-          src="/videos/stavebni_prace.gif" /* Cesta k vašemu GIFu */
+          src="/images/bourani.png" /* Cesta k vašemu GIFu */
           alt="Animace stavebních prací"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
         />
@@ -381,7 +381,7 @@ Vhodné pro přípravu plotů, pergol nebo drobných základů.</p>
         
         {/* ÚPRAVA: Použit <img> tag místo <video> */}
         <img 
-          src="/videos/stavebni_prace.gif" /* Cesta k vašemu GIFu */
+          src="/images/vrtani.png" /* Cesta k vašemu GIFu */
           alt="Animace stavebních prací"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
         />
