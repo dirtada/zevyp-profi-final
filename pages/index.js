@@ -217,7 +217,6 @@ export default function Home() {
         />
         <meta name="robots" content="index,follow" />
         <link rel="canonical" href="https://www.zevyp-kp.cz/" />
-
         {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="cs_CZ" />
@@ -231,7 +230,6 @@ export default function Home() {
         <meta property="og:image" content="https://www.zevyp.cz/images/bagr-hero.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Zemní a výkopové práce Karlovarský kraj a okolí | Zevyp.cz" />
@@ -240,12 +238,21 @@ export default function Home() {
           content="Výkopové a zemní práce minibagrem Hitachi v Karlovarském kraji a okolí. Zavolejte +420 725 319 300."
         />
         <meta name="twitter:image" content="https://www.zevyp.cz/images/bagr-hero.png" />
-
         {/* JSON-LD LocalBusiness */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdLocalBusiness) }}
         />
+        {/* CSS pro plovoucí animaci vizitky */}
+        <style>{`
+          @keyframes float-card {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+          }
+          .animate-float-card {
+            animation: float-card 4s ease-in-out infinite;
+          }
+        `}</style>
       </Head>
 
       <Header />
@@ -296,7 +303,6 @@ export default function Home() {
 
               {/* 1. Výkopové práce */}
               <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
-                {/* Dekorativní šipka v rohu */}
                 <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
@@ -305,13 +311,9 @@ export default function Home() {
 
                 <div className="flex-grow relative z-10">
                   <div className="flex items-center gap-3 mb-2">
-                    {/* Ikona lopaty */}
-                    <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M2 22v-5l5-5 5 5-5 5z" />
-                        <path d="M9.5 14.5L16 8" />
-                        <path d="M17 2l5 5-.5 .5a3.53 3.53 0 0 1-5 0s0 0 0 0L17 2" />
-                      </svg>
+                    {/* ČÍSLO 1 */}
+                    <div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">
+                      1
                     </div>
                     <h3 className="text-lg font-bold text-[#2f3237]">Výkopové práce</h3>
                   </div>
@@ -320,7 +322,6 @@ export default function Home() {
                   </p>
                 </div>
 
-                {/* Obrázek s efektem zoomu */}
                 <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
                   <img
                     src="/videos/vykopove_prace.gif"
@@ -340,13 +341,9 @@ export default function Home() {
 
                 <div className="flex-grow relative z-10">
                   <div className="flex items-center gap-3 mb-2">
-                    {/* Ikona kopce/terénu */}
-                    <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="m8 6 4-4 4 4" />
-                        <path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22" />
-                        <path d="m20 22-5-5" />
-                      </svg>
+                     {/* ČÍSLO 2 */}
+                    <div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">
+                      2
                     </div>
                     <h3 className="text-lg font-bold text-[#2f3237]">Terénní úpravy</h3>
                   </div>
@@ -374,13 +371,9 @@ export default function Home() {
 
                 <div className="flex-grow relative z-10">
                   <div className="flex items-center gap-3 mb-2">
-                    {/* Ikona Zednická lžíce/Cihly */}
-                    <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M19 14v3c0 1.57-1.34 2.83-3 2.83H8c-1.66 0-3-1.26-3-2.83v-3" />
-                        <path d="M10 14V4h4v10" />
-                        <path d="M7 14h10" />
-                      </svg>
+                     {/* ČÍSLO 3 */}
+                    <div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">
+                      3
                     </div>
                     <h3 className="text-lg font-bold text-[#2f3237]">Stavební práce</h3>
                   </div>
@@ -408,13 +401,9 @@ export default function Home() {
 
                 <div className="flex-grow relative z-10">
                   <div className="flex items-center gap-3 mb-2">
-                    {/* Ikona Kladiva */}
-                    <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9" />
-                        <path d="M17.64 15 22 10.64" />
-                        <path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25V2.75A.75.75 0 0 0 18 2h-2.25c-.85 0-1.65.33-2.25.93L12.2 4.18" />
-                      </svg>
+                     {/* ČÍSLO 4 */}
+                    <div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">
+                      4
                     </div>
                     <h3 className="text-lg font-bold text-[#2f3237]">Bourací práce</h3>
                   </div>
@@ -442,15 +431,9 @@ export default function Home() {
 
                 <div className="flex-grow relative z-10">
                   <div className="flex items-center gap-3 mb-2">
-                    {/* Ikona Vrtáku */}
-                    <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M10 2v2" />
-                        <path d="M14 2v2" />
-                        <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h12z" />
-                        <path d="M8 8v13" />
-                        <path d="M16 8v13" />
-                      </svg>
+                     {/* ČÍSLO 5 */}
+                    <div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">
+                      5
                     </div>
                     <h3 className="text-lg font-bold text-[#2f3237]">Bagr s vrtákem</h3>
                   </div>
@@ -468,36 +451,28 @@ export default function Home() {
                 </div>
               </article>
 
-              {/* 6. 3D VIZITKA (LOGIKA: VIDÍŠ LOGO -> OTOČÍŠ NA KONTAKTY) */}
+              {/* 6. 3D VIZITKA - FLIP CARD */}
               <article className="group relative flex flex-col h-full rounded-2xl bg-[#2f3237] ring-1 ring-black/10 p-6 shadow-md hover:shadow-2xl transition-all duration-300 items-center justify-center overflow-visible">
-
-                {/* Světlejší nadpis pro kontrast na tmavém pozadí */}
                 <div className="flex items-center gap-3 mb-4 self-start">
-                  <div className="p-2 bg-white/10 rounded-lg text-[#f9c600]">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                    </svg>
+                   {/* ČÍSLO 6 */}
+                  <div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">
+                    6
                   </div>
                   <h3 className="text-lg font-bold text-white">Individuální domluva</h3>
                 </div>
 
                 <div className="w-full aspect-[1.7/1] relative [perspective:1500px] my-auto">
                   <div className="w-full h-full relative transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] shadow-xl rounded-xl">
-
-                    {/* --- PŘEDNÍ STRANA (ZDE MÁ BÝT LOGO - image_0) --- */}
-                    {/* Toto je to, co uživatel vidí jako první */}
+                    {/* PŘEDNÍ STRANA */}
                     <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-xl overflow-hidden bg-[#f9c600] flex items-center justify-center border-2 border-white/10">
                       <img
                         src="/images/vizitka_logo.png"
                         alt="ZEVYP Logo"
                         className="w-full h-full object-cover"
                       />
-                      {/* Lesklý efekt přes logo */}
                       <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
                     </div>
-
-                    {/* --- ZADNÍ STRANA (ZDE MAJÍ BÝT KONTAKTY - image_1) --- */}
-                    {/* Toto se odhalí po otočení */}
+                    {/* ZADNÍ STRANA */}
                     <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden bg-[#f9c600] border-2 border-white/10">
                       <img
                         src="/images/vizitka_kontakty.png"
@@ -505,7 +480,6 @@ export default function Home() {
                         className="w-full h-full object-cover"
                       />
                     </div>
-
                   </div>
                 </div>
 
@@ -525,7 +499,6 @@ export default function Home() {
         <section id="technika" className="scroll-mt-24 bg-white text-black py-16 relative">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237]">TECHNIKA</h2>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start justify-center">
               {/* Válec */}
               <div className="bg-gray-50 rounded-xl shadow-lg p-6 hover:shadow-xl transition">
@@ -689,7 +662,7 @@ export default function Home() {
           )}
         </section>
 
-        {/* CENÍK A 3D VIZITKA - PŘESNÁ KOPIE VIZUÁLU */}
+        {/* CENÍK A 3D VIZITKA */}
         <section id="cenik" className="scroll-mt-24 bg-gray-100 text-black py-16 overflow-hidden">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center tracking-wide">
@@ -733,19 +706,19 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 2. PRAVÁ STRANA - STATICKÁ 3D VIZITKA (PŘESNĚ DLE OBRÁZKU) */}
+              {/* 2. PRAVÁ STRANA - STATICKÁ 3D VIZITKA (UPRAVENO: Responsivní a plovoucí) */}
               <div className="order-1 lg:order-2 flex justify-center py-10 lg:py-0">
                 
-                {/* Obal pro efekt vznášení */}
-                <div className="relative group perspective-[1000px]">
+                {/* Obal pro efekt vznášení (nahoru/dolů animace) */}
+                <div className="relative group perspective-[1000px] animate-float-card">
                   
                   {/* Stín pod kartou (Blur efekt) */}
-                  <div className="absolute -bottom-10 left-[10%] w-[80%] h-10 bg-black/40 blur-xl rounded-full transform rotate-3"></div>
+                  <div className="absolute -bottom-10 left-[10%] w-[80%] h-10 bg-black/40 blur-xl rounded-full transform rotate-3 scale-75 md:scale-100"></div>
 
                   {/* KARTA SAMOTNÁ - Statický 3D náklon */}
-                  {/* Používáme transformaci pro natočení v prostoru */}
+                  {/* Upravené rozměry pro mobil (w-full max-w-[340px]) a desktop (md:w-[500px]) */}
                   <div 
-                    className="relative w-[500px] h-[290px] bg-[#f9c600] rounded-xl shadow-2xl overflow-visible border-2 border-yellow-400"
+                    className="relative w-full max-w-[340px] md:max-w-[500px] aspect-[1.7/1] bg-[#f9c600] rounded-xl shadow-2xl overflow-visible border-2 border-yellow-400"
                     style={{
                       transform: 'perspective(1000px) rotateY(-20deg) rotateX(10deg) rotateZ(-3deg)',
                       transformStyle: 'preserve-3d',
@@ -756,30 +729,29 @@ export default function Home() {
                     {/* Odlesk pro plastický vzhled */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-transparent to-transparent pointer-events-none rounded-xl z-10"></div>
 
-                    <div className="relative z-20 h-full p-6 flex flex-col justify-between">
+                    <div className="relative z-20 h-full p-4 md:p-6 flex flex-col justify-between">
                       
                       {/* Horní část - Kontakty a Ikonky */}
-                      <div className="flex flex-col space-y-4">
+                      <div className="flex flex-col space-y-2 md:space-y-4">
                         
                         {/* Jméno + Helma */}
-                        <div className="flex items-center gap-4">
-                           {/* Vlastní SVG Helma (přesnější než heroicon) */}
-                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-black">
+                        <div className="flex items-center gap-2 md:gap-4">
+                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 md:w-8 md:h-8 text-black">
                              <path strokeLinecap="round" strokeLinejoin="round" d="M3 13h18M5 13v-3a7 7 0 0114 0v3M12 13v-8m-2 0h4" />
                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l-1 4h16l-1-4" />
                            </svg>
-                           <h3 className="text-2xl font-extrabold uppercase text-black tracking-tight" style={{ fontFamily: 'sans-serif' }}>
+                           <h3 className="text-lg md:text-2xl font-extrabold uppercase text-black tracking-tight" style={{ fontFamily: 'sans-serif' }}>
                              KLÁRA PUDILOVÁ
                            </h3>
                         </div>
 
                         {/* Telefon */}
-                        <div className="flex items-center gap-4">
-                          <div className="border-2 border-black rounded-full p-1 w-8 h-8 flex items-center justify-center">
-                             <PhoneIcon className="w-5 h-5 text-black" />
+                        <div className="flex items-center gap-2 md:gap-4">
+                          <div className="border-2 border-black rounded-full p-1 w-6 h-6 md:w-8 md:h-8 flex items-center justify-center">
+                             <PhoneIcon className="w-3 h-3 md:w-5 md:h-5 text-black" />
                           </div>
                           <div className="flex flex-col">
-                            <span className="text-3xl font-extrabold text-black tracking-wide leading-none">
+                            <span className="text-xl md:text-3xl font-extrabold text-black tracking-wide leading-none">
                               725 319 300
                             </span>
                             {/* Podtržení pod číslem */}
@@ -788,35 +760,36 @@ export default function Home() {
                         </div>
 
                         {/* Web */}
-                        <div className="flex items-center gap-4">
-                           <GlobeAltIcon className="w-8 h-8 text-black" />
-                           <span className="text-2xl font-extrabold uppercase text-black">
+                        <div className="flex items-center gap-2 md:gap-4">
+                           <GlobeAltIcon className="w-6 h-6 md:w-8 md:h-8 text-black" />
+                           <span className="text-base md:text-2xl font-extrabold uppercase text-black">
                              ZEVYP-KP.CZ
                            </span>
                         </div>
 
                         {/* IČO */}
-                        <div className="flex items-center gap-4">
-                           <div className="w-8 flex justify-center">
-                              <IdentificationIcon className="w-8 h-8 text-black" />
+                        <div className="flex items-center gap-2 md:gap-4">
+                           <div className="w-6 md:w-8 flex justify-center">
+                              <IdentificationIcon className="w-6 h-6 md:w-8 md:h-8 text-black" />
                            </div>
-                           <span className="text-2xl font-extrabold uppercase text-black">
+                           <span className="text-base md:text-2xl font-extrabold uppercase text-black">
                              IČO: 73377619
                            </span>
                         </div>
                       </div>
 
                       {/* Spodní text */}
-                      <div className="mt-2 pt-2 border-t-0 border-black/20 text-center">
-                         <p className="text-[11px] font-bold text-black uppercase tracking-widest">
-                           VÝKOPOVÉ PRÁCE • TERÉNNÍ ÚPRAVY • STAVEBNÍ PRÁCE
-                         </p>
+                      <div className="mt-1 pt-2 border-t-0 border-black/20 text-center">
+                          <p className="text-[9px] md:text-[11px] font-bold text-black uppercase tracking-widest">
+                            VÝKOPOVÉ PRÁCE • TERÉNNÍ ÚPRAVY • STAVEBNÍ PRÁCE
+                          </p>
                       </div>
 
                     </div>
 
                     {/* OBRÁZEK STROJE - Vystupující mimo kartu (3D efekt) */}
-                    <div className="absolute -right-16 -bottom-5 w-[280px] z-30 pointer-events-none drop-shadow-2xl">
+                    {/* Upravena velikost pro mobil, aby nepřekrýval text */}
+                    <div className="absolute -right-8 -bottom-3 w-[160px] md:-right-16 md:-bottom-5 md:w-[280px] z-30 pointer-events-none drop-shadow-2xl">
                        <img 
                           src="/images/flotila_nejlepsi_transparentni.jpg" 
                           alt="Flotila bagrů" 
