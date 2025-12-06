@@ -3,7 +3,15 @@ import Head from "next/head";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useState, useEffect, useMemo } from "react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { 
+  Bars3Icon, 
+  XMarkIcon, 
+  PhoneIcon as PhoneIconOutline,
+  HomeIcon,
+  WrenchScrewdriverIcon as WrenchOutline,
+  BanknotesIcon,
+  EnvelopeIcon
+} from "@heroicons/react/24/outline";
 import {
   ScaleIcon,
   Cog6ToothIcon,
@@ -13,8 +21,7 @@ import {
   PhoneIcon,
   XMarkIcon as CloseIcon,
   GlobeAltIcon,
-  IdentificationIcon,
-  ArrowPathIcon
+  IdentificationIcon
 } from "@heroicons/react/24/solid";
 import { Inter } from "next/font/google";
 import "react-calendar/dist/Calendar.css";
@@ -23,67 +30,144 @@ const inter = Inter({ subsets: ["latin", "latin-ext"] });
 // Calendar přes dynamic import (bez SSR záseků)
 const Calendar = dynamic(() => import("react-calendar"), { ssr: false });
 
+/* --- VYLEPŠENÝ HEADER S MODERNÍM MENU --- */
 function Header() {
   const [open, setOpen] = useState(false);
 
+  // Zámek scrollu, když je mobilní menu otevřené
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [open]);
+
+  const navigation = [
+    { name: 'NAŠE SLUŽBY', href: '#sluzby', icon: HomeIcon },
+    { name: 'TECHNIKA', href: '#technika', icon: WrenchOutline },
+    { name: 'CENÍK', href: '#cenik', icon: BanknotesIcon },
+    { name: 'KONTAKT', href: '#kontakt', icon: EnvelopeIcon },
+  ];
+
   return (
-    <header className="sticky top-0 bg-[#f9c600]/90 backdrop-blur supports-[backdrop-filter]:bg-[#f9c600]/80 border-b border-black/5 z-50">
-      <div className="container mx-auto flex justify-between items-center px-4 py-2">
-        <Image
-          src="/images/zevyp-newlogo.png"
-          alt="Zevyp logo"
-          width={150}
-          height={150}
-          priority
-          sizes="150px"
-          className="h-12 w-auto"
-        />
+    <>
+      <header className="sticky top-0 bg-[#f9c600]/95 backdrop-blur-md border-b border-black/5 z-50 shadow-sm transition-all duration-300">
+        <div className="container mx-auto flex justify-between items-center px-4 py-3 md:py-4">
+          
+          {/* LOGO */}
+          <div className="flex-shrink-0">
+            <Image
+              src="/images/zevyp-newlogo.png"
+              alt="Zevyp logo"
+              width={160}
+              height={50}
+              priority
+              className="h-10 md:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300"
+            />
+          </div>
 
-        {/* Desktop: menu + telefon */}
-        <div className="hidden md:flex items-center gap-6">
-          <nav className="flex gap-6 text-base md:text-lg">
-            <a href="#sluzby" className="hover:underline">NAŠE SLUŽBY</a>
-            <a href="#technika" className="hover:underline">TECHNIKA</a>
-            <a href="#cenik" className="hover:underline">CENÍK</a>
-            <a href="#kontakt" className="hover:underline">KONTAKT</a>
-          </nav>
+          {/* DESKTOP NAVIGACE */}
+          <div className="hidden md:flex items-center gap-8">
+            <nav className="flex gap-8 text-sm lg:text-base font-bold text-[#2f3237] tracking-wide">
+              {navigation.map((item) => (
+                <a 
+                  key={item.name} 
+                  href={item.href} 
+                  className="relative group py-2"
+                >
+                  {item.name}
+                  {/* Animované podtržítko */}
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#2f3237] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                </a>
+              ))}
+            </nav>
 
-          <a
-            href="tel:+420725319300"
-            aria-label="Zavolat +420 725 319 300"
-            className="inline-flex items-center gap-2 bg-white/90 hover:bg-white text-[#2f3237] font-semibold px-4 py-2 rounded-full shadow-sm ring-1 ring-black/10 transition whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2f3237] focus-visible:ring-offset-[#f9c600]"
-          >
-            <PhoneIcon className="w-5 h-5" />
-            <span>+420&nbsp;725&nbsp;319&nbsp;300</span>
-          </a>
+            <a
+              href="tel:+420725319300"
+              className="group inline-flex items-center gap-2 bg-[#2f3237] text-white hover:bg-black font-semibold px-5 py-2.5 rounded-full shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
+            >
+              <PhoneIcon className="w-5 h-5 group-hover:animate-pulse" />
+              <span>725 319 300</span>
+            </a>
+          </div>
+
+          {/* MOBILNÍ BURGER TLAČÍTKO */}
+          <div className="md:hidden">
+            <button 
+              onClick={() => setOpen(true)} 
+              className="p-2 text-[#2f3237] hover:bg-black/5 rounded-lg transition-colors"
+              aria-label="Otevřít menu"
+            >
+              <Bars3Icon className="w-8 h-8" />
+            </button>
+          </div>
         </div>
+      </header>
 
-        {/* Mobile burger */}
-        <button className="md:hidden" onClick={() => setOpen(!open)} aria-label="Otevřít menu">
-          {open ? <XMarkIcon className="w-8 h-8" /> : <Bars3Icon className="w-8 h-8" />}
-        </button>
+      {/* MOBILNÍ MENU - FULLSCREEN OVERLAY */}
+      {/* 1. Tmavé pozadí (Backdrop) */}
+      <div 
+        className={`fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+          open ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+        onClick={() => setOpen(false)}
+      />
+
+      {/* 2. Samotný panel menu (Slide-in zprava) */}
+      <div 
+        className={`fixed top-0 right-0 z-[70] h-full w-[85%] max-w-[300px] bg-[#2f3237] shadow-2xl transform transition-transform duration-300 ease-out md:hidden ${
+          open ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex flex-col h-full">
+          
+          {/* Hlavička mobilního menu */}
+          <div className="flex items-center justify-between p-5 border-b border-white/10">
+            <span className="text-white font-bold text-xl tracking-wider">MENU</span>
+            <button 
+              onClick={() => setOpen(false)}
+              className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-full transition-all"
+            >
+              <XMarkIcon className="w-7 h-7" />
+            </button>
+          </div>
+
+          {/* Odkazy */}
+          <div className="flex-1 overflow-y-auto py-6 px-4 space-y-2">
+            {navigation.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-4 p-4 text-white hover:bg-[#f9c600] hover:text-[#2f3237] rounded-xl transition-all duration-200 group"
+              >
+                <item.icon className="w-6 h-6 text-[#f9c600] group-hover:text-[#2f3237] transition-colors" />
+                <span className="font-bold text-lg">{item.name}</span>
+              </a>
+            ))}
+          </div>
+
+          {/* Patička mobilního menu s telefonem */}
+          <div className="p-5 border-t border-white/10 bg-[#25282c]">
+            <a
+              href="tel:+420725319300"
+              className="flex items-center justify-center gap-3 w-full bg-[#f9c600] text-[#2f3237] font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-transform"
+            >
+              <PhoneIcon className="w-6 h-6" />
+              ZAVOLAT HNED
+            </a>
+            <p className="text-center text-gray-500 text-xs mt-4">
+              Zevyp - Zemní a výkopové práce
+            </p>
+          </div>
+        </div>
       </div>
-
-      {/* Mobile menu */}
-      {open && (
-        <div className="md:hidden bg-[#f9c600] py-4 px-6 flex flex-col gap-4 shadow-lg">
-          <a href="#sluzby" onClick={() => setOpen(false)}>NAŠE SLUŽBY</a>
-          <a href="#technika" onClick={() => setOpen(false)}>TECHNIKA</a>
-          <a href="#cenik" onClick={() => setOpen(false)}>CENÍK</a>
-          <a href="#kontakt" onClick={() => setOpen(false)}>KONTAKT</a>
-          <a
-            href="tel:+420725319300"
-            className="mt-2 inline-flex items-center justify-center gap-2 bg-white text-[#2f3237] font-semibold px-4 py-3 rounded-lg shadow ring-1 ring-black/10"
-          >
-            <PhoneIcon className="w-5 h-5" />
-            Zavolat
-          </a>
-        </div>
-      )}
-    </header>
+    </>
   );
 }
 
+/* --- HLAVNÍ STRÁNKA --- */
 export default function Home() {
   const [adresa, setAdresa] = useState("");
   const [datumOd, setDatumOd] = useState("");
@@ -786,9 +870,9 @@ export default function Home() {
 
                     </div>
 
-                    {/* OBRÁZEK STROJE - UPRAVENO POZICOVÁNÍ PRO MOBIL */}
-                    {/* Na mobilu je obrázek uvnitř (right-1 bottom-1), na desktopu (md:) stále vystupuje ven */}
-                    <div className="absolute right-1 bottom-1 w-[130px] md:-right-16 md:-bottom-5 md:w-[240px] z-30 pointer-events-none drop-shadow-2xl">
+                    {/* OBRÁZEK STROJE - UPRAVENO: Uvnitř vizitky na PC i mobilu */}
+                    {/* Odstraněny negativní marginy, nyní zarovnáno doprava dolů kousek od okraje */}
+                    <div className="absolute right-0 bottom-0 w-[130px] md:right-2 md:bottom-2 md:w-[280px] z-30 pointer-events-none drop-shadow-lg">
                        <img 
                           src="/images/flotila_nejlepsi_transparentni.png" 
                           alt="Flotila bagrů" 
