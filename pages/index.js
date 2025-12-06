@@ -294,12 +294,13 @@ export default function Home() {
       NAŠE SLUŽBY
     </h2>
 
-    {/* ---------- PRVNÍ ŘADA (2 VĚTŠÍ BOXY) ---------- */}
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+    {/* ---------- JEDNOTNÁ MŘÍŽKA (všechny boxy stejně velké) ---------- */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
       {/* 1. Výkopové práce */}
-      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-8 shadow-sm hover:shadow-lg transition-all">
-        <h3 className="text-xl font-semibold text-[#2f3237]">Výkopové práce</h3>
+      {/* Upraveno: sjednocen padding (p-6) a font (text-lg) */}
+      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-lg transition-all">
+        <h3 className="text-lg font-semibold text-[#2f3237]">Výkopové práce</h3>
         <p className="mt-2 text-sm text-gray-600">
           Výkopy základových pasů a patek, výkopy pro inženýrské sítě, bazény, jímky a další.
         </p>
@@ -312,8 +313,9 @@ export default function Home() {
       </article>
 
       {/* 2. Terénní úpravy */}
-      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-8 shadow-sm hover:shadow-lg transition-all">
-        <h3 className="text-xl font-semibold text-[#2f3237]">Terénní úpravy</h3>
+      {/* Upraveno: sjednocen padding (p-6) a font (text-lg) */}
+      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-lg transition-all">
+        <h3 className="text-lg font-semibold text-[#2f3237]">Terénní úpravy</h3>
         <p className="mt-2 text-sm text-gray-600">
           Svahování, zarovnávání a skrývka ornice. Příprava pozemku pro stavbu nebo finální úpravu terénu.
         </p>
@@ -324,12 +326,6 @@ export default function Home() {
           className="w-full rounded-lg mt-4 aspect-video object-cover"
         />
       </article>
-
-    </div>
-
-
-    {/* ---------- DRUHÁ ŘADA (3 MENŠÍ BOXY) ---------- */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
       {/* 3. Stavební práce */}
       <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-lg transition-all">
