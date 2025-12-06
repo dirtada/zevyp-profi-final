@@ -32,112 +32,25 @@ const inter = Inter({ subsets: ["latin", "latin-ext"] });
 const Calendar = dynamic(() => import("react-calendar"), { ssr: false });
 
 /* --- LOGIKA BAREV PRO NAVIGACI --- */
-// Tato funkce určuje barvy teček A TEXTŮ podle pozadí sekce
 const getNavTheme = (section) => {
-  // Sekce, které mají světlé nebo žluté pozadí (potřebují tmavé prvky)
   const lightBackgroundSections = ['sluzby', 'technika', 'cenik'];
   
   if (lightBackgroundSections.includes(section)) {
     return {
-      container: "bg-black/5", // Velmi jemné pozadí kontejneru
-      // Tečky
-      inactiveDot: "bg-[#2f3237]/30 group-hover:bg-[#2f3237]/60",
-      activeDot: "bg-[#2f3237] scale-125",
-      // Texty
-      inactiveText: "text-[#2f3237]/60", // Šedý text pro neaktivní
-      activeText: "text-[#2f3237]" // Černý text pro aktivní
+      container: "bg-black/5", 
+      inactive: "bg-[#2f3237]/30 hover:bg-[#2f3237]/60", 
+      active: "bg-[#2f3237] scale-125", 
     };
   }
   
-  // Sekce s tmavým pozadím (Hero, Kontakt) - potřebují světlé/žluté prvky
   return {
-    container: "bg-white/5", // Velmi jemné světlé pozadí
-    // Tečky
-    inactiveDot: "bg-white/30 group-hover:bg-white", 
-    activeDot: "bg-[#f9c600] scale-125",
-    // Texty
-    inactiveText: "text-white/60", // Bílý poloprůhledný text
-    activeText: "text-[#f9c600]" // Žlutý text pro aktivní
+    container: "bg-white/5",
+    inactive: "bg-white/30 hover:bg-white",
+    active: "bg-[#f9c600] scale-125",
   };
 };
 
-/* --- SIDE NAVIGATION (DESKTOP) --- */
-function SideNav() {
-  const [activeSection, setActiveSection] = useState('hero');
-  const theme = getNavTheme(activeSection);
-
-  useEffect(() => {
-    const sections = ['hero', 'sluzby', 'technika', 'cenik', 'kontakt'];
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.4 }
-    );
-
-    sections.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const navItems = [
-    { id: 'hero', label: 'Úvod' },
-    { id: 'sluzby', label: 'Služby' },
-    { id: 'technika', label: 'Technika' },
-    { id: 'cenik', label: 'Ceník' },
-    { id: 'kontakt', label: 'Kontakt' },
-  ];
-
-  return (
-    // Skryté na 'hero', objeví se po scrollu. Posunuto o kousek doleva (left-[6px]).
-    <div className={`fixed left-[6px] top-1/2 transform -translate-y-1/2 z-40 hidden md:flex flex-col gap-4 transition-all duration-700 ease-in-out ${
-      activeSection === 'hero' 
-        ? 'opacity-0 pointer-events-none -translate-x-10' 
-        : 'opacity-100 translate-x-0'
-    }`}>
-      {/* Kontejner */}
-      <div className={`flex flex-col gap-1 p-3 pr-6 backdrop-blur-sm rounded-r-2xl transition-colors duration-500 ${theme.container}`}>
-        {navItems.map((item) => {
-          const isActive = activeSection === item.id;
-          return (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              aria-label={`Přejít na ${item.label}`}
-              className="group flex items-center gap-3 py-1 cursor-pointer"
-            >
-              {/* Tečka */}
-              <div 
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  isActive ? theme.activeDot : theme.inactiveDot
-                }`} 
-              />
-              
-              {/* Text (Label) - Nyní viditelný vždy, ale mění styl */}
-              <span className={`text-xs uppercase tracking-wider transition-all duration-300 ${
-                isActive 
-                  ? `font-bold ${theme.activeText} translate-x-1 scale-105` // Aktivní: Zvýrazněný, posunutý
-                  : `font-medium ${theme.inactiveText} group-hover:text-opacity-100 group-hover:translate-x-1` // Neaktivní: Jemný
-              }`}>
-                {item.label}
-              </span>
-            </a>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-/* --- SIDE NAVIGATION (MOBILE) --- */
+/* --- SIDE NAVIGATION (POUZE MOBIL) --- */
 function MobileSideNav() {
   const [activeSection, setActiveSection] = useState('hero');
   const theme = getNavTheme(activeSection);
@@ -158,7 +71,7 @@ function MobileSideNav() {
   }, []);
 
   return (
-    // Skryté na 'hero', kuličky na mobilu
+    // Skryté na 'hero' (opacity-0), viditelné jinde. Jen pro mobil (md:hidden).
     <div className={`fixed left-2 top-1/2 transform -translate-y-1/2 z-40 flex flex-col gap-3 md:hidden transition-all duration-700 ease-in-out ${
       activeSection === 'hero' 
         ? 'opacity-0 pointer-events-none -translate-x-10' 
@@ -170,7 +83,7 @@ function MobileSideNav() {
             key={id}
             href={`#${id}`}
             className={`w-3 h-3 rounded-full transition-all duration-300 shadow-sm ${
-               activeSection === id ? theme.activeDot : theme.inactiveDot
+               activeSection === id ? theme.active : theme.inactive
             }`}
           />
         ))}
@@ -348,8 +261,7 @@ export default function Home() {
 
       <Header />
       
-      {/* BOČNÍ NAVIGACE (Dynamická) */}
-      <SideNav />
+      {/* BOČNÍ NAVIGACE (POUZE MOBIL) */}
       <MobileSideNav />
 
       <div className={`${inter.className} min-h-screen bg-[#f9c600] text-gray-900`}>
@@ -551,7 +463,7 @@ export default function Home() {
                       </div>
                       <div className="mt-1 pt-2 border-t-0 border-black/20 text-center"><p className="text-[9px] md:text-[11px] font-bold text-black uppercase tracking-widest">VÝKOPOVÉ PRÁCE • TERÉNNÍ ÚPRAVY • STAVEBNÍ PRÁCE</p></div>
                     </div>
-                    <div className="absolute right-0 bottom-7 w-[140px] md:right-2 md:bottom-4 md:w-[160px] z-30 pointer-events-none drop-shadow-lg">
+                    <div className="absolute right-0 bottom-9 w-[150px] md:right-2 md:bottom-6 md:w-[160px] z-30 pointer-events-none drop-shadow-lg">
                        <img src="/images/flotila_nejlepsi_transparentni.png" alt="Flotila bagrů" className="w-full h-auto object-contain" />
                     </div>
                   </div>
