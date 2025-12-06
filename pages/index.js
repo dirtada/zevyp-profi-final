@@ -526,7 +526,7 @@ export default function Home() {
                       </div>
                       <div className="mt-1 pt-2 border-t-0 border-black/20 text-center"><p className="text-[9px] md:text-[11px] font-bold text-black uppercase tracking-widest">VÝKOPOVÉ PRÁCE • TERÉNNÍ ÚPRAVY • STAVEBNÍ PRÁCE</p></div>
                     </div>
-                    <div className="absolute right-0 bottom-3 w-[140px] md:right-2 md:bottom-4 md:w-[150px] z-30 pointer-events-none drop-shadow-lg">
+                    <div className="absolute right-0 bottom-7 w-[160px] md:right-2 md:bottom-4 md:w-[150px] z-30 pointer-events-none drop-shadow-lg">
                        <img src="/images/flotila_nejlepsi_transparentni.png" alt="Flotila bagrů" className="w-full h-auto object-contain" />
                     </div>
                   </div>
