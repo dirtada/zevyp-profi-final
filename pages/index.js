@@ -11,7 +11,6 @@ import {
   WrenchScrewdriverIcon as WrenchOutline,
   BanknotesIcon,
   EnvelopeIcon,
-  UserIcon,
   MapPinIcon
 } from "@heroicons/react/24/outline";
 import {
@@ -32,9 +31,34 @@ const inter = Inter({ subsets: ["latin", "latin-ext"] });
 // Calendar přes dynamic import (bez SSR záseků)
 const Calendar = dynamic(() => import("react-calendar"), { ssr: false });
 
-/* --- SIDE NAVIGATION (SCROLL SPY) --- */
+/* --- LOGIKA BAREV PRO NAVIGACI --- */
+// Tato funkce určuje barvy teček podle pozadí sekce
+const getNavTheme = (section) => {
+  // Sekce, které mají světlé nebo žluté pozadí (potřebují tmavé tečky)
+  const lightBackgroundSections = ['sluzby', 'technika', 'cenik'];
+  
+  if (lightBackgroundSections.includes(section)) {
+    return {
+      container: "bg-black/10", // Jemné tmavé pozadí kontejneru
+      inactive: "bg-[#2f3237]/40 hover:bg-[#2f3237]/70", // Tmavě šedá poloprůhledná
+      active: "bg-[#2f3237] scale-125", // Plná tmavá (aktivní)
+      tooltip: "bg-[#2f3237] text-[#f9c600]" // Tooltip
+    };
+  }
+  
+  // Sekce s tmavým pozadím (Hero, Kontakt) - potřebují světlé/žluté tečky
+  return {
+    container: "bg-white/10", // Jemné světlé pozadí
+    inactive: "bg-white/40 hover:bg-white", // Bílá poloprůhledná
+    active: "bg-[#f9c600] scale-125", // Žlutá (aktivní)
+    tooltip: "bg-white text-[#2f3237]" // Tooltip
+  };
+};
+
+/* --- SIDE NAVIGATION (DESKTOP) --- */
 function SideNav() {
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState('hero');
+  const theme = getNavTheme(activeSection);
 
   useEffect(() => {
     const sections = ['hero', 'sluzby', 'technika', 'cenik', 'kontakt'];
@@ -47,7 +71,7 @@ function SideNav() {
           }
         });
       },
-      { threshold: 0.4 } // Sekce se aktivuje, když je z 40% vidět
+      { threshold: 0.4 }
     );
 
     sections.forEach((id) => {
@@ -67,22 +91,21 @@ function SideNav() {
   ];
 
   return (
-    <div className="fixed left-4 top-1/2 transform -translate-y-1/2 z-40 hidden md:flex flex-col gap-4">
-      {/* Na desktopu zobrazíme tooltipy po najetí, na mobilu jen tečky */}
-      <div className="flex flex-col gap-3 p-2 bg-black/20 backdrop-blur-sm rounded-full">
+    // UPRAVENO: left-[6px] pro posun více doleva
+    <div className="fixed left-[6px] top-1/2 transform -translate-y-1/2 z-40 hidden md:flex flex-col gap-4">
+      {/* Kontejner s dynamickým pozadím */}
+      <div className={`flex flex-col gap-3 p-2 backdrop-blur-sm rounded-full transition-colors duration-500 ${theme.container}`}>
         {navItems.map((item) => (
           <a
             key={item.id}
             href={`#${item.id}`}
             aria-label={`Přejít na ${item.label}`}
             className={`group relative w-3 h-3 rounded-full transition-all duration-300 ${
-              activeSection === item.id 
-                ? 'bg-[#f9c600] scale-125' 
-                : 'bg-white/50 hover:bg-white'
+              activeSection === item.id ? theme.active : theme.inactive
             }`}
           >
-            {/* Tooltip (jen desktop) */}
-            <span className="absolute left-6 top-1/2 -translate-y-1/2 px-2 py-1 bg-[#2f3237] text-[#f9c600] text-xs font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none hidden md:block">
+            {/* Tooltip */}
+            <span className={`absolute left-6 top-1/2 -translate-y-1/2 px-2 py-1 text-xs font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none hidden md:block ${theme.tooltip}`}>
               {item.label}
             </span>
           </a>
@@ -92,9 +115,10 @@ function SideNav() {
   );
 }
 
-// Mobilní verze navigace (jednodušší, vlevo u kraje)
+/* --- SIDE NAVIGATION (MOBILE) --- */
 function MobileSideNav() {
   const [activeSection, setActiveSection] = useState('hero');
+  const theme = getNavTheme(activeSection);
 
   useEffect(() => {
     const sections = ['hero', 'sluzby', 'technika', 'cenik', 'kontakt'];
@@ -112,16 +136,20 @@ function MobileSideNav() {
   }, []);
 
   return (
+    // UPRAVENO: Používá stejný styl kuliček jako desktop a dynamické barvy
     <div className="fixed left-2 top-1/2 transform -translate-y-1/2 z-40 flex flex-col gap-3 md:hidden">
-      {['hero', 'sluzby', 'technika', 'cenik', 'kontakt'].map((id) => (
-        <a
-          key={id}
-          href={`#${id}`}
-          className={`w-1.5 h-6 rounded-full transition-all duration-300 shadow-sm ${
-             activeSection === id ? 'bg-[#f9c600] h-8' : 'bg-white/40'
-          }`}
-        />
-      ))}
+      {/* Kontejner pro lepší čitelnost na mobilu */}
+      <div className={`flex flex-col gap-3 p-1.5 backdrop-blur-sm rounded-full transition-colors duration-500 ${theme.container}`}>
+        {['hero', 'sluzby', 'technika', 'cenik', 'kontakt'].map((id) => (
+          <a
+            key={id}
+            href={`#${id}`}
+            className={`w-3 h-3 rounded-full transition-all duration-300 shadow-sm ${
+               activeSection === id ? theme.active : theme.inactive
+            }`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -295,7 +323,7 @@ export default function Home() {
 
       <Header />
       
-      {/* BOČNÍ NAVIGACE */}
+      {/* BOČNÍ NAVIGACE (Dynamická) */}
       <SideNav />
       <MobileSideNav />
 
@@ -498,7 +526,7 @@ export default function Home() {
                       </div>
                       <div className="mt-1 pt-2 border-t-0 border-black/20 text-center"><p className="text-[9px] md:text-[11px] font-bold text-black uppercase tracking-widest">VÝKOPOVÉ PRÁCE • TERÉNNÍ ÚPRAVY • STAVEBNÍ PRÁCE</p></div>
                     </div>
-                    <div className="absolute right-0 bottom-8 w-[140px] md:right-2 md:bottom-4 md:w-[150px] z-30 pointer-events-none drop-shadow-lg">
+                    <div className="absolute right-0 bottom-3 w-[140px] md:right-2 md:bottom-4 md:w-[150px] z-30 pointer-events-none drop-shadow-lg">
                        <img src="/images/flotila_nejlepsi_transparentni.png" alt="Flotila bagrů" className="w-full h-auto object-contain" />
                     </div>
                   </div>
