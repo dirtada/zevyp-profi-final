@@ -392,7 +392,7 @@ export default function Home() {
             <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-xl overflow-hidden bg-[#f9c600]">
                {/* ZDE VLOŽTE CESTU K OBRÁZKU S KONTAKTY (image_1.png) */}
               <img 
-                src="/images/vizitka-kontakty.png" 
+                src="/images/vizitka_kontakty.png" 
                 alt="ZEVYP Kontakty Klára Pudilová" 
                 className="w-full h-full object-cover" 
               />
@@ -403,7 +403,7 @@ export default function Home() {
             <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden bg-[#f9c600] flex items-center justify-center">
                {/* ZDE VLOŽTE CESTU K OBRÁZKU S LOGEM (image_0.png) */}
               <img 
-                src="/images/vizitka-logo.png" 
+                src="/images/vizitka_logo.png" 
                 alt="ZEVYP Logo" 
                 className="w-full h-full object-cover" 
               />
