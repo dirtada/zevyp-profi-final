@@ -351,7 +351,7 @@ export default function Home() {
           </p>
         </div>
         <img 
-          src="/images/bourani.png"
+          src="/videos/bouraci_prace.gif"
           alt="Animace bouracích prací"
           className="w-full rounded-lg mt-5 aspect-video object-cover"
         />
@@ -366,7 +366,7 @@ export default function Home() {
           </p>
         </div>
         <img 
-          src="/images/vrtani.png"
+          src="/videos/bagr_s_vrtakem.gif"
           alt="Animace vrtání"
           className="w-full rounded-lg mt-5 aspect-video object-cover"
         />
