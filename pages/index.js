@@ -716,7 +716,6 @@ export default function Home() {
                   <div className="absolute -bottom-10 left-[10%] w-[80%] h-10 bg-black/40 blur-xl rounded-full transform rotate-3 scale-75 md:scale-100"></div>
 
                   {/* KARTA SAMOTNÁ - Statický 3D náklon */}
-                  {/* Upravené rozměry pro mobil (w-full max-w-[340px]) a desktop (md:w-[500px]) */}
                   <div 
                     className="relative w-full max-w-[340px] md:max-w-[500px] aspect-[1.7/1] bg-[#f9c600] rounded-xl shadow-2xl overflow-visible border-2 border-yellow-400"
                     style={{
@@ -787,9 +786,9 @@ export default function Home() {
 
                     </div>
 
-                    {/* OBRÁZEK STROJE - Vystupující mimo kartu (3D efekt) */}
-                    {/* UPRAVENO: Zmenšena velikost pro mobil i desktop a odstraněno scale-110 */}
-                    <div className="absolute -right-8 -bottom-3 w-[140px] md:-right-16 md:-bottom-5 md:w-[240px] z-30 pointer-events-none drop-shadow-2xl">
+                    {/* OBRÁZEK STROJE - UPRAVENO POZICOVÁNÍ PRO MOBIL */}
+                    {/* Na mobilu je obrázek uvnitř (right-1 bottom-1), na desktopu (md:) stále vystupuje ven */}
+                    <div className="absolute right-1 bottom-1 w-[130px] md:-right-16 md:-bottom-5 md:w-[240px] z-30 pointer-events-none drop-shadow-2xl">
                        <img 
                           src="/images/flotila_nejlepsi_transparentni.png" 
                           alt="Flotila bagrů" 
