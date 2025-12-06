@@ -1,7 +1,6 @@
 // pages/index.js
 import Head from "next/head";
 import Link from "next/link";
-
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useState, useEffect, useMemo } from "react";
@@ -17,6 +16,11 @@ import {
   PlusCircleIcon,
   PhoneIcon,
   XMarkIcon as CloseIcon,
+  // Nové ikony pro vizitku:
+  GlobeAltIcon,
+  IdentificationIcon,
+  UserIcon,
+  ArrowPathIcon
 } from "@heroicons/react/24/solid";
 import { Inter } from "next/font/google";
 import "react-calendar/dist/Calendar.css";
@@ -48,7 +52,6 @@ function Header() {
             <a href="#technika" className="hover:underline">TECHNIKA</a>
             <a href="#cenik" className="hover:underline">CENÍK</a>
             <a href="#kontakt" className="hover:underline">KONTAKT</a>
-        
           </nav>
 
           <a
@@ -207,7 +210,7 @@ export default function Home() {
     },
     "areaServed": ["Karlovy Vary", "Karlovarský kraj"],
     "description": "Profesionální zemní a výkopové práce minibagrem v Karlovarském kraji a okolí.",
-    "geo": { "@type": "GeoCoordinates", "latitude": 50.181, "longitude": 12.634 } // volitelně – klidně smaž, pokud nechceš
+    "geo": { "@type": "GeoCoordinates", "latitude": 50.181, "longitude": 12.634 }
   };
 
   return (
@@ -287,241 +290,243 @@ export default function Home() {
             </div>
           </div>
         </main>
-<section id="sluzby" className="scroll-mt-24 bg-[#f9c600] text-black py-16">
-  <div className="container mx-auto px-4">
-    <h2 className="text-2xl md:text-3xl font-bold mb-10 text-[#2f3237] text-center tracking-wide">
-      NAŠE SLUŽBY
-    </h2>
 
-    {/* ---------- MŘÍŽKA 3x2 ---------- */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+        <section id="sluzby" className="scroll-mt-24 bg-[#f9c600] text-black py-16">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-10 text-[#2f3237] text-center tracking-wide">
+              NAŠE SLUŽBY
+            </h2>
 
-      {/* 1. Výkopové práce */}
-      <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
-        {/* Dekorativní šipka v rohu */}
-        <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-          </svg>
-        </div>
+            {/* ---------- MŘÍŽKA 3x2 ---------- */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
 
-        <div className="flex-grow relative z-10">
-          <div className="flex items-center gap-3 mb-2">
-            {/* Ikona lopaty */}
-            <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M2 22v-5l5-5 5 5-5 5z" />
-                <path d="M9.5 14.5L16 8" />
-                <path d="M17 2l5 5-.5 .5a3.53 3.53 0 0 1-5 0s0 0 0 0L17 2" />
-              </svg>
+              {/* 1. Výkopové práce */}
+              <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
+                {/* Dekorativní šipka v rohu */}
+                <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                  </svg>
+                </div>
+
+                <div className="flex-grow relative z-10">
+                  <div className="flex items-center gap-3 mb-2">
+                    {/* Ikona lopaty */}
+                    <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M2 22v-5l5-5 5 5-5 5z" />
+                        <path d="M9.5 14.5L16 8" />
+                        <path d="M17 2l5 5-.5 .5a3.53 3.53 0 0 1-5 0s0 0 0 0L17 2" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-[#2f3237]">Výkopové práce</h3>
+                  </div>
+                  <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">
+                    Výkopy základových pasů a patek, výkopy pro inženýrské sítě, bazény, jímky a další.
+                  </p>
+                </div>
+
+                {/* Obrázek s efektem zoomu */}
+                <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
+                  <img
+                    src="/videos/vykopove_prace.gif"
+                    alt="Animace výkopových prací"
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
+                  />
+                </div>
+              </article>
+
+              {/* 2. Terénní úpravy */}
+              <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
+                <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                  </svg>
+                </div>
+
+                <div className="flex-grow relative z-10">
+                  <div className="flex items-center gap-3 mb-2">
+                    {/* Ikona kopce/terénu */}
+                    <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m8 6 4-4 4 4" />
+                        <path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22" />
+                        <path d="m20 22-5-5" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-[#2f3237]">Terénní úpravy</h3>
+                  </div>
+                  <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">
+                    Svahování, zarovnávání a skrývka ornice. Příprava pozemku pro stavbu nebo finální úpravu.
+                  </p>
+                </div>
+
+                <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
+                  <img
+                    src="/videos/terenni_upravy.gif"
+                    alt="Animace terenních úprav"
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
+                  />
+                </div>
+              </article>
+
+              {/* 3. Stavební práce */}
+              <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
+                <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                  </svg>
+                </div>
+
+                <div className="flex-grow relative z-10">
+                  <div className="flex items-center gap-3 mb-2">
+                    {/* Ikona Zednická lžíce/Cihly */}
+                    <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M19 14v3c0 1.57-1.34 2.83-3 2.83H8c-1.66 0-3-1.26-3-2.83v-3" />
+                        <path d="M10 14V4h4v10" />
+                        <path d="M7 14h10" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-[#2f3237]">Stavební práce</h3>
+                  </div>
+                  <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">
+                    Stavební příprava pro pokládky chodníků, dlažby a dalších povrchů.
+                  </p>
+                </div>
+
+                <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
+                  <img
+                    src="/videos/stavebni_prace.gif"
+                    alt="Animace stavebních prací"
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
+                  />
+                </div>
+              </article>
+
+              {/* 4. Bourací práce */}
+              <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
+                <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                  </svg>
+                </div>
+
+                <div className="flex-grow relative z-10">
+                  <div className="flex items-center gap-3 mb-2">
+                    {/* Ikona Kladiva */}
+                    <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9" />
+                        <path d="M17.64 15 22 10.64" />
+                        <path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25V2.75A.75.75 0 0 0 18 2h-2.25c-.85 0-1.65.33-2.25.93L12.2 4.18" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-[#2f3237]">Bourací práce</h3>
+                  </div>
+                  <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">
+                    Bourání menších objektů, betonových konstrukcí, základů, plotů a zpevněných ploch.
+                  </p>
+                </div>
+
+                <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
+                  <img
+                    src="/images/bourani.png"
+                    alt="Animace bouracích prací"
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
+                  />
+                </div>
+              </article>
+
+              {/* 5. Bagr s vrtákem */}
+              <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
+                <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                  </svg>
+                </div>
+
+                <div className="flex-grow relative z-10">
+                  <div className="flex items-center gap-3 mb-2">
+                    {/* Ikona Vrtáku */}
+                    <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M10 2v2" />
+                        <path d="M14 2v2" />
+                        <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h12z" />
+                        <path d="M8 8v13" />
+                        <path d="M16 8v13" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-[#2f3237]">Bagr s vrtákem</h3>
+                  </div>
+                  <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">
+                    Vrtání děr pro plotové sloupky, patky, piloty a další drobné stavební prvky.
+                  </p>
+                </div>
+
+                <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
+                  <img
+                    src="/images/vrtani.png"
+                    alt="Animace vrtání"
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
+                  />
+                </div>
+              </article>
+
+              {/* 6. 3D VIZITKA (LOGIKA: VIDÍŠ LOGO -> OTOČÍŠ NA KONTAKTY) */}
+              <article className="group relative flex flex-col h-full rounded-2xl bg-[#2f3237] ring-1 ring-black/10 p-6 shadow-md hover:shadow-2xl transition-all duration-300 items-center justify-center overflow-visible">
+
+                {/* Světlejší nadpis pro kontrast na tmavém pozadí */}
+                <div className="flex items-center gap-3 mb-4 self-start">
+                  <div className="p-2 bg-white/10 rounded-lg text-[#f9c600]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-bold text-white">Individuální domluva</h3>
+                </div>
+
+                <div className="w-full aspect-[1.7/1] relative [perspective:1500px] my-auto">
+                  <div className="w-full h-full relative transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] shadow-xl rounded-xl">
+
+                    {/* --- PŘEDNÍ STRANA (ZDE MÁ BÝT LOGO - image_0) --- */}
+                    {/* Toto je to, co uživatel vidí jako první */}
+                    <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-xl overflow-hidden bg-[#f9c600] flex items-center justify-center border-2 border-white/10">
+                      <img
+                        src="/images/vizitka_logo.png"
+                        alt="ZEVYP Logo"
+                        className="w-full h-full object-cover"
+                      />
+                      {/* Lesklý efekt přes logo */}
+                      <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
+                    </div>
+
+                    {/* --- ZADNÍ STRANA (ZDE MAJÍ BÝT KONTAKTY - image_1) --- */}
+                    {/* Toto se odhalí po otočení */}
+                    <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden bg-[#f9c600] border-2 border-white/10">
+                      <img
+                        src="/images/vizitka_kontakty.png"
+                        alt="ZEVYP Kontakty"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                  </div>
+                </div>
+
+                <p className="mt-4 text-xs text-gray-400 uppercase tracking-wider font-semibold text-center flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-[#f9c600] animate-bounce">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                  </svg>
+                  Otočit vizitku
+                </p>
+              </article>
+
             </div>
-            <h3 className="text-lg font-bold text-[#2f3237]">Výkopové práce</h3>
           </div>
-          <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">
-            Výkopy základových pasů a patek, výkopy pro inženýrské sítě, bazény, jímky a další.
-          </p>
-        </div>
+        </section>
 
-        {/* Obrázek s efektem zoomu */}
-        <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
-          <img
-            src="/videos/vykopove_prace.gif"
-            alt="Animace výkopových prací"
-            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
-          />
-        </div>
-      </article>
-
-      {/* 2. Terénní úpravy */}
-      <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
-        <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-          </svg>
-        </div>
-
-        <div className="flex-grow relative z-10">
-          <div className="flex items-center gap-3 mb-2">
-            {/* Ikona kopce/terénu */}
-            <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m8 6 4-4 4 4" />
-                <path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22" />
-                <path d="m20 22-5-5" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-bold text-[#2f3237]">Terénní úpravy</h3>
-          </div>
-          <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">
-            Svahování, zarovnávání a skrývka ornice. Příprava pozemku pro stavbu nebo finální úpravu.
-          </p>
-        </div>
-
-        <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
-          <img
-            src="/videos/terenni_upravy.gif"
-            alt="Animace terenních úprav"
-            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
-          />
-        </div>
-      </article>
-
-      {/* 3. Stavební práce */}
-      <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
-        <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-          </svg>
-        </div>
-
-        <div className="flex-grow relative z-10">
-          <div className="flex items-center gap-3 mb-2">
-            {/* Ikona Zednická lžíce/Cihly */}
-            <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 14v3c0 1.57-1.34 2.83-3 2.83H8c-1.66 0-3-1.26-3-2.83v-3" />
-                <path d="M10 14V4h4v10" />
-                <path d="M7 14h10" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-bold text-[#2f3237]">Stavební práce</h3>
-          </div>
-          <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">
-            Stavební příprava pro pokládky chodníků, dlažby a dalších povrchů.
-          </p>
-        </div>
-
-        <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
-          <img
-            src="/videos/stavebni_prace.gif"
-            alt="Animace stavebních prací"
-            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
-          />
-        </div>
-      </article>
-
-      {/* 4. Bourací práce */}
-      <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
-        <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-          </svg>
-        </div>
-
-        <div className="flex-grow relative z-10">
-          <div className="flex items-center gap-3 mb-2">
-            {/* Ikona Kladiva */}
-            <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9" />
-                <path d="M17.64 15 22 10.64" />
-                <path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25V2.75A.75.75 0 0 0 18 2h-2.25c-.85 0-1.65.33-2.25.93L12.2 4.18" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-bold text-[#2f3237]">Bourací práce</h3>
-          </div>
-          <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">
-            Bourání menších objektů, betonových konstrukcí, základů, plotů a zpevněných ploch.
-          </p>
-        </div>
-
-        <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
-          <img
-            src="/images/bourani.png"
-            alt="Animace bouracích prací"
-            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
-          />
-        </div>
-      </article>
-
-      {/* 5. Bagr s vrtákem */}
-      <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
-        <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-          </svg>
-        </div>
-
-        <div className="flex-grow relative z-10">
-          <div className="flex items-center gap-3 mb-2">
-            {/* Ikona Vrtáku */}
-            <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M10 2v2" />
-                <path d="M14 2v2" />
-                <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h12z" />
-                <path d="M8 8v13" />
-                <path d="M16 8v13" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-bold text-[#2f3237]">Bagr s vrtákem</h3>
-          </div>
-          <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">
-            Vrtání děr pro plotové sloupky, patky, piloty a další drobné stavební prvky.
-          </p>
-        </div>
-
-        <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
-          <img
-            src="/images/vrtani.png"
-            alt="Animace vrtání"
-            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
-          />
-        </div>
-      </article>
-
-      {/* 6. 3D VIZITKA (LOGIKA: VIDÍŠ LOGO -> OTOČÍŠ NA KONTAKTY) */}
-      <article className="group relative flex flex-col h-full rounded-2xl bg-[#2f3237] ring-1 ring-black/10 p-6 shadow-md hover:shadow-2xl transition-all duration-300 items-center justify-center overflow-visible">
-
-        {/* Světlejší nadpis pro kontrast na tmavém pozadí */}
-        <div className="flex items-center gap-3 mb-4 self-start">
-          <div className="p-2 bg-white/10 rounded-lg text-[#f9c600]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-            </svg>
-          </div>
-          <h3 className="text-lg font-bold text-white">Individuální domluva</h3>
-        </div>
-
-        <div className="w-full aspect-[1.7/1] relative [perspective:1500px] my-auto">
-          <div className="w-full h-full relative transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] shadow-xl rounded-xl">
-
-            {/* --- PŘEDNÍ STRANA (ZDE MÁ BÝT LOGO - image_0) --- */}
-            {/* Toto je to, co uživatel vidí jako první */}
-            <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-xl overflow-hidden bg-[#f9c600] flex items-center justify-center border-2 border-white/10">
-              <img
-                src="/images/vizitka_logo.png"
-                alt="ZEVYP Logo"
-                className="w-full h-full object-cover"
-              />
-              {/* Lesklý efekt přes logo */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
-            </div>
-
-            {/* --- ZADNÍ STRANA (ZDE MAJÍ BÝT KONTAKTY - image_1) --- */}
-            {/* Toto se odhalí po otočení */}
-            <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden bg-[#f9c600] border-2 border-white/10">
-              <img
-                src="/images/vizitka_kontakty.png"
-                alt="ZEVYP Kontakty"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-          </div>
-        </div>
-
-        <p className="mt-4 text-xs text-gray-400 uppercase tracking-wider font-semibold text-center flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-[#f9c600] animate-bounce">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-          </svg>
-          Otočit vizitku
-        </p>
-      </article>
-
-    </div>
-  </div>
-</section>
         {/* TECHNIKA */}
         <section id="technika" className="scroll-mt-24 bg-white text-black py-16 relative">
           <div className="container mx-auto px-4 text-center">
@@ -690,159 +695,251 @@ export default function Home() {
           )}
         </section>
 
-        {/* CENÍK */}
-        <section id="cenik" className="scroll-mt-24 bg-[#f9c600] text-black py-16">
+        {/* CENÍK A 3D VIZITKA */}
+        <section id="cenik" className="scroll-mt-24 bg-gray-100 text-black py-16 overflow-hidden">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center">CENÍK</h2>
-            <table className="w-full max-w-3xl mx-auto rounded-xl overflow-hidden border border-black/10 bg-white">
-              <tbody className="[&_tr]:border-b [&_tr:last-child]:border-none border-black/10">
-                <tr>
-                  <td className="py-4 px-6 font-semibold">Bagr s obsluhou</td>
-                  <td className="py-4 px-6 text-right font-bold">990 Kč / hod</td>
-                </tr>
-                <tr>
-                  <td className="py-4 px-6 font-semibold">Doprava stroje</td>
-                  <td className="py-4 px-6 text-right font-bold">30 Kč / km</td>
-                </tr>
-                <tr>
-                  <td className="py-4 px-6 font-semibold">Terenní úpravy</td>
-                  <td className="py-4 px-6 text-right font-bold">dle domluvy</td>
-                </tr>
-                <tr>
-                  <td className="py-4 px-6 font-semibold">Odvoz a likvidace zeminy</td>
-                  <td className="py-4 px-6 text-right font-bold">dle domluvy</td>
-                </tr>
-              </tbody>
-            </table>
-            <p className="text-sm text-gray-700 mt-6 text-center">
-              *Konečnou cenu stanovíme individuálně podle vzdálenosti a požadavků.
-            </p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center tracking-wide">
+              CENÍK SLUŽEB
+            </h2>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              
+              {/* 1. LEVÁ STRANA - TABULKA */}
+              <div className="order-2 lg:order-1">
+                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+                  <table className="w-full">
+                    <thead className="bg-[#2f3237] text-white">
+                      <tr>
+                        <th className="py-4 px-6 text-left font-semibold">Položka</th>
+                        <th className="py-4 px-6 text-right font-semibold">Cena</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      <tr className="hover:bg-yellow-50 transition-colors">
+                        <td className="py-4 px-6 font-medium text-gray-700">Bagr s obsluhou</td>
+                        <td className="py-4 px-6 text-right font-bold text-[#2f3237]">990 Kč / hod</td>
+                      </tr>
+                      <tr className="hover:bg-yellow-50 transition-colors">
+                        <td className="py-4 px-6 font-medium text-gray-700">Doprava stroje</td>
+                        <td className="py-4 px-6 text-right font-bold text-[#2f3237]">30 Kč / km</td>
+                      </tr>
+                      <tr className="hover:bg-yellow-50 transition-colors">
+                        <td className="py-4 px-6 font-medium text-gray-700">Terénní úpravy</td>
+                        <td className="py-4 px-6 text-right font-bold text-[#2f3237]">dle domluvy</td>
+                      </tr>
+                      <tr className="hover:bg-yellow-50 transition-colors">
+                        <td className="py-4 px-6 font-medium text-gray-700">Odvoz a likvidace zeminy</td>
+                        <td className="py-4 px-6 text-right font-bold text-[#2f3237]">dle domluvy</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="p-4 bg-gray-50 text-xs text-gray-500 text-center border-t border-gray-100">
+                    * Ceny jsou uvedeny bez DPH. Konečnou cenu stanovíme individuálně.
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. PRAVÁ STRANA - 3D VIZITKA (Podle obrázku) */}
+              <div className="order-1 lg:order-2 flex justify-center perspective-[1500px] group h-[350px] items-center">
+                
+                {/* Kontejner karty s 3D transformací */}
+                <div className="relative w-full max-w-[550px] aspect-[1.7/1] transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] shadow-2xl rounded-xl">
+                  
+                  {/* --- PŘEDNÍ STRANA (ŽLUTÁ - Design dle obrázku) --- */}
+                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-xl overflow-hidden bg-[#f9c600] text-black shadow-lg border border-yellow-500/30">
+                    
+                    {/* Dekorativní pozadí (jemný gradient) */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-300/40 to-transparent pointer-events-none"></div>
+
+                    <div className="relative z-10 h-full flex flex-row p-6 md:p-8">
+                      {/* Levý sloupec - TEXTY */}
+                      <div className="flex-1 flex flex-col justify-center space-y-4">
+                        
+                        {/* Jméno */}
+                        <div className="flex items-center gap-3">
+                          <UserIcon className="w-6 h-6 md:w-8 md:h-8 text-black" />
+                          <h3 className="text-xl md:text-3xl font-extrabold uppercase tracking-tight">
+                            KLÁRA PUDILOVÁ
+                          </h3>
+                        </div>
+
+                        {/* Telefon */}
+                        <div className="flex items-center gap-3">
+                          <div className="border-2 border-black rounded-full p-1">
+                             <PhoneIcon className="w-4 h-4 md:w-5 md:h-5 text-black" />
+                          </div>
+                          <span className="text-xl md:text-3xl font-bold tracking-wide">
+                            725 319 300
+                          </span>
+                        </div>
+
+                        {/* Web */}
+                        <div className="flex items-center gap-3">
+                           <GlobeAltIcon className="w-6 h-6 md:w-8 md:h-8 text-black" />
+                           <span className="text-lg md:text-2xl font-bold uppercase">
+                             ZEVYP-KP.CZ
+                           </span>
+                        </div>
+
+                        {/* IČO */}
+                        <div className="flex items-center gap-3">
+                           <IdentificationIcon className="w-6 h-6 md:w-8 md:h-8 text-black" />
+                           <span className="text-lg md:text-2xl font-bold uppercase">
+                             IČO: 73377619
+                           </span>
+                        </div>
+                      </div>
+
+                      {/* Pravý sloupec - OBRÁZEK STROJE */}
+                      <div className="w-1/3 flex items-center justify-center relative">
+                         <img 
+                            src="/images/bagr-hero.png" 
+                            alt="Bagr" 
+                            className="object-contain w-full h-auto drop-shadow-xl transform scale-125 translate-x-4 translate-y-4"
+                         />
+                      </div>
+                    </div>
+
+                    {/* Spodní lišta s textem */}
+                    <div className="absolute bottom-4 left-0 right-0 text-center">
+                      <p className="text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-80">
+                        VÝKOPOVÉ PRÁCE • TERÉNNÍ ÚPRAVY • STAVEBNÍ PRÁCE
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* --- ZADNÍ STRANA (TMAVÁ - Logo) --- */}
+                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden bg-[#2f3237] flex flex-col items-center justify-center border-2 border-gray-700">
+                    <div className="text-[#f9c600] mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-20 h-20">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-2">Potřebujete poradit?</h3>
+                    <p className="text-gray-400 text-sm mb-6">Neváhejte nás kontaktovat</p>
+                    <a href="#kontakt" className="bg-[#f9c600] text-[#2f3237] px-6 py-2 rounded-full font-bold hover:bg-white transition-colors">
+                      Přejít na formulář
+                    </a>
+                  </div>
+
+                </div>
+                
+                {/* Nápověda pod kartou */}
+                <div className="absolute -bottom-10 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-sm text-gray-500 flex items-center justify-center gap-2">
+                        <ArrowPathIcon className="w-4 h-4" /> Klikněte pro kontakt
+                    </span>
+                </div>
+              </div>
+
+            </div>
           </div>
         </section>
 
-{/* KONTAKT + POPTÁVKA */}
-<section id="kontakt" className="scroll-mt-24 bg-[#2f3237] text-white px-6 py-12">
-  <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
-    KONTAKTNÍ FORMULÁŘ
-  </h2>
+        {/* KONTAKT + POPTÁVKA */}
+        <section id="kontakt" className="scroll-mt-24 bg-[#2f3237] text-white px-6 py-12">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-[#f9c600]">
+            KONTAKTNÍ FORMULÁŘ
+          </h2>
 
-  <form
-    onSubmit={(e) => { e.preventDefault(); odeslat(); }}
-    /* Ponecháváme 'space-y-5', protože většina prvků je stále pod sebou */
-    className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800"
-  >
-    
-    {/* 1. E-mail a Telefon: ZABALENO V GRIDU PRO RESPONZIVNÍ ROZLOŽENÍ
-        (Původně bylo jako bod 2, nyní je první)
-    */}
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      
-      {/* E-mail (bude 1. sloupec na PC) */}
-      <div>
-        <label className="block font-semibold">E-mail</label>
-        <input 
-          type="email" 
-          className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          // POZNÁMKA: Chybí useState/onChange pro E-mail.
-        />
-      </div>
+          <form
+            onSubmit={(e) => { e.preventDefault(); odeslat(); }}
+            className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-5 text-gray-800"
+          >
+            
+            {/* 1. E-mail a Telefon */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block font-semibold">E-mail</label>
+                <input 
+                  type="email" 
+                  className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                />
+              </div>
+              <div>
+                <label className="block font-semibold">Telefon</label>
+                <input 
+                  type="tel" 
+                  className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" 
+                />
+              </div>
+            </div>
+            
+            {/* 2. Adresa zakázky */}
+            <div>
+              <label className="block font-semibold">Adresa zakázky</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  className="flex-1 border px-4 py-2 rounded"
+                  value={adresa}
+                  onChange={(e) => setAdresa(e.target.value)}
+                />
+                <button
+                  type="button"
+                  onClick={spocitatVzdalenost}
+                  disabled={loadingKm}
+                  aria-busy={loadingKm}
+                  className={`bg-[#f4c700] text-black px-4 py-2 rounded ${loadingKm ? "opacity-60 cursor-not-allowed" : ""}`}
+                >
+                  {loadingKm ? "Počítám…" : "Zjistit km"}
+                </button>
+              </div>
+              {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
+            </div>
 
-      {/* Telefon (bude 2. sloupec na PC) */}
-      <div>
-        <label className="block font-semibold">Telefon</label>
-        <input 
-          type="tel" 
-          className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" 
-          // POZNÁMKA: Chybí useState/onChange pro Telefon.
-        />
-      </div>
-    </div>
-    
-    {/* 2. Adresa zakázky (Původně bod 3) */}
-    <div>
-      <label className="block font-semibold">Adresa zakázky</label>
-      <div className="flex gap-2">
-        <input
-          type="text"
-          className="flex-1 border px-4 py-2 rounded"
-          value={adresa}
-          onChange={(e) => setAdresa(e.target.value)}
-        />
-        <button
-          type="button"
-          onClick={spocitatVzdalenost}
-          disabled={loadingKm}
-          aria-busy={loadingKm}
-          className={`bg-[#f4c700] text-black px-4 py-2 rounded ${loadingKm ? "opacity-60 cursor-not-allowed" : ""}`}
-        >
-          {loadingKm ? "Počítám…" : "Zjistit km"}
-        </button>
-      </div>
-      {km && <p className="text-sm mt-1 text-gray-600">Vzdálenost: {km} km</p>}
-    </div>
+            {/* 3. Kalendář a Popis */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* 3a. LEVÝ SLOUPEC: Kalendář */}
+              <div>
+                <label className="block font-semibold">Zvolte termín</label>
+                <Calendar
+                  selectRange
+                  className="brand-calendar"
+                  tileDisabled={({ date }) => occupiedSet.has(formatLocalDate(date))}
+                  onChange={(range) => {
+                    if (Array.isArray(range) && range.length === 2) {
+                      setDatumOd(formatLocalDate(range[0]));
+                      setDatumDo(formatLocalDate(range[1]));
+                    }
+                  }}
+                />
+                {datumOd && datumDo && (
+                  <p className="text-sm mt-2 text-[#000000]">
+                    Vybraný termín: {datumOd} až {datumDo}
+                  </p>
+                )}
+              </div>
 
-    {/* 3. NOVÝ GRID PRO KALENDÁŘ A POPIS PRACÍ 
-        - Na mobilu (grid-cols-1): Bude vše pod sebou.
-        - Na PC (md:grid-cols-2): Budou vedle sebe.
-    */}
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* 3b. PRAVÝ SLOUPEC: Popis požadovaných prací */}
+              <div className="flex flex-col h-full">
+                <label className="block font-semibold">Popis požadovaných prací</label>
+                <textarea
+                  className="w-full border px-4 py-3 rounded min-h-[140px] resize-y placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 flex-grow"
+                  value={popisZK}
+                  onChange={(e) => setpopisZK(e.target.value)}
+                  placeholder={`Např.: Poptávám výkop rýhy pro elektriku cca 12 m, hloubka 70 cm, šířka 30 cm.\nOdvoz přebytečné zeminy, zarovnání terénu. Místo: Karlovy Vary.`}
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Tip: uveďte rozměry (délka/šířka/hloubka), místo realizace a případně odvoz zeminy.
+                </p>
+              </div>
+            </div> 
 
-      {/* 3a. LEVÝ SLOUPEC: Kalendář (Původně bod 5) */}
-      <div>
-        <label className="block font-semibold">Zvolte termín</label>
-        <Calendar
-          selectRange
-          className="brand-calendar"
-          tileDisabled={({ date }) => occupiedSet.has(formatLocalDate(date))}
-          onChange={(range) => {
-            if (Array.isArray(range) && range.length === 2) {
-              setDatumOd(formatLocalDate(range[0]));
-              setDatumDo(formatLocalDate(range[1]));
-            }
-          }}
-        />
-        {datumOd && datumDo && (
-          <p className="text-sm mt-2 text-[#000000]">
-            Vybraný termín: {datumOd} až {datumDo}
-          </p>
-        )}
-      </div>
+            {/* 4. ODESLAT tlačítko */}
+            <button
+              type="submit"
+              disabled={sending}
+              aria-busy={sending}
+              className={`w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400 ${sending ? "opacity-60 cursor-not-allowed" : ""}`}
+            >
+              {sending ? "Odesílám…" : "ODESLAT NEZÁVAZNĚ OBJEDNÁVKU"}
+            </button>
+            {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
 
-      {/* 3b. PRAVÝ SLOUPEC: Popis požadovaných prací (PŘESUNUTO ZDE) */}
-      {/* ÚPRAVA: 'flex flex-col h-full' zajistí, že se tento div
-        snaží být stejně vysoký jako kalendář, a 'flex-grow' na textarea
-        způsobí, že textové pole vyplní dostupnou výšku.
-      */}
-      <div className="flex flex-col h-full">
-        <label className="block font-semibold">Popis požadovaných prací</label>
-        <textarea
-          className="w-full border px-4 py-3 rounded min-h-[140px] resize-y placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 flex-grow"
-          value={popisZK}
-          onChange={(e) => setpopisZK(e.target.value)}
-          placeholder={`Např.: Poptávám výkop rýhy pro elektriku cca 12 m, hloubka 70 cm, šířka 30 cm.\nOdvoz přebytečné zeminy, zarovnání terénu. Místo: Karlovy Vary.`}
-        />
-        <p className="text-xs text-gray-500 mt-1">
-          Tip: uveďte rozměry (délka/šířka/hloubka), místo realizace a případně odvoz zeminy.
-        </p>
-      </div>
+          </form>
+        </section>
 
-    </div> 
-    {/* KONEC GRIDU PRO KALENDÁŘ A POPIS */}
-    
-
-    {/* 4. ODESLAT tlačítko (Původně bod 6) */}
-    <button
-      type="submit"
-      disabled={sending}
-      aria-busy={sending}
-      className={`w-full bg-[#f9c600] text-[#2f3237] font-bold py-3 rounded hover:bg-yellow-400 ${sending ? "opacity-60 cursor-not-allowed" : ""}`}
-    >
-      {sending ? "Odesílám…" : "ODESLAT NEZÁVAZNĚ OBJEDNÁVKU"}
-    </button>
-    {msg && <p className="text-sm text-red-600 mt-2">{msg}</p>}
-
-  </form>
-</section>
         {/* Footer */}
         <footer className="bg-[#2f3237] text-white text-center py-4 text-sm">
           Zemní a Výkopové Práce • IČO:73377619 • Milan Popov • kontakt@zevyp.cz • Habartov, Horní Částkov ev. č. 2, 357 09
