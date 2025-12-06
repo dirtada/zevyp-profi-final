@@ -872,7 +872,7 @@ export default function Home() {
 
                     {/* OBRÁZEK STROJE - UPRAVENO: Uvnitř vizitky na PC i mobilu */}
                     {/* Odstraněny negativní marginy, nyní zarovnáno doprava dolů kousek od okraje */}
-                    <div className="absolute right-0 bottom-0 w-[130px] md:right-2 md:bottom-2 md:w-[280px] z-30 pointer-events-none drop-shadow-lg">
+                    <div className="absolute right-0 bottom-8 w-[130px] md:right-2 md:bottom-2 md:w-[180px] z-30 pointer-events-none drop-shadow-lg">
                        <img 
                           src="/images/flotila_nejlepsi_transparentni.png" 
                           alt="Flotila bagrů" 
