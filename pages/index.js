@@ -349,7 +349,7 @@ export default function Home() {
         </p>
 
         <img 
-          src="/ivideos/bouraci_prace.gif"
+          src="/videos/bouraci_prace.gif"
           alt="Animace bouracích prací"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
         />
