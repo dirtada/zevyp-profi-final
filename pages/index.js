@@ -349,7 +349,7 @@ export default function Home() {
         </p>
 
         <img 
-          src="/images/bourani.png"
+          src="/ivideos/bouraci_prace.gif"
           alt="Animace bouracích prací"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
         />
@@ -363,7 +363,7 @@ export default function Home() {
         </p>
 
         <img 
-          src="/images/vrtani.png"
+          src="/videos/bagr_s_vrtakem.gif"
           alt="Animace vrtání"
           className="w-full rounded-lg mt-4 aspect-video object-cover"
         />
