@@ -300,16 +300,20 @@ export default function Home() {
       <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
         {/* Dekorativní šipka v rohu */}
         <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-            </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+          </svg>
         </div>
 
         <div className="flex-grow relative z-10">
           <div className="flex items-center gap-3 mb-2">
             {/* Ikona lopaty */}
             <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 22v-5l5-5 5 5-5 5z"/><path d="M9.5 14.5L16 8"/><path d="M17 2l5 5-.5 .5a3.53 3.53 0 0 1-5 0s0 0 0 0L17 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 22v-5l5-5 5 5-5 5z" />
+                <path d="M9.5 14.5L16 8" />
+                <path d="M17 2l5 5-.5 .5a3.53 3.53 0 0 1-5 0s0 0 0 0L17 2" />
+              </svg>
             </div>
             <h3 className="text-lg font-bold text-[#2f3237]">Výkopové práce</h3>
           </div>
@@ -317,30 +321,34 @@ export default function Home() {
             Výkopy základových pasů a patek, výkopy pro inženýrské sítě, bazény, jímky a další.
           </p>
         </div>
-        
+
         {/* Obrázek s efektem zoomu */}
         <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
-            <img 
-              src="/videos/vykopove_prace.gif"
-              alt="Animace výkopových prací"
-              className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
-            />
+          <img
+            src="/videos/vykopove_prace.gif"
+            alt="Animace výkopových prací"
+            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
+          />
         </div>
       </article>
 
       {/* 2. Terénní úpravy */}
       <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
         <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-            </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+          </svg>
         </div>
 
         <div className="flex-grow relative z-10">
           <div className="flex items-center gap-3 mb-2">
-             {/* Ikona kopce/terénu */}
-             <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"/><path d="m20 22-5-5"/></svg>
+            {/* Ikona kopce/terénu */}
+            <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m8 6 4-4 4 4" />
+                <path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22" />
+                <path d="m20 22-5-5" />
+              </svg>
             </div>
             <h3 className="text-lg font-bold text-[#2f3237]">Terénní úpravy</h3>
           </div>
@@ -350,27 +358,31 @@ export default function Home() {
         </div>
 
         <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
-            <img 
-              src="/videos/terenni_upravy.gif"
-              alt="Animace terenních úprav"
-              className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
-            />
+          <img
+            src="/videos/terenni_upravy.gif"
+            alt="Animace terenních úprav"
+            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
+          />
         </div>
       </article>
 
       {/* 3. Stavební práce */}
       <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
         <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-            </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+          </svg>
         </div>
 
         <div className="flex-grow relative z-10">
           <div className="flex items-center gap-3 mb-2">
             {/* Ikona Zednická lžíce/Cihly */}
             <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14v3c0 1.57-1.34 2.83-3 2.83H8c-1.66 0-3-1.26-3-2.83v-3"/><path d="M10 14V4h4v10"/><path d="M7 14h10"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 14v3c0 1.57-1.34 2.83-3 2.83H8c-1.66 0-3-1.26-3-2.83v-3" />
+                <path d="M10 14V4h4v10" />
+                <path d="M7 14h10" />
+              </svg>
             </div>
             <h3 className="text-lg font-bold text-[#2f3237]">Stavební práce</h3>
           </div>
@@ -380,27 +392,31 @@ export default function Home() {
         </div>
 
         <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
-            <img 
-              src="/videos/stavebni_prace.gif"
-              alt="Animace stavebních prací"
-              className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
-            />
+          <img
+            src="/videos/stavebni_prace.gif"
+            alt="Animace stavebních prací"
+            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
+          />
         </div>
       </article>
 
       {/* 4. Bourací práce */}
       <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
-         <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-            </svg>
+        <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+          </svg>
         </div>
 
         <div className="flex-grow relative z-10">
           <div className="flex items-center gap-3 mb-2">
             {/* Ikona Kladiva */}
             <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25V2.75A.75.75 0 0 0 18 2h-2.25c-.85 0-1.65.33-2.25.93L12.2 4.18"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9" />
+                <path d="M17.64 15 22 10.64" />
+                <path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25V2.75A.75.75 0 0 0 18 2h-2.25c-.85 0-1.65.33-2.25.93L12.2 4.18" />
+              </svg>
             </div>
             <h3 className="text-lg font-bold text-[#2f3237]">Bourací práce</h3>
           </div>
@@ -410,27 +426,33 @@ export default function Home() {
         </div>
 
         <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
-            <img 
-              src="/images/bourani.png"
-              alt="Animace bouracích prací"
-              className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
-            />
+          <img
+            src="/images/bourani.png"
+            alt="Animace bouracích prací"
+            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
+          />
         </div>
       </article>
 
       {/* 5. Bagr s vrtákem */}
       <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
         <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-            </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+          </svg>
         </div>
 
         <div className="flex-grow relative z-10">
           <div className="flex items-center gap-3 mb-2">
             {/* Ikona Vrtáku */}
             <div className="p-2 bg-[#f9c600]/10 rounded-lg text-[#dba500]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h12z"/><path d="M8 8v13"/><path d="M16 8v13"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10 2v2" />
+                <path d="M14 2v2" />
+                <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h12z" />
+                <path d="M8 8v13" />
+                <path d="M16 8v13" />
+              </svg>
             </div>
             <h3 className="text-lg font-bold text-[#2f3237]">Bagr s vrtákem</h3>
           </div>
@@ -440,53 +462,55 @@ export default function Home() {
         </div>
 
         <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
-            <img 
-              src="/images/vrtani.png"
-              alt="Animace vrtání"
-              className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
-            />
+          <img
+            src="/images/vrtani.png"
+            alt="Animace vrtání"
+            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
+          />
         </div>
       </article>
 
       {/* 6. 3D VIZITKA (LOGIKA: VIDÍŠ LOGO -> OTOČÍŠ NA KONTAKTY) */}
       <article className="group relative flex flex-col h-full rounded-2xl bg-[#2f3237] ring-1 ring-black/10 p-6 shadow-md hover:shadow-2xl transition-all duration-300 items-center justify-center overflow-visible">
-        
+
         {/* Světlejší nadpis pro kontrast na tmavém pozadí */}
         <div className="flex items-center gap-3 mb-4 self-start">
-             <div className="p-2 bg-white/10 rounded-lg text-[#f9c600]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </div>
-            <h3 className="text-lg font-bold text-white">Individuální domluva</h3>
+          <div className="p-2 bg-white/10 rounded-lg text-[#f9c600]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-bold text-white">Individuální domluva</h3>
         </div>
 
         <div className="w-full aspect-[1.7/1] relative [perspective:1500px] my-auto">
           <div className="w-full h-full relative transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] shadow-xl rounded-xl">
-            
+
             {/* --- PŘEDNÍ STRANA (ZDE MÁ BÝT LOGO - image_0) --- */}
             {/* Toto je to, co uživatel vidí jako první */}
             <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-xl overflow-hidden bg-[#f9c600] flex items-center justify-center border-2 border-white/10">
-              <img 
-                src="/images/vizitka_logo.png" 
-                alt="ZEVYP Logo" 
-                className="w-full h-full object-cover" 
+              <img
+                src="/images/vizitka_logo.png"
+                alt="ZEVYP Logo"
+                className="w-full h-full object-cover"
               />
-               {/* Lesklý efekt přes logo */}
-               <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
+              {/* Lesklý efekt přes logo */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
             </div>
 
             {/* --- ZADNÍ STRANA (ZDE MAJÍ BÝT KONTAKTY - image_1) --- */}
             {/* Toto se odhalí po otočení */}
             <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden bg-[#f9c600] border-2 border-white/10">
-              <img 
-                src="/images/vizitka_kontakty.png" 
-                alt="ZEVYP Kontakty" 
-                className="w-full h-full object-cover" 
+              <img
+                src="/images/vizitka_kontakty.png"
+                alt="ZEVYP Kontakty"
+                className="w-full h-full object-cover"
               />
             </div>
 
           </div>
         </div>
-        
+
         <p className="mt-4 text-xs text-gray-400 uppercase tracking-wider font-semibold text-center flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-[#f9c600] animate-bounce">
             <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -498,7 +522,6 @@ export default function Home() {
     </div>
   </div>
 </section>
-
         {/* TECHNIKA */}
         <section id="technika" className="scroll-mt-24 bg-white text-black py-16 relative">
           <div className="container mx-auto px-4 text-center">
