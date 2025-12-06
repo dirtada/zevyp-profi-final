@@ -1,6 +1,5 @@
 // pages/index.js
 import Head from "next/head";
-import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useState, useEffect, useMemo } from "react";
@@ -10,16 +9,11 @@ import {
   Cog6ToothIcon,
   ArrowsUpDownIcon,
   WrenchScrewdriverIcon,
-  BuildingOffice2Icon,
-  TruckIcon,
-  SquaresPlusIcon,
   PlusCircleIcon,
   PhoneIcon,
   XMarkIcon as CloseIcon,
-  // Nové ikony pro vizitku:
   GlobeAltIcon,
   IdentificationIcon,
-  UserIcon,
   ArrowPathIcon
 } from "@heroicons/react/24/solid";
 import { Inter } from "next/font/google";
@@ -695,7 +689,7 @@ export default function Home() {
           )}
         </section>
 
-        {/* CENÍK A 3D VIZITKA */}
+        {/* CENÍK A 3D VIZITKA - PŘESNÁ KOPIE VIZUÁLU */}
         <section id="cenik" className="scroll-mt-24 bg-gray-100 text-black py-16 overflow-hidden">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237] text-center tracking-wide">
@@ -739,96 +733,98 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 2. PRAVÁ STRANA - 3D VIZITKA (Podle obrázku) */}
-              <div className="order-1 lg:order-2 flex justify-center perspective-[1500px] group h-[350px] items-center">
+              {/* 2. PRAVÁ STRANA - STATICKÁ 3D VIZITKA (PŘESNĚ DLE OBRÁZKU) */}
+              <div className="order-1 lg:order-2 flex justify-center py-10 lg:py-0">
                 
-                {/* Kontejner karty s 3D transformací */}
-                <div className="relative w-full max-w-[550px] aspect-[1.7/1] transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] shadow-2xl rounded-xl">
+                {/* Obal pro efekt vznášení */}
+                <div className="relative group perspective-[1000px]">
                   
-                  {/* --- PŘEDNÍ STRANA (ŽLUTÁ - Design dle obrázku) --- */}
-                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-xl overflow-hidden bg-[#f9c600] text-black shadow-lg border border-yellow-500/30">
-                    
-                    {/* Dekorativní pozadí (jemný gradient) */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-300/40 to-transparent pointer-events-none"></div>
+                  {/* Stín pod kartou (Blur efekt) */}
+                  <div className="absolute -bottom-10 left-[10%] w-[80%] h-10 bg-black/40 blur-xl rounded-full transform rotate-3"></div>
 
-                    <div className="relative z-10 h-full flex flex-row p-6 md:p-8">
-                      {/* Levý sloupec - TEXTY */}
-                      <div className="flex-1 flex flex-col justify-center space-y-4">
+                  {/* KARTA SAMOTNÁ - Statický 3D náklon */}
+                  {/* Používáme transformaci pro natočení v prostoru */}
+                  <div 
+                    className="relative w-[500px] h-[290px] bg-[#f9c600] rounded-xl shadow-2xl overflow-visible border-2 border-yellow-400"
+                    style={{
+                      transform: 'perspective(1000px) rotateY(-20deg) rotateX(10deg) rotateZ(-3deg)',
+                      transformStyle: 'preserve-3d',
+                      boxShadow: '-20px 20px 60px rgba(0,0,0,0.3)'
+                    }}
+                  >
+                    
+                    {/* Odlesk pro plastický vzhled */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-transparent to-transparent pointer-events-none rounded-xl z-10"></div>
+
+                    <div className="relative z-20 h-full p-6 flex flex-col justify-between">
+                      
+                      {/* Horní část - Kontakty a Ikonky */}
+                      <div className="flex flex-col space-y-4">
                         
-                        {/* Jméno */}
-                        <div className="flex items-center gap-3">
-                          <UserIcon className="w-6 h-6 md:w-8 md:h-8 text-black" />
-                          <h3 className="text-xl md:text-3xl font-extrabold uppercase tracking-tight">
-                            KLÁRA PUDILOVÁ
-                          </h3>
+                        {/* Jméno + Helma */}
+                        <div className="flex items-center gap-4">
+                           {/* Vlastní SVG Helma (přesnější než heroicon) */}
+                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-black">
+                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 13h18M5 13v-3a7 7 0 0114 0v3M12 13v-8m-2 0h4" />
+                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l-1 4h16l-1-4" />
+                           </svg>
+                           <h3 className="text-2xl font-extrabold uppercase text-black tracking-tight" style={{ fontFamily: 'sans-serif' }}>
+                             KLÁRA PUDILOVÁ
+                           </h3>
                         </div>
 
                         {/* Telefon */}
-                        <div className="flex items-center gap-3">
-                          <div className="border-2 border-black rounded-full p-1">
-                             <PhoneIcon className="w-4 h-4 md:w-5 md:h-5 text-black" />
+                        <div className="flex items-center gap-4">
+                          <div className="border-2 border-black rounded-full p-1 w-8 h-8 flex items-center justify-center">
+                             <PhoneIcon className="w-5 h-5 text-black" />
                           </div>
-                          <span className="text-xl md:text-3xl font-bold tracking-wide">
-                            725 319 300
-                          </span>
+                          <div className="flex flex-col">
+                            <span className="text-3xl font-extrabold text-black tracking-wide leading-none">
+                              725 319 300
+                            </span>
+                            {/* Podtržení pod číslem */}
+                            <div className="w-full h-[2px] bg-black mt-1"></div>
+                          </div>
                         </div>
 
                         {/* Web */}
-                        <div className="flex items-center gap-3">
-                           <GlobeAltIcon className="w-6 h-6 md:w-8 md:h-8 text-black" />
-                           <span className="text-lg md:text-2xl font-bold uppercase">
+                        <div className="flex items-center gap-4">
+                           <GlobeAltIcon className="w-8 h-8 text-black" />
+                           <span className="text-2xl font-extrabold uppercase text-black">
                              ZEVYP-KP.CZ
                            </span>
                         </div>
 
                         {/* IČO */}
-                        <div className="flex items-center gap-3">
-                           <IdentificationIcon className="w-6 h-6 md:w-8 md:h-8 text-black" />
-                           <span className="text-lg md:text-2xl font-bold uppercase">
+                        <div className="flex items-center gap-4">
+                           <div className="w-8 flex justify-center">
+                              <IdentificationIcon className="w-8 h-8 text-black" />
+                           </div>
+                           <span className="text-2xl font-extrabold uppercase text-black">
                              IČO: 73377619
                            </span>
                         </div>
                       </div>
 
-                      {/* Pravý sloupec - OBRÁZEK STROJE */}
-                      <div className="w-1/3 flex items-center justify-center relative">
-                         <img 
-                            src="/images/bagr-hero.png" 
-                            alt="Bagr" 
-                            className="object-contain w-full h-auto drop-shadow-xl transform scale-125 translate-x-4 translate-y-4"
-                         />
+                      {/* Spodní text */}
+                      <div className="mt-2 pt-2 border-t-0 border-black/20 text-center">
+                         <p className="text-[11px] font-bold text-black uppercase tracking-widest">
+                           VÝKOPOVÉ PRÁCE • TERÉNNÍ ÚPRAVY • STAVEBNÍ PRÁCE
+                         </p>
                       </div>
+
                     </div>
 
-                    {/* Spodní lišta s textem */}
-                    <div className="absolute bottom-4 left-0 right-0 text-center">
-                      <p className="text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-80">
-                        VÝKOPOVÉ PRÁCE • TERÉNNÍ ÚPRAVY • STAVEBNÍ PRÁCE
-                      </p>
+                    {/* OBRÁZEK STROJE - Vystupující mimo kartu (3D efekt) */}
+                    <div className="absolute -right-16 -bottom-5 w-[280px] z-30 pointer-events-none drop-shadow-2xl">
+                       <img 
+                          src="/images/flotila_nejlepsi_transparentni.jpg" 
+                          alt="Flotila bagrů" 
+                          className="w-full h-auto object-contain transform scale-110"
+                       />
                     </div>
+
                   </div>
-
-                  {/* --- ZADNÍ STRANA (TMAVÁ - Logo) --- */}
-                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden bg-[#2f3237] flex flex-col items-center justify-center border-2 border-gray-700">
-                    <div className="text-[#f9c600] mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-20 h-20">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-2">Potřebujete poradit?</h3>
-                    <p className="text-gray-400 text-sm mb-6">Neváhejte nás kontaktovat</p>
-                    <a href="#kontakt" className="bg-[#f9c600] text-[#2f3237] px-6 py-2 rounded-full font-bold hover:bg-white transition-colors">
-                      Přejít na formulář
-                    </a>
-                  </div>
-
-                </div>
-                
-                {/* Nápověda pod kartou */}
-                <div className="absolute -bottom-10 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-sm text-gray-500 flex items-center justify-center gap-2">
-                        <ArrowPathIcon className="w-4 h-4" /> Klikněte pro kontakt
-                    </span>
                 </div>
               </div>
 
