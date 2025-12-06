@@ -793,7 +793,7 @@ export default function Home() {
                        <img 
                           src="/images/flotila_nejlepsi_transparentni.png" 
                           alt="Flotila bagrů" 
-                          className="w-full h-auto object-contain transform scale-110"
+                          className="w-full h-auto object-contain transform scale-30"
                        />
                     </div>
 
