@@ -294,79 +294,131 @@ export default function Home() {
       NAŠE SLUŽBY
     </h2>
 
-    {/* ---------- JEDNOTNÁ MŘÍŽKA (všechny boxy stejně velké) ---------- */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {/* ---------- MŘÍŽKA 3x2 (6 boxů) ---------- */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
 
       {/* 1. Výkopové práce */}
-      {/* Upraveno: sjednocen padding (p-6) a font (text-lg) */}
-      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-lg transition-all">
-        <h3 className="text-lg font-semibold text-[#2f3237]">Výkopové práce</h3>
-        <p className="mt-2 text-sm text-gray-600">
-          Výkopy základových pasů a patek, výkopy pro inženýrské sítě, bazény, jímky a další.
-        </p>
-
+      <article className="flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-xl hover:ring-2 hover:ring-[#2f3237] hover:-translate-y-1 transition-all duration-300">
+        <div className="flex-grow">
+          <h3 className="text-lg font-bold text-[#2f3237]">Výkopové práce</h3>
+          <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+            Výkopy základových pasů a patek, výkopy pro inženýrské sítě, bazény, jímky a další.
+          </p>
+        </div>
         <img 
           src="/videos/vykopove_prace.gif"
           alt="Animace výkopových prací"
-          className="w-full rounded-lg mt-4 aspect-video object-cover"
+          className="w-full rounded-lg mt-5 aspect-video object-cover"
         />
       </article>
 
       {/* 2. Terénní úpravy */}
-      {/* Upraveno: sjednocen padding (p-6) a font (text-lg) */}
-      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-lg transition-all">
-        <h3 className="text-lg font-semibold text-[#2f3237]">Terénní úpravy</h3>
-        <p className="mt-2 text-sm text-gray-600">
-          Svahování, zarovnávání a skrývka ornice. Příprava pozemku pro stavbu nebo finální úpravu terénu.
-        </p>
-
+      <article className="flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-xl hover:ring-2 hover:ring-[#2f3237] hover:-translate-y-1 transition-all duration-300">
+        <div className="flex-grow">
+          <h3 className="text-lg font-bold text-[#2f3237]">Terénní úpravy</h3>
+          <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+            Svahování, zarovnávání a skrývka ornice. Příprava pozemku pro stavbu nebo finální úpravu terénu.
+          </p>
+        </div>
         <img 
           src="/videos/terenni_upravy.gif"
           alt="Animace terenních úprav"
-          className="w-full rounded-lg mt-4 aspect-video object-cover"
+          className="w-full rounded-lg mt-5 aspect-video object-cover"
         />
       </article>
 
       {/* 3. Stavební práce */}
-      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-lg transition-all">
-        <h3 className="text-lg font-semibold text-[#2f3237]">Stavební práce</h3>
-        <p className="mt-1 text-sm text-gray-600">
-          Stavební příprava pro pokládky chodníků, dlažby a dalších povrchů.
-        </p>
-
+      <article className="flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-xl hover:ring-2 hover:ring-[#2f3237] hover:-translate-y-1 transition-all duration-300">
+        <div className="flex-grow">
+          <h3 className="text-lg font-bold text-[#2f3237]">Stavební práce</h3>
+          <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+            Stavební příprava pro pokládky chodníků, dlažby a dalších povrchů.
+          </p>
+        </div>
         <img 
           src="/videos/stavebni_prace.gif"
           alt="Animace stavebních prací"
-          className="w-full rounded-lg mt-4 aspect-video object-cover"
+          className="w-full rounded-lg mt-5 aspect-video object-cover"
         />
       </article>
 
       {/* 4. Bourací práce */}
-      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-lg transition-all">
-        <h3 className="text-lg font-semibold text-[#2f3237]">Bourací práce</h3>
-        <p className="mt-1 text-sm text-gray-600">
-          Bourání menších objektů, betonových konstrukcí, základů, plotů a zpevněných ploch.
-        </p>
-
+      <article className="flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-xl hover:ring-2 hover:ring-[#2f3237] hover:-translate-y-1 transition-all duration-300">
+        <div className="flex-grow">
+          <h3 className="text-lg font-bold text-[#2f3237]">Bourací práce</h3>
+          <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+            Bourání menších objektů, betonových konstrukcí, základů, plotů a zpevněných ploch.
+          </p>
+        </div>
         <img 
-          src="/videos/bouraci_prace.gif"
+          src="/images/bourani.png"
           alt="Animace bouracích prací"
-          className="w-full rounded-lg mt-4 aspect-video object-cover"
+          className="w-full rounded-lg mt-5 aspect-video object-cover"
         />
       </article>
 
       {/* 5. Bagr s vrtákem */}
-      <article className="rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-lg transition-all">
-        <h3 className="text-lg font-semibold text-[#2f3237]">Bagr s vrtákem</h3>
-        <p className="mt-1 text-sm text-gray-600">
-          Vrtání děr pro plotové sloupky, patky, piloty a další drobné stavební prvky.
-        </p>
-
+      <article className="flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-xl hover:ring-2 hover:ring-[#2f3237] hover:-translate-y-1 transition-all duration-300">
+        <div className="flex-grow">
+          <h3 className="text-lg font-bold text-[#2f3237]">Bagr s vrtákem</h3>
+          <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+            Vrtání děr pro plotové sloupky, patky, piloty a další drobné stavební prvky.
+          </p>
+        </div>
         <img 
-          src="/videos/bagr_s_vrtakem.gif"
+          src="/images/vrtani.png"
           alt="Animace vrtání"
-          className="w-full rounded-lg mt-4 aspect-video object-cover"
+          className="w-full rounded-lg mt-5 aspect-video object-cover"
         />
+      </article>
+
+      {/* 6. 3D OBOUSTRANNÁ VIZITKA */}
+      {/* 'group' na hlavním článku umožňuje ovládat hover efekt uvnitř */}
+      <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/10 p-6 shadow-sm hover:shadow-xl transition-all duration-300 items-center justify-center overflow-hidden">
+        
+        {/* Nadpis pro sjednocení s ostatními boxy */}
+        <h3 className="text-lg font-bold text-[#2f3237] mb-4 self-start">Kontakty & Individuální domluva</h3>
+
+        {/* 3D Scéna - Kontejner definující perspektivu */}
+        {/* aspect ratio nastavuje poměr stran vizitky */}
+        <div className="w-full aspect-[1.7/1] relative [perspective:1500px]">
+          
+          {/* Samotný otáčecí element (Flipper) */}
+          {/* group-hover:rotate-y-180 zajistí otočení při najetí na hlavní article */}
+          <div className="w-full h-full relative transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] shadow-lg rounded-xl">
+            
+            {/* --- PŘEDNÍ STRANA (Kontakty) --- */}
+            {/* [backface-visibility:hidden] skryje tuto stranu, když je otočená zády */}
+            <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-xl overflow-hidden bg-[#f9c600]">
+               {/* ZDE VLOŽTE CESTU K OBRÁZKU S KONTAKTY (image_1.png) */}
+              <img 
+                src="/images/vizitka-kontakty.png" 
+                alt="ZEVYP Kontakty Klára Pudilová" 
+                className="w-full h-full object-cover" 
+              />
+            </div>
+
+            {/* --- ZADNÍ STRANA (Logo) --- */}
+            {/* Tato strana je již na začátku otočená o 180 stupňů [transform:rotateY(180deg)] */}
+            <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden bg-[#f9c600] flex items-center justify-center">
+               {/* ZDE VLOŽTE CESTU K OBRÁZKU S LOGEM (image_0.png) */}
+              <img 
+                src="/images/vizitka-logo.png" 
+                alt="ZEVYP Logo" 
+                className="w-full h-full object-cover" 
+              />
+            </div>
+
+          </div>
+        </div>
+        
+        {/* Nápověda pro uživatele */}
+        <p className="mt-4 text-xs text-gray-400 uppercase tracking-wider font-semibold text-center flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 animate-bounce">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+          </svg>
+          Najeďte pro otočení
+        </p>
       </article>
 
     </div>
