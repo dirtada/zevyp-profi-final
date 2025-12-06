@@ -791,7 +791,7 @@ export default function Home() {
                     {/* UPRAVENO: Zmenšena velikost pro mobil i desktop a odstraněno scale-110 */}
                     <div className="absolute -right-8 -bottom-3 w-[140px] md:-right-16 md:-bottom-5 md:w-[240px] z-30 pointer-events-none drop-shadow-2xl">
                        <img 
-                          src="/images/flotila_nejlepsi_transparentni.ppg" 
+                          src="/images/flotila_nejlepsi_transparentni.png" 
                           alt="Flotila bagrů" 
                           className="w-full h-auto object-contain"
                        />
