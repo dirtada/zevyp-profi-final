@@ -431,7 +431,7 @@ export default function Home() {
 
                 <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
                   <img
-                    src="/images/bourani.png"
+                    src="/videos/bouraci_prace.gif"
                     alt="Animace bouracích prací"
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
                   />
@@ -467,7 +467,7 @@ export default function Home() {
 
                 <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video">
                   <img
-                    src="/images/vrtani.png"
+                    src="/videos/bagr_s_vrtakem.gif"
                     alt="Animace vrtání"
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
                   />
