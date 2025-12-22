@@ -441,12 +441,12 @@ export default function Home() {
                       <tr><th className="py-4 px-6 text-left font-semibold">Položka</th><th className="py-4 px-6 text-right font-semibold">Cena</th></tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
-                      {[{ name: "Bagr s obsluhou", price: "990 Kč / hod" }, { name: "Doprava stroje", price: "30 Kč / km" }, { name: "Terénní úpravy", price: "dle domluvy" }, { name: "Odvoz a likvidace zeminy", price: "dle domluvy" }].map((item) => (
+                      {[{ name: "Bagr s obsluhou", price: "od 900 Kč / hod" }, { name: "Doprava stroje", price: "30 Kč / km" }, { name: "Terénní úpravy", price: "dle domluvy" }, { name: "Odvoz a likvidace zeminy", price: "dle domluvy" }].map((item) => (
                         <tr key={item.name} className="hover:bg-yellow-50 transition-colors"><td className="py-4 px-6 font-medium text-gray-700">{item.name}</td><td className="py-4 px-6 text-right font-bold text-[#2f3237]">{item.price}</td></tr>
                       ))}
                     </tbody>
                   </table>
-                  <div className="p-4 bg-gray-50 text-xs text-gray-500 text-center border-t border-gray-100">* Ceny jsou uvedeny bez DPH. Konečnou cenu stanovíme individuálně.</div>
+                  <div className="p-4 bg-gray-50 text-xs text-gray-500 text-center border-t border-gray-100">*Konečnou cenu stanovíme individuálně.</div>
                 </div>
               </div>
               <div className="order-1 lg:order-2 flex justify-center py-10 lg:py-0">
