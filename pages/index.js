@@ -290,8 +290,10 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">1</div><h3 className="text-lg font-bold text-[#2f3237]">Výkopové práce</h3></div>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Výkopy základových pasů a patek, výkopy pro inženýrské sítě, bazény, jímky a další.</p>
                 </div>
+          /*
                 <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/vykopove_prace.gif" alt="Animace výkopových prací" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div>
-              </article>
+          */    
+          </article>
               {/* Box 2 */}
               <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
                 <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" /></svg></div>
@@ -299,7 +301,9 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">2</div><h3 className="text-lg font-bold text-[#2f3237]">Terénní úpravy</h3></div>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Svahování, zarovnávání a skrývka ornice. Příprava pozemku pro stavbu nebo finální úpravu.</p>
                 </div>
+                /*
                 <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/terenni_upravy.gif" alt="Animace terenních úprav" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div>
+             */
               </article>
               {/* Box 3 */}
               <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
@@ -308,7 +312,9 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">3</div><h3 className="text-lg font-bold text-[#2f3237]">Stavební práce</h3></div>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Stavební příprava pro pokládky chodníků, dlažby a dalších povrchů.</p>
                 </div>
+                /*
                 <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/stavebni_prace.gif" alt="Animace stavebních prací" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div>
+              */
               </article>
               {/* Box 4 */}
               <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
@@ -317,8 +323,10 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">4</div><h3 className="text-lg font-bold text-[#2f3237]">Bourací práce</h3></div>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Bourání menších objektů, betonových konstrukcí, základů, plotů a zpevněných ploch.</p>
                 </div>
+                /*
                 <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/bouraci_prace.gif" alt="Animace bouracích prací" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div>
-              </article>
+              */
+                </article>
               {/* Box 5 */}
               <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
                 <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" /></svg></div>
@@ -326,9 +334,11 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">5</div><h3 className="text-lg font-bold text-[#2f3237]">Bagr s vrtákem</h3></div>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Vrtání děr pro plotové sloupky, patky, piloty a další drobné stavební prvky.</p>
                 </div>
+                /*
                 <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/bagr_s_vrtakem.gif" alt="Animace vrtání" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div>
-              </article>
-              {/* Box 6 - Vizitka Flip */}
+             */
+                </article>
+/*              {/* Box 6 - Vizitka Flip */}
               <article className="group relative flex flex-col h-full rounded-2xl bg-[#2f3237] ring-1 ring-black/10 p-6 shadow-md hover:shadow-2xl transition-all duration-300 items-center justify-center overflow-visible">
                 <div className="flex items-center gap-3 mb-4 self-start">
                   <div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">6</div>
@@ -350,6 +360,7 @@ export default function Home() {
                   Otočit vizitku
                 </p>
               </article>
+                    */
             </div>
           </div>
         </section>
@@ -441,7 +452,7 @@ export default function Home() {
                       <tr><th className="py-4 px-6 text-left font-semibold">Položka</th><th className="py-4 px-6 text-right font-semibold">Cena</th></tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
-                      {[{ name: "Bagr s obsluhou", price: "od 900 Kč / hod" }, { name: "Doprava stroje", price: "30 Kč / km" }, { name: "Terénní úpravy", price: "dle domluvy" }, { name: "Odvoz a likvidace zeminy", price: "dle domluvy" }].map((item) => (
+                      {[{ name: "Bagr s obsluhou", price: "dle domluvy" }, { name: "Doprava stroje", price: "dle domluvy" }, { name: "Terénní úpravy", price: "dle domluvy" }, { name: "Odvoz a likvidace zeminy", price: "dle domluvy" }].map((item) => (
                         <tr key={item.name} className="hover:bg-yellow-50 transition-colors"><td className="py-4 px-6 font-medium text-gray-700">{item.name}</td><td className="py-4 px-6 text-right font-bold text-[#2f3237]">{item.price}</td></tr>
                       ))}
                     </tbody>
