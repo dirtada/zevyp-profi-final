@@ -29,7 +29,7 @@ export default function ArTechnik() {
       <header className="py-6 px-10 border-b border-slate-100">
         <div className="container mx-auto flex justify-between items-center">
           <Image 
-            src="/images/ar-technik-logo-okno.jpg" 
+            src="/images/ar-technik-logo-okno.png" 
             alt="AR TECHNIK Logo" 
             width={180} 
             height={60} 
