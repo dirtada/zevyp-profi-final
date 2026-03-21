@@ -5,7 +5,7 @@ import {
   EnvelopeIcon, 
   MapPinIcon,
   CheckCircleIcon,
-  CurrencyBanknotesIcon
+  BanknotesIcon
 } from "@heroicons/react/24/solid";
 
 export default function ArTechnik() {
@@ -23,7 +23,7 @@ export default function ArTechnik() {
             <div className="bg-blue-700 p-1.5 rounded-lg">
               <WrenchScrewdriverIcon className="w-6 h-6 text-white" />
             </div>
-            <span className="text-2xl font-black tracking-tighter text-slate-800">AR<span className="text-blue-700">TECHNIK</span></span>
+            <span className="text-2xl font-black tracking-tighter text-slate-800 uppercase">AR<span className="text-blue-700">TECHNIK</span></span>
           </div>
           <div className="hidden md:block text-sm font-semibold text-slate-500 uppercase tracking-widest">
             Servis & Opravy Oken
@@ -31,16 +31,16 @@ export default function ArTechnik() {
         </div>
       </header>
 
-      {/* Hlavní obsah - Bez scrollu na desktopu */}
+      {/* Hlavní obsah - Designovaný pro zobrazení bez nutnosti velkého scrollu */}
       <main className="flex-grow flex items-center py-10">
         <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
           {/* Levá strana - Texty */}
           <div className="space-y-8">
             <div>
-              <h1 className="text-5xl md:text-6xl font-extrabold leading-tight text-slate-900 mb-4">
+              <h1 className="text-5xl md:text-6xl font-extrabold leading-tight text-slate-900 mb-4 tracking-tight">
                 Vaše okna <br />
-                <span className="text-blue-700 font-black">jako nová.</span>
+                <span className="text-blue-700 font-black italic">jako nová.</span>
               </h1>
               <p className="text-xl text-slate-600 max-w-md">
                 Odborné seřízení, výměna těsnění a kompletní servis oken pro celou Prahu a okolí.
@@ -50,15 +50,15 @@ export default function ArTechnik() {
             <ul className="space-y-3">
               {["Seřízení a promazání kování", "Výměna poškozeného těsnění", "Opravy klik a funkčních částí"].map((text) => (
                 <li key={text} className="flex items-center gap-3 font-bold text-slate-700 text-lg">
-                  <CheckCircleIcon className="w-6 h-6 text-blue-600" /> {text}
+                  <CheckCircleIcon className="w-6 h-6 text-blue-600 flex-shrink-0" /> {text}
                 </li>
               ))}
             </ul>
 
-            {/* Cenová doložka - Zakomponováno dle požadavku */}
+            {/* Cenová doložka */}
             <div className="inline-flex items-center gap-4 bg-white border-2 border-blue-100 p-5 rounded-2xl shadow-sm">
               <div className="bg-blue-50 p-3 rounded-full text-blue-700">
-                <CurrencyBanknotesIcon className="w-8 h-8" />
+                <BanknotesIcon className="w-8 h-8" />
               </div>
               <div>
                 <p className="text-sm font-bold text-slate-500 uppercase tracking-tight">Výjezd po Praze</p>
@@ -80,7 +80,7 @@ export default function ArTechnik() {
 
               <div className="space-y-6 pt-4 border-t border-white/10">
                 <a href="tel:+420608025502" className="flex items-center gap-5 group">
-                  <div className="bg-blue-600 p-3 rounded-xl group-hover:bg-blue-500 transition-colors">
+                  <div className="bg-blue-600 p-3 rounded-xl group-hover:bg-blue-500 transition-colors shadow-lg shadow-blue-600/20">
                     <PhoneIcon className="w-6 h-6 text-white" />
                   </div>
                   <span className="text-2xl font-bold tracking-tight group-hover:text-blue-400 transition-colors">+420 608 025 502</span>
@@ -102,8 +102,8 @@ export default function ArTechnik() {
               </div>
 
               <div className="pt-6">
-                <div className="bg-white/5 border border-white/10 p-4 rounded-xl text-center text-xs text-slate-400 uppercase tracking-widest font-bold">
-                  IČO: [DOPLNIT IČO]
+                <div className="bg-white/5 border border-white/10 p-4 rounded-xl text-center text-[10px] text-slate-500 uppercase tracking-widest font-bold">
+                   LUKÁŠ NOVÁK • IČO: [Sem doplňte IČO]
                 </div>
               </div>
             </div>
@@ -113,8 +113,8 @@ export default function ArTechnik() {
       </main>
 
       {/* Footer */}
-      <footer className="py-6 text-center text-slate-400 text-xs border-t border-slate-200 bg-white">
-        © {new Date().getFullYear()} AR TECHNIK • Rychlý a spolehlivý servis oken v Praze
+      <footer className="py-6 text-center text-slate-400 text-[10px] uppercase tracking-[0.2em] border-t border-slate-200 bg-white">
+        © {new Date().getFullYear()} AR TECHNIK • Profesionální servis oken v Praze
       </footer>
     </div>
   );
