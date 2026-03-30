@@ -48,7 +48,7 @@ export default function ArTechnik() {
           </div>
           <div className="flex items-center gap-6">
             <div className="hidden lg:block text-slate-500 font-semibold tracking-wider text-[11px] uppercase text-right leading-tight border-r pr-6 border-slate-200">
-              Specialista na okenní systémy<br/>Praha a Střední Čechy
+              Specialista na okenní systémy<br/>Praha a okolí
             </div>
             <a href="tel:+420608025502" className="flex items-center gap-2 text-blue-700 font-black text-lg hover:scale-105 transition-transform">
               <PhoneIcon className="w-5 h-5" />
@@ -93,20 +93,20 @@ export default function ArTechnik() {
               </div>
             </div>
 
-            {/* HLAVNÍ FOTKA */}
+            {/* HLAVNÍ FOTKA - ODZOOMOVANÁ */}
             <div className="lg:col-span-7 order-1 lg:order-2">
-              <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl h-[450px] md:h-[750px] border-8 border-white group">
+              <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl h-[400px] md:h-[600px] lg:h-[750px] border-8 border-white group bg-slate-100">
                 <Image 
                   src="/images/servis-oken-ar-technik.png" 
                   alt="Servis oken Lukáš Novák" 
                   fill
-                  className="object-cover object-[70%_center] md:object-center transition-transform duration-700 group-hover:scale-105"
+                  className="object-contain object-center transition-transform duration-700 group-hover:scale-105 p-4"
                   priority
                 />
-                <div className="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur p-6 rounded-3xl shadow-xl flex items-center justify-between">
+                <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 bg-white/95 backdrop-blur p-4 md:p-6 rounded-3xl shadow-xl flex items-center justify-between z-10 border border-slate-100">
                   <div>
-                    <span className="block text-[10px] font-black text-blue-600 uppercase tracking-widest">Jednotná cena výjezdu</span>
-                    <span className="text-3xl font-black italic text-slate-900">1 200 Kč <span className="text-sm font-normal not-italic text-slate-400 uppercase font-sans">bez DPH</span></span>
+                    <span className="block text-[8px] md:text-[10px] font-black text-blue-600 uppercase tracking-widest">Cena za výjezd a servis standardního bytu po Praze</span>
+                    <span className="text-2xl md:text-3xl font-black italic text-slate-900">1 200 Kč <span className="text-sm font-normal not-italic text-slate-400 uppercase font-sans">bez DPH</span></span>
                   </div>
                   <CheckBadgeIcon className="w-12 h-12 text-blue-600 opacity-20 hidden md:block" />
                 </div>
@@ -162,9 +162,9 @@ export default function ArTechnik() {
               Potřebujete servis?
             </h2>
             
-            <div className="bg-slate-50 rounded-[3rem] p-8 md:p-12 shadow-2xl border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-10 relative overflow-hidden">
-              <div className="flex items-center gap-6 text-left relative z-10">
-                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
+            <div className="bg-slate-50 rounded-[3rem] p-8 md:p-12 shadow-2xl border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-10 relative overflow-hidden text-center md:text-left">
+              <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
+                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-blue-600/20 shrink-0">
                   <MapPinIcon className="w-10 h-10" />
                 </div>
                 <div>
@@ -175,7 +175,7 @@ export default function ArTechnik() {
               
               <a href="tel:+420608025502" className="group w-full md:w-auto flex items-center justify-center gap-4 bg-blue-600 hover:bg-blue-700 p-8 rounded-[2rem] transition-all shadow-xl shadow-blue-600/30 active:scale-95">
                 <PhoneIcon className="w-10 h-10 text-white group-hover:rotate-12 transition-transform" />
-                <span className="text-3xl md:text-5xl font-black text-white tracking-tighter italic">+420 608 025 502</span>
+                <span className="text-3xl md:text-5xl font-black text-white tracking-tighter italic whitespace-nowrap">+420 608 025 502</span>
               </a>
             </div>
           </div>
@@ -185,7 +185,7 @@ export default function ArTechnik() {
       <footer className="py-12 bg-white border-t border-slate-200">
         <div className="container mx-auto px-6 text-center">
           <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.4em]">
-            AR TECHNIK • Lukáš Novák • IČO: [DOPLNIT]
+            AR TECHNIK • Lukáš Novák • IČO: 21387605
           </p>
         </div>
       </footer>
