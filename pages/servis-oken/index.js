@@ -18,7 +18,6 @@ export default function ArTechnik() {
     { jmeno: "Servis a seřízení oken", ikona: WrenchIcon, popis: "Prevence před zadrháváním a profukováním." },
     { jmeno: "Oprava kování", ikona: ExclamationTriangleIcon, popis: "Výměna nefunkčních částí a mechanizmů." },
     { jmeno: "Výměna těsnění", ikona: ShieldCheckIcon, popis: "Zastavení úniku tepla a hluku z ulice." },
-    { jmeno: "Měření úniku tepla", ikona: FireIcon, popis: "Termovizní kontrola kritických míst." },
   ];
 
   const vyhody = [
