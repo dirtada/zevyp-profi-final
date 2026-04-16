@@ -33,7 +33,7 @@ const Calendar = dynamic(() => import("react-calendar"), { ssr: false });
 
 /* --- LOGIKA BAREV PRO NAVIGACI --- */
 const getNavTheme = (section) => {
-  const lightBackgroundSections = ['aktualne', 'sluzby', 'technika', 'cenik'];
+  const lightBackgroundSections = ['sluzby', 'technika', 'cenik'];
   if (lightBackgroundSections.includes(section)) {
     return {
       container: "bg-black/5", 
@@ -54,7 +54,7 @@ function MobileSideNav() {
   const theme = getNavTheme(activeSection);
 
   useEffect(() => {
-    const sections = ['hero', 'aktualne', 'sluzby', 'technika', 'cenik', 'kontakt'];
+    const sections = ['hero', 'sluzby', 'technika', 'cenik', 'kontakt'];
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) setActiveSection(entry.target.id);
@@ -91,7 +91,6 @@ function MobileSideNav() {
 
 function Header() {
   const [open, setOpen] = useState(false);
-
   useEffect(() => {
     if (open) { document.body.style.overflow = 'hidden'; } 
     else { document.body.style.overflow = 'unset'; }
@@ -160,7 +159,8 @@ function Header() {
     </>
   );
 }
-/*
+
+/* --- TATO SEKCE JE TEĎ DEFINOVANÁ, ALE NENÍ VOLANÁ DOLE V HOME --- */
 function AktualneZTerenu() {
   const stavkaData = {
     popis: "Výkop rýhy pro inženýrské sítě a zásyp pískem",
@@ -192,15 +192,13 @@ function AktualneZTerenu() {
             <div className="aspect-video md:aspect-[16/10] rounded-2xl overflow-hidden relative border-4 border-[#1a1c1f] shadow-2xl group bg-[#1a1c1f]">
               <Image src={stavkaData.fotoPath} alt={`Práce v lokalitě ${stavkaData.obec}`} fill className="object-contain transform group-hover:scale-105 transition-transform duration-700" priority />
             </div>
-            <p className="text-center text-xs text-gray-500 mt-3 italic">Záběr z místa realizace včetně mapy</p>
           </div>
         </div>
       </div>
     </section>
   );
 }
-*/
-/* --- HLAVNÍ KOMPONENTA HOME --- */
+
 export default function Home() {
   const [adresa, setAdresa] = useState("");
   const [datumOd, setDatumOd] = useState("");
@@ -289,7 +287,8 @@ export default function Home() {
           </div>
         </main>
 
-        <AktualneZTerenu />
+        {/* --- TADY JE SEKCE ZAKOMENTOVANÁ --- */}
+        {/* <AktualneZTerenu /> */}
 
         <section id="sluzby" className="scroll-mt-24 bg-[#f9c600] text-black py-16">
           <div className="container mx-auto px-4">
@@ -311,6 +310,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ... Zbytek kódu zůstává stejný ... */}
         <section id="technika" className="scroll-mt-24 bg-white text-black py-16">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-12 uppercase tracking-wide">Technika</h2>
@@ -335,32 +335,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          {showAccessoriesBagr && (
-            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50" onClick={() => setShowAccessoriesBagr(false)}>
-              <div className="relative bg-white border shadow-2xl rounded-2xl p-6 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
-                <button onClick={() => setShowAccessoriesBagr(false)} className="absolute top-3 right-3 text-gray-400 hover:text-black"><CloseIcon className="w-7 h-7" /></button>
-                <h3 className="text-xl font-bold mb-5 uppercase tracking-wide">Příslušenství bagr</h3>
-                <ul className="space-y-3">
-                  {["Vrták", "Sbíječka", "Lžíce svahová"].map((label) => (
-                    <li key={label}><button onClick={() => setShowAccessoriesBagr(false)} className="w-full text-left px-5 py-3 border rounded-xl hover:bg-yellow-50 transition font-medium flex items-center justify-between"><span>{label}</span> <ChevronRightIcon className="w-5 h-5 text-gray-300" /></button></li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          )}
-          {showAccessoriesLoader && (
-            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50" onClick={() => setShowAccessoriesLoader(false)}>
-               <div className="relative bg-white border shadow-2xl rounded-2xl p-6 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
-                <button onClick={() => setShowAccessoriesLoader(false)} className="absolute top-3 right-3 text-gray-400 hover:text-black"><CloseIcon className="w-7 h-7" /></button>
-                <h3 className="text-xl font-bold mb-5 uppercase tracking-wide">Příslušenství nakladač</h3>
-                <ul className="space-y-3">
-                  {["Pluh", "Vidle na palety"].map((label) => (
-                    <li key={label}><button onClick={() => setShowAccessoriesLoader(false)} className="w-full text-left px-5 py-3 border rounded-xl hover:bg-yellow-50 transition font-medium flex items-center justify-between"><span>{label}</span> <ChevronRightIcon className="w-5 h-5 text-gray-300" /></button></li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          )}
         </section>
 
         <section id="cenik" className="scroll-mt-24 bg-gray-100 text-black py-16 overflow-hidden">
@@ -383,8 +357,6 @@ export default function Home() {
                 <div className="w-full max-w-[480px] aspect-[1.7/1] bg-[#f9c600] rounded-xl shadow-2xl p-7 border-2 border-yellow-400" style={{ transform: 'perspective(1500px) rotateY(-10deg)' }}>
                   <h3 className="text-3xl font-black uppercase text-black tracking-tighter">MILAN POPOV</h3>
                   <div className="flex items-center gap-3 border-l-4 border-black pl-3 mt-4"><PhoneIcon className="w-7 h-7 text-black" /><span className="text-2xl font-black text-black">725 319 300</span></div>
-                  <div className="flex items-center gap-3 mt-2"><GlobeAltIcon className="w-6 h-6 text-black" /><span className="text-xl font-bold uppercase text-black">ZEVYP-KP.CZ</span></div>
-                  <p className="text-[10px] font-bold text-black uppercase tracking-widest border-t border-black/20 pt-3 mt-6">Zemní práce • Výkopy • Terénní úpravy</p>
                 </div>
               </div>
             </div>
@@ -411,7 +383,6 @@ export default function Home() {
                 <button type="submit" disabled={sending} className="w-full bg-[#f9c600] text-[#2f3237] text-xl font-black uppercase py-4 rounded-xl shadow-lg hover:bg-yellow-400 transition">
                   {sending ? "Odesílám..." : "Odeslat nezávaznou poptávku"}
                 </button>
-                {msg && <div className={`text-center p-3 rounded-lg font-bold mt-4 ${msg.includes("odeslána") ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>{msg}</div>}
               </form>
             </div>
           </div>
