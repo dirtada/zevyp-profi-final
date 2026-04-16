@@ -160,7 +160,7 @@ function Header() {
     </>
   );
 }
-
+/*
 function AktualneZTerenu() {
   const stavkaData = {
     popis: "Výkop rýhy pro inženýrské sítě a zásyp pískem",
@@ -199,7 +199,7 @@ function AktualneZTerenu() {
     </section>
   );
 }
-
+*/
 /* --- HLAVNÍ KOMPONENTA HOME --- */
 export default function Home() {
   const [adresa, setAdresa] = useState("");
