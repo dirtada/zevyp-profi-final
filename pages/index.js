@@ -165,6 +165,8 @@ function Header() {
 }
 
 export default function Home() {
+  const [email, setEmail] = useState("");
+  const [telefon, setTelefon] = useState("");
   const [adresa, setAdresa] = useState("");
   const [datumOd, setDatumOd] = useState("");
   const [datumDo, setDatumDo] = useState("");
@@ -470,131 +472,137 @@ export default function Home() {
             </div>
           </div>
         </section>
+{/* --- KONTAKTNÍ FORMULÁŘ (OPRAVENÝ) --- */}
+<section id="kontakt" className="scroll-mt-24 bg-[#2f3237] text-white px-6 py-16 relative overflow-hidden">
+  <div className="absolute top-0 right-0 w-64 h-64 bg-[#f9c600]/5 rounded-full blur-3xl pointer-events-none"></div>
+  
+  <div className="container mx-auto max-w-4xl relative z-10">
+    <div className="text-center mb-10">
+       <h2 className="text-3xl md:text-4xl font-extrabold mb-4 text-[#f9c600]">ZAVOLEJTE NEBO NAPIŠTE</h2>
+       <p className="text-gray-300">Máte dotaz nebo chcete nezávaznou cenovou nabídku? Jsme tu pro vás.</p>
+    </div>
 
-        {/* --- VYLEPŠENÝ KONTAKTNÍ FORMULÁŘ --- */}
-        <section id="kontakt" className="scroll-mt-24 bg-[#2f3237] text-white px-6 py-16 relative overflow-hidden">
-          {/* Dekorativní pozadí */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#f9c600]/5 rounded-full blur-3xl pointer-events-none"></div>
-          
-          <div className="container mx-auto max-w-4xl relative z-10">
-            <div className="text-center mb-10">
-               <h2 className="text-3xl md:text-4xl font-extrabold mb-4 text-[#f9c600]">
-                 ZAVOLEJTE NEBO NAPIŠTE
-               </h2>
-               <p className="text-gray-300">
-                 Máte dotaz nebo chcete nezávaznou cenovou nabídku? Jsme tu pro vás.
-               </p>
+    <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 text-gray-800 border-t-4 border-[#f9c600]">
+      <form onSubmit={(e) => { e.preventDefault(); odeslat(); }} className="space-y-6">
+        
+        {/* Kontaktní údaje */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Váš E-mail</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <EnvelopeIcon className="h-5 w-5 text-gray-400" />
+              </div>
+              <input 
+                type="email" 
+                required
+                value={email} // Propojeno se stavem
+                onChange={(e) => setEmail(e.target.value)} // Ukládá text
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent transition-all"
+                placeholder="např. jan@novak.cz"
+              />
             </div>
+          </div>
+          <div>
+            <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Váš Telefon</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <PhoneIconOutline className="h-5 w-5 text-gray-400" />
+              </div>
+              <input 
+                type="tel" 
+                required
+                value={telefon} // Propojeno se stavem
+                onChange={(e) => setTelefon(e.target.value)} // Ukládá text
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent transition-all" 
+                placeholder="+420 123 456 789"
+              />
+            </div>
+          </div>
+        </div>
+        
+        {/* Adresa */}
+        <div>
+          <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Adresa realizace</label>
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <MapPinIcon className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                required
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent transition-all"
+                placeholder="Ulice, Město"
+                value={adresa}
+                onChange={(e) => setAdresa(e.target.value)}
+              />
+            </div>
+            <button
+              type="button"
+              onClick={spocitatVzdalenost}
+              disabled={loadingKm}
+              className="bg-gray-800 text-white px-5 py-2 rounded-lg font-semibold hover:bg-black transition disabled:opacity-50 whitespace-nowrap"
+            >
+              {loadingKm ? "..." : "Zjistit KM"}
+            </button>
+          </div>
+          {km && <p className="text-sm mt-2 font-semibold text-[#2f3237] bg-yellow-100 inline-block px-3 py-1 rounded">Vzdálenost: {km} km</p>}
+        </div>
 
-            <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 text-gray-800 border-t-4 border-[#f9c600]">
-              <form onSubmit={(e) => { e.preventDefault(); odeslat(); }} className="space-y-6">
-                
-                {/* Kontaktní údaje */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Váš E-mail</label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <EnvelopeIcon className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input 
-                        type="email" 
-                        required
-                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent transition-all"
-                        placeholder="např. jan@novak.cz"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Váš Telefon</label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <PhoneIconOutline className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input 
-                        type="tel" 
-                        required
-                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent transition-all" 
-                        placeholder="+420 123 456 789"
-                      />
-                    </div>
-                  </div>
+        {/* Grid pro Kalendář a Popis */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+           <div>
+             <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Preferovaný termín</label>
+             <div className="border border-gray-200 rounded-lg p-2 bg-gray-50">
+                <Calendar
+                  selectRange
+                  className="brand-calendar w-full border-none bg-transparent"
+                  tileDisabled={({ date }) => occupiedSet.has(formatLocalDate(date))}
+                  onChange={(range) => {
+                    if (Array.isArray(range) && range.length === 2) {
+                      setDatumOd(formatLocalDate(range[0]));
+                      setDatumDo(formatLocalDate(range[1]));
+                    }
+                  }}
+                />
+             </div>
+             {datumOd && datumDo && (
+                <div className="mt-2 text-center text-sm font-bold text-[#2f3237]">
+                  Vybráno: {datumOd} — {datumDo}
                 </div>
-                
-                {/* Adresa */}
-                <div>
-                  <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Adresa realizace</label>
-                  <div className="flex gap-2">
-                    <div className="relative flex-1">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <MapPinIcon className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input
-                        type="text"
-                        required
-                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent transition-all"
-                        placeholder="Ulice, Město"
-                        value={adresa}
-                        onChange={(e) => setAdresa(e.target.value)}
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      onClick={spocitatVzdalenost}
-                      disabled={loadingKm}
-                      className="bg-gray-800 text-white px-5 py-2 rounded-lg font-semibold hover:bg-black transition disabled:opacity-50 whitespace-nowrap"
-                    >
-                      {loadingKm ? "..." : "Zjistit KM"}
-                    </button>
-                  </div>
-                  {km && <p className="text-sm mt-2 font-semibold text-[#2f3237] bg-yellow-100 inline-block px-3 py-1 rounded">Vzdálenost: {km} km</p>}
-                </div>
+             )}
+           </div>
 
-                {/* Grid pro Kalendář a Popis */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                   {/* Kalendář */}
-                   <div>
-                     <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Preferovaný termín</label>
-                     <div className="border border-gray-200 rounded-lg p-2 bg-gray-50">
-                        <Calendar
-                          selectRange
-                          className="brand-calendar w-full border-none bg-transparent"
-                          tileDisabled={({ date }) => occupiedSet.has(formatLocalDate(date))}
-                          onChange={(range) => {
-                            if (Array.isArray(range) && range.length === 2) {
-                              setDatumOd(formatLocalDate(range[0]));
-                              setDatumDo(formatLocalDate(range[1]));
-                            }
-                          }}
-                        />
-                     </div>
-                     {datumOd && datumDo && (
-                        <div className="mt-2 text-center text-sm font-bold text-[#2f3237]">
-                          Vybráno: {datumOd} — {datumDo}
-                        </div>
-                     )}
-                   </div>
+           <div className="flex flex-col h-full">
+             <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Popis prací</label>
+             <textarea
+               required
+               className="w-full flex-grow p-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent resize-none transition-all"
+               value={popisZK}
+               onChange={(e) => setpopisZK(e.target.value)}
+               placeholder={`Co potřebujete vykopat nebo upravit?`}
+             ></textarea>
+           </div>
+        </div>
 
-                   {/* Popis */}
-                   <div className="flex flex-col h-full">
-                     <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Popis prací</label>
-                     <textarea
-                       required
-                       className="w-full flex-grow p-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent resize-none transition-all"
-                       value={popisZK}
-                       onChange={(e) => setpopisZK(e.target.value)}
-                       placeholder={`Co potřebujete vykopat nebo upravit?\n\nNapř.: Výkop rýhy pro vodu, délka 15m, hloubka 1m. Odvoz hlíny ano/ne.`}
-                     ></textarea>
-                   </div>
-                </div>
-
-                {/* Tlačítko */}
-                <button
-                  type="submit"
-                  disabled={sending}
-                  className={`w-full bg-[#f9c600] text-[#2f3237] text-lg font-black uppercase tracking-widest py-4 rounded-lg shadow-lg hover:bg-yellow-400 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 ${sending ? "opacity-60 cursor-not-allowed" : ""}`}
-                >
-                  {sending ? "Odesílám poptávku..." : "Odeslat nezávaznou poptávku"}
+        <button
+          type="submit"
+          disabled={sending}
+          className={`w-full bg-[#f9c600] text-[#2f3237] text-lg font-black uppercase tracking-widest py-4 rounded-lg shadow-lg hover:bg-yellow-400 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 ${sending ? "opacity-60 cursor-not-allowed" : ""}`}
+        >
+          {sending ? "Odesílám poptávku..." : "Odeslat nezávaznou poptávku"}
+        </button>
+        
+        {msg && (
+          <div className={`text-center p-3 rounded font-bold ${msg.includes("odeslána") ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+            {msg}
+          </div>
+        )}
+      </form>
+    </div>
+  </div>
+</section>    {sending ? "Odesílám poptávku..." : "Odeslat nezávaznou poptávku"}
                 </button>
                 
                 {msg && (
