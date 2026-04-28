@@ -676,7 +676,7 @@ export default function Home() {
 
                 </article>
 
-              {/* Box 5 */}
+              {/* Box 6 */}
 
               <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
 
@@ -684,7 +684,7 @@ export default function Home() {
 
                 <div className="flex-grow relative z-10">
 
-                  <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">5</div><h3 className="text-lg font-bold text-[#2f3237]">Zimní údržba/h3></div>
+                  <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">5</div><h3 className="text-lg font-bold text-[#2f3237]">Zimní údržba</h3></div>
 
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Odklízení sněhu (parkoviště, areály, komunikace), údržba chodníků a příjezdových cest, posyp proti námraze. </p>
 
