@@ -1,4 +1,3 @@
-// pages/index.js
 import Head from "next/head";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -165,8 +164,8 @@ function Header() {
 }
 
 export default function Home() {
-  const [email, setEmail] = useState("");
-  const [telefon, setTelefon] = useState("");
+  const [email, setEmail] = useState(""); // PŘIDÁNO
+  const [telefon, setTelefon] = useState(""); // PŘIDÁNO
   const [adresa, setAdresa] = useState("");
   const [datumOd, setDatumOd] = useState("");
   const [datumDo, setDatumDo] = useState("");
@@ -218,12 +217,22 @@ export default function Home() {
 
   const odeslat = async () => {
     if (sending) return;
-    if (!popisZK || !adresa || !datumOd || !datumDo) { setMsg("Vyplňte prosím všechna povinná pole."); return; }
+    if (!popisZK || !adresa || !datumOd || !datumDo || !email || !telefon) { setMsg("Vyplňte prosím všechna povinná pole."); return; }
     setSending(true); setMsg("");
     try {
       const res = await fetch("/api/objednavka", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ popisZK, adresa, datumOd, datumDo, typZeminy: znameRozmery ? typZeminy : null, rozmerZeminy: znameRozmery ? rozmerZeminy : null, km }),
+        body: JSON.stringify({ 
+          popisZK, 
+          adresa, 
+          email, // PŘIDÁNO
+          telefon, // PŘIDÁNO
+          datumOd, 
+          datumDo, 
+          typZeminy: znameRozmery ? typZeminy : null, 
+          rozmerZeminy: znameRozmery ? rozmerZeminy : null, 
+          km 
+        }),
       });
       if (res.ok) { setMsg("Poptávka byla odeslána!"); } else { const data = await res.json(); setMsg(data.error || "Chyba při odesílání."); }
     } catch (e) { setMsg("Nepodařilo se připojit k serveru."); } 
@@ -292,10 +301,7 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">1</div><h3 className="text-lg font-bold text-[#2f3237]">Výkopové práce</h3></div>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Výkopy základových pasů a patek, výkopy pro inženýrské sítě, bazény, jímky a další.</p>
                 </div>
-
-               {/*<div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/vykopove_prace.gif" alt="Animace výkopových prací" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div>*/}
-              
-          </article>
+              </article>
               {/* Box 2 */}
               <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
                 <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" /></svg></div>
@@ -303,9 +309,6 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">2</div><h3 className="text-lg font-bold text-[#2f3237]">Terénní úpravy</h3></div>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Svahování, zarovnávání a skrývka ornice. Příprava pozemku pro stavbu nebo finální úpravu.</p>
                 </div>
-
-               {/* <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/terenni_upravy.gif" alt="Animace terenních úprav" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div> */}
-            
               </article>
               {/* Box 3 */}
               <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
@@ -314,9 +317,6 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">3</div><h3 className="text-lg font-bold text-[#2f3237]">Stavební práce</h3></div>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Stavební příprava pro pokládky chodníků, dlažby a dalších povrchů.</p>
                 </div>
-
-               {/* <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/stavebni_prace.gif" alt="Animace stavebních prací" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div> */}
-              
               </article>
               {/* Box 4 */}
               <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
@@ -325,10 +325,7 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">4</div><h3 className="text-lg font-bold text-[#2f3237]">Bourací práce</h3></div>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Bourání menších objektů, betonových konstrukcí, základů, plotů a zpevněných ploch.</p>
                 </div>
-
-               {/* <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/bouraci_prace.gif" alt="Animace bouracích prací" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div> */}
-              
-                </article>
+              </article>
               {/* Box 5 */}
               <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
                 <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" /></svg></div>
@@ -336,20 +333,15 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">5</div><h3 className="text-lg font-bold text-[#2f3237]">Bagr s vrtákem</h3></div>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Vrtání děr pro plotové sloupky, patky, piloty a další drobné stavební prvky.</p>
                 </div>
-               {/* <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/bagr_s_vrtakem.gif" alt="Animace vrtání" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div> */}
-             
-                </article>
-                {/* Box 6 */}
+              </article>
+              {/* Box 6 */}
               <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
                 <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" /></svg></div>
                 <div className="flex-grow relative z-10">
-                  <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">5</div><h3 className="text-lg font-bold text-[#2f3237]">Zimní údržba</h3></div>
+                  <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">6</div><h3 className="text-lg font-bold text-[#2f3237]">Zimní údržba</h3></div>
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Odklízení sněhu - (parkoviště, areály, komunikace), údržba chodníků a příjezdových cest, posyp proti námraze.</p>
                 </div>
-               {/* <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/bagr_s_vrtakem.gif" alt="Animace vrtání" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div> */}
-             
-                </article>
-                    
+              </article>
             </div>
           </div>
         </section>
@@ -401,7 +393,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          {/* Modaly pro příslušenství zůstávají stejné... */}
+          {/* Modaly pro příslušenství */}
           {showAccessoriesBagr && (
             <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50" onClick={() => setShowAccessoriesBagr(false)} role="dialog" aria-modal="true">
               <div className="relative bg-white/95 border border-white/60 rounded-2xl shadow-2xl p-6 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
@@ -472,137 +464,133 @@ export default function Home() {
             </div>
           </div>
         </section>
-{/* --- KONTAKTNÍ FORMULÁŘ (OPRAVENÝ) --- */}
-<section id="kontakt" className="scroll-mt-24 bg-[#2f3237] text-white px-6 py-16 relative overflow-hidden">
-  <div className="absolute top-0 right-0 w-64 h-64 bg-[#f9c600]/5 rounded-full blur-3xl pointer-events-none"></div>
-  
-  <div className="container mx-auto max-w-4xl relative z-10">
-    <div className="text-center mb-10">
-       <h2 className="text-3xl md:text-4xl font-extrabold mb-4 text-[#f9c600]">ZAVOLEJTE NEBO NAPIŠTE</h2>
-       <p className="text-gray-300">Máte dotaz nebo chcete nezávaznou cenovou nabídku? Jsme tu pro vás.</p>
-    </div>
 
-    <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 text-gray-800 border-t-4 border-[#f9c600]">
-      <form onSubmit={(e) => { e.preventDefault(); odeslat(); }} className="space-y-6">
-        
-        {/* Kontaktní údaje */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Váš E-mail</label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <EnvelopeIcon className="h-5 w-5 text-gray-400" />
-              </div>
-              <input 
-                type="email" 
-                required
-                value={email} // Propojeno se stavem
-                onChange={(e) => setEmail(e.target.value)} // Ukládá text
-                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent transition-all"
-                placeholder="např. jan@novak.cz"
-              />
+        {/* --- KONTAKTNÍ FORMULÁŘ --- */}
+        <section id="kontakt" className="scroll-mt-24 bg-[#2f3237] text-white px-6 py-16 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#f9c600]/5 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="container mx-auto max-w-4xl relative z-10">
+            <div className="text-center mb-10">
+               <h2 className="text-3xl md:text-4xl font-extrabold mb-4 text-[#f9c600]">ZAVOLEJTE NEBO NAPIŠTE</h2>
+               <p className="text-gray-300">Máte dotaz nebo chcete nezávaznou cenovou nabídku? Jsme tu pro vás.</p>
             </div>
-          </div>
-          <div>
-            <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Váš Telefon</label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <PhoneIconOutline className="h-5 w-5 text-gray-400" />
-              </div>
-              <input 
-                type="tel" 
-                required
-                value={telefon} // Propojeno se stavem
-                onChange={(e) => setTelefon(e.target.value)} // Ukládá text
-                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent transition-all" 
-                placeholder="+420 123 456 789"
-              />
-            </div>
-          </div>
-        </div>
-        
-        {/* Adresa */}
-        <div>
-          <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Adresa realizace</label>
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <MapPinIcon className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                type="text"
-                required
-                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent transition-all"
-                placeholder="Ulice, Město"
-                value={adresa}
-                onChange={(e) => setAdresa(e.target.value)}
-              />
-            </div>
-            <button
-              type="button"
-              onClick={spocitatVzdalenost}
-              disabled={loadingKm}
-              className="bg-gray-800 text-white px-5 py-2 rounded-lg font-semibold hover:bg-black transition disabled:opacity-50 whitespace-nowrap"
-            >
-              {loadingKm ? "..." : "Zjistit KM"}
-            </button>
-          </div>
-          {km && <p className="text-sm mt-2 font-semibold text-[#2f3237] bg-yellow-100 inline-block px-3 py-1 rounded">Vzdálenost: {km} km</p>}
-        </div>
 
-        {/* Grid pro Kalendář a Popis */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-           <div>
-             <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Preferovaný termín</label>
-             <div className="border border-gray-200 rounded-lg p-2 bg-gray-50">
-                <Calendar
-                  selectRange
-                  className="brand-calendar w-full border-none bg-transparent"
-                  tileDisabled={({ date }) => occupiedSet.has(formatLocalDate(date))}
-                  onChange={(range) => {
-                    if (Array.isArray(range) && range.length === 2) {
-                      setDatumOd(formatLocalDate(range[0]));
-                      setDatumDo(formatLocalDate(range[1]));
-                    }
-                  }}
-                />
-             </div>
-             {datumOd && datumDo && (
-                <div className="mt-2 text-center text-sm font-bold text-[#2f3237]">
-                  Vybráno: {datumOd} — {datumDo}
+            <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 text-gray-800 border-t-4 border-[#f9c600]">
+              <form onSubmit={(e) => { e.preventDefault(); odeslat(); }} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Váš E-mail</label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <EnvelopeIcon className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <input 
+                        type="email" 
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent transition-all"
+                        placeholder="např. jan@novak.cz"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Váš Telefon</label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <PhoneIconOutline className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <input 
+                        type="tel" 
+                        required
+                        value={telefon}
+                        onChange={(e) => setTelefon(e.target.value)}
+                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent transition-all" 
+                        placeholder="+420 123 456 789"
+                      />
+                    </div>
+                  </div>
                 </div>
-             )}
-           </div>
+                
+                <div>
+                  <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Adresa realizace</label>
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <MapPinIcon className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <input
+                        type="text"
+                        required
+                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent transition-all"
+                        placeholder="Ulice, Město"
+                        value={adresa}
+                        onChange={(e) => setAdresa(e.target.value)}
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={spocitatVzdalenost}
+                      disabled={loadingKm}
+                      className="bg-gray-800 text-white px-5 py-2 rounded-lg font-semibold hover:bg-black transition disabled:opacity-50 whitespace-nowrap"
+                    >
+                      {loadingKm ? "..." : "Zjistit KM"}
+                    </button>
+                  </div>
+                  {km && <p className="text-sm mt-2 font-semibold text-[#2f3237] bg-yellow-100 inline-block px-3 py-1 rounded">Vzdálenost: {km} km</p>}
+                </div>
 
-           <div className="flex flex-col h-full">
-             <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Popis prací</label>
-             <textarea
-               required
-               className="w-full flex-grow p-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent resize-none transition-all"
-               value={popisZK}
-               onChange={(e) => setpopisZK(e.target.value)}
-               placeholder={`Co potřebujete vykopat nebo upravit?`}
-             ></textarea>
-           </div>
-        </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                   <div>
+                     <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Preferovaný termín</label>
+                     <div className="border border-gray-200 rounded-lg p-2 bg-gray-50">
+                        <Calendar
+                          selectRange
+                          className="brand-calendar w-full border-none bg-transparent"
+                          tileDisabled={({ date }) => occupiedSet.has(formatLocalDate(date))}
+                          onChange={(range) => {
+                            if (Array.isArray(range) && range.length === 2) {
+                              setDatumOd(formatLocalDate(range[0]));
+                              setDatumDo(formatLocalDate(range[1]));
+                            }
+                          }}
+                        />
+                     </div>
+                     {datumOd && datumDo && (
+                        <div className="mt-2 text-center text-sm font-bold text-[#2f3237]">
+                          Vybráno: {datumOd} — {datumDo}
+                        </div>
+                     )}
+                   </div>
 
-        <button
-          type="submit"
-          disabled={sending}
-          className={`w-full bg-[#f9c600] text-[#2f3237] text-lg font-black uppercase tracking-widest py-4 rounded-lg shadow-lg hover:bg-yellow-400 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 ${sending ? "opacity-60 cursor-not-allowed" : ""}`}
-        >
-          {sending ? "Odesílám poptávku..." : "Odeslat nezávaznou poptávku"}
-        </button>
-        
-        {msg && (
-          <div className={`text-center p-3 rounded font-bold ${msg.includes("odeslána") ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-            {msg}
+                   <div className="flex flex-col h-full">
+                     <label className="block text-sm font-bold uppercase tracking-wider mb-2 text-gray-700">Popis prací</label>
+                     <textarea
+                       required
+                       className="w-full flex-grow p-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f9c600] focus:border-transparent resize-none transition-all"
+                       value={popisZK}
+                       onChange={(e) => setpopisZK(e.target.value)}
+                       placeholder={`Co potřebujete vykopat nebo upravit?`}
+                     ></textarea>
+                   </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={sending}
+                  className={`w-full bg-[#f9c600] text-[#2f3237] text-lg font-black uppercase tracking-widest py-4 rounded-lg shadow-lg hover:bg-yellow-400 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 ${sending ? "opacity-60 cursor-not-allowed" : ""}`}
+                >
+                  {sending ? "Odesílám poptávku..." : "Odeslat nezávaznou poptávku"}
+                </button>
+                
+                {msg && (
+                  <div className={`text-center p-3 rounded font-bold ${msg.includes("odeslána") ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {msg}
+                  </div>
+                )}
+              </form>
+            </div>
           </div>
-        )}
-      </form>
-    </div>
-  </div>
-</section>   
+        </section>
 
         {/* Footer */}
         <footer className="bg-[#2f3237] text-white text-center py-6 text-sm border-t border-white/10">
