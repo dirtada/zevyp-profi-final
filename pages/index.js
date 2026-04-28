@@ -602,18 +602,7 @@ export default function Home() {
       </form>
     </div>
   </div>
-</section>    {sending ? "Odesílám poptávku..." : "Odeslat nezávaznou poptávku"}
-                </button>
-                
-                {msg && (
-                  <div className={`text-center p-3 rounded font-bold ${msg.includes("odeslána") ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                    {msg}
-                  </div>
-                )}
-              </form>
-            </div>
-          </div>
-        </section>
+</section>   
 
         {/* Footer */}
         <footer className="bg-[#2f3237] text-white text-center py-6 text-sm border-t border-white/10">
