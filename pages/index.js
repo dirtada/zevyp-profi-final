@@ -337,28 +337,16 @@ export default function Home() {
                {/* <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/bagr_s_vrtakem.gif" alt="Animace vrtání" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div> */}
              
                 </article>
-                {/* Box 6 - Vizitka Flip 
-              <article className="group relative flex flex-col h-full rounded-2xl bg-[#2f3237] ring-1 ring-black/10 p-6 shadow-md hover:shadow-2xl transition-all duration-300 items-center justify-center overflow-visible">
-                <div className="flex items-center gap-3 mb-4 self-start">
-                  <div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">6</div>
-                  <h3 className="text-lg font-bold text-white">Individuální domluva</h3>
+                {/* Box 6 */}
+              <article className="group relative flex flex-col h-full rounded-2xl bg-white ring-1 ring-black/5 p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-default">
+                <div className="absolute top-4 right-4 text-gray-300 group-hover:text-[#f9c600] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" /></svg></div>
+                <div className="flex-grow relative z-10">
+                  <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 rounded-full bg-[#f9c600] flex items-center justify-center text-[#2f3237] font-bold text-lg shadow-sm">5</div><h3 className="text-lg font-bold text-[#2f3237]">Zimní údržba</h3></div>
+                  <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Odklízení sněhu - (parkoviště, areály, komunikace), údržba chodníků a příjezdových cest, posyp proti námraze.</p>
                 </div>
-                <div className="w-full aspect-[1.7/1] relative [perspective:1500px] my-auto">
-                  <div className="w-full h-full relative transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] shadow-xl rounded-xl">
-                    <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-xl overflow-hidden bg-[#f9c600] flex items-center justify-center border-2 border-white/10">
-                      <img src="/images/vizitka_logo.png" alt="ZEVYP Logo" className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
-                    </div>
-                    <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden bg-[#f9c600] border-2 border-white/10">
-                      <img src="/images/vizitka_kontakty.png" alt="ZEVYP Kontakty" className="w-full h-full object-cover" />
-                    </div>
-                  </div>
-                </div>
-                <p className="mt-4 text-xs text-gray-400 uppercase tracking-wider font-semibold text-center flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-[#f9c600] animate-bounce"><path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>
-                  Otočit vizitku
-                </p>
-              </article> */}
+               {/* <div className="mt-5 rounded-lg overflow-hidden w-full aspect-video"><img src="/videos/bagr_s_vrtakem.gif" alt="Animace vrtání" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out" /></div> */}
+             
+                </article>
                     
             </div>
           </div>
@@ -370,12 +358,12 @@ export default function Home() {
             <h2 className="text-2xl md:text-3xl font-bold mb-12 text-[#2f3237]">TECHNIKA</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start justify-center">
               <div className="bg-gray-50 rounded-xl shadow-lg p-6 hover:shadow-xl transition">
-                <Image src="/images/valec.png" alt="Válec" width={300} height={200} className="mx-auto" />
-                <h3 className="text-xl font-bold mt-4 text-[#2f3237]">Válec</h3>
+                <Image src="/images/valec.png" alt="Válec" width={250} height={150} className="mx-auto" />
+                <h3 className="text-xl font-bold mt-4 text-[#2f3237]">Válec Ammann AV 32</h3>
                 <ul className="text-sm text-gray-700 mt-3 space-y-2 text-left">
-                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 2.7 t</li>
-                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Kubota 33 kW</li>
-                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Šířka válce: 1,2 m</li>
+                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 3.2 t</li>
+                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Yanmar 21.6 kW</li>
+                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Šířka válce: 1,22 m</li>
                   <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Pro hutnění zemin a štěrku</li>
                 </ul>
               </div>
@@ -622,8 +610,8 @@ export default function Home() {
         {/* Footer */}
         <footer className="bg-[#2f3237] text-white text-center py-6 text-sm border-t border-white/10">
           <p className="opacity-70">Zemní a Výkopové Práce • IČO: 73377619 • Milan Popov</p>
-          <a href="mailto:kontakt@zevyp.cz" className="text-[#f9c600] hover:underline font-bold">kontakt@zevyp.cz</a>
-          <p className="opacity-50 mt-1 text-xs">Habartov, Horní Částkov ev. č. 2, 357 09</p>
+          <a href="mailto:kontakt@zevyp-kp.cz" className="text-[#f9c600] hover:underline font-bold">kontakt@zevyp-kp.cz</a>
+          <p className="opacity-50 mt-1 text-xs">Habartov, Horní Částkov 129, 357 09</p>
         </footer>
       </div>
     </>
