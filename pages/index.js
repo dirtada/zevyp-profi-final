@@ -712,7 +712,7 @@ export default function Home() {
 
               <div className="bg-gray-50 rounded-xl shadow-lg p-6 hover:shadow-xl transition">
 
-                <Image src="/images/valec.png" alt="Válec" width={300} height={200} className="mx-auto" />
+                <Image src="/images/valec.png" alt="Válec" width={250} height={150} className="mx-auto" />
 
                 <h3 className="text-xl font-bold mt-4 text-[#2f3237]">Válec Ammann AV 32</h3>
 
