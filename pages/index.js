@@ -689,7 +689,7 @@ export default function Home() {
                   <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-1">Odklízení sněhu (parkoviště, areály, komunikace), údržba chodníků a příjezdových cest, posyp proti námraze. </p>
 
                 </div>
-
+</article>
                     
 
             </div>
