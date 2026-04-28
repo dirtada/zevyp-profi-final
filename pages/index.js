@@ -714,15 +714,15 @@ export default function Home() {
 
                 <Image src="/images/valec.png" alt="Válec" width={300} height={200} className="mx-auto" />
 
-                <h3 className="text-xl font-bold mt-4 text-[#2f3237]">Válec</h3>
+                <h3 className="text-xl font-bold mt-4 text-[#2f3237]">Válec Ammann AV 32</h3>
 
                 <ul className="text-sm text-gray-700 mt-3 space-y-2 text-left">
 
-                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 2.7 t</li>
+                  <li className="flex items-center gap-2"><ScaleIcon className="w-5 h-5 text-yellow-500" /> Hmotnost: 3.2 t</li>
 
-                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Kubota 33 kW</li>
+                  <li className="flex items-center gap-2"><Cog6ToothIcon className="w-5 h-5 text-yellow-500" /> Motor: Yanmar 21,6 kW</li>
 
-                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Šířka válce: 1,2 m</li>
+                  <li className="flex items-center gap-2"><ArrowsUpDownIcon className="w-5 h-5 text-yellow-500" /> Šířka válce: 1,24 m</li>
 
                   <li className="flex items-center gap-2"><WrenchScrewdriverIcon className="w-5 h-5 text-yellow-500" /> Pro hutnění zemin a štěrku</li>
 
