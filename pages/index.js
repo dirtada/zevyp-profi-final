@@ -202,17 +202,11 @@ export default function Home() {
     {
       id: 2,
       jmeno: "Hriste Luh nad Svatavou",
-      lokalita: "Sokolov",
+      lokalita: "Luh nad Svatavou",
       imgPred: "/images/hriste_pred.jpeg",
       imgPo: "/images/hriste_po.jpeg"
     },
-    {
-      id: 3,
-      jmeno: "Úprava svahu a opěrná zeď",
-      lokalita: "Cheb",
-      imgPred: "/images/svah-pred.jpg",
-      imgPo: "/images/svah-po.jpg"
-    }
+    
   ];
 
   const nextZakazka = () => {
