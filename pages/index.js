@@ -194,14 +194,14 @@ export default function Home() {
   const zakazkyData = [
     {
       id: 1,
-      jmeno: "Parkoviste + chodnik Josefov",
+      jmeno: "Výstavba parkoviště a chodníku",
       lokalita: "Josefov",
       imgPred: "/images/parkoviste_pred.jpeg", // Změň na své reálné cesty k obrázkům
       imgPo: "/images/parkoviste_po.jpeg"
     },
     {
       id: 2,
-      jmeno: "Hriste Luh nad Svatavou",
+      jmeno: "Výstavba hřiště",
       lokalita: "Luh nad Svatavou",
       imgPred: "/images/hriste_pred.jpeg",
       imgPo: "/images/hriste_po.jpeg"
