@@ -196,22 +196,22 @@ export default function Home() {
       id: 1,
       jmeno: "Parkoviste + chodnik Josefov",
       lokalita: "Josefov",
-      imgPred: "/images/zakazky/parkoviste_pred.jpeg", // Změň na své reálné cesty k obrázkům
-      imgPo: "/images/zakazky/parkoviste_po.jpeg"
+      imgPred: "/images/parkoviste_pred.jpeg", // Změň na své reálné cesty k obrázkům
+      imgPo: "/images/parkoviste_po.jpeg"
     },
     {
       id: 2,
       jmeno: "Hriste Luh nad Svatavou",
       lokalita: "Sokolov",
-      imgPred: "/images/zakazky/hriste_pred.jpeg",
-      imgPo: "/images/zakazky/hriste_po.jpeg"
+      imgPred: "/images/hriste_pred.jpeg",
+      imgPo: "/images/hriste_po.jpeg"
     },
     {
       id: 3,
       jmeno: "Úprava svahu a opěrná zeď",
       lokalita: "Cheb",
-      imgPred: "/images/zakazky/svah-pred.jpg",
-      imgPo: "/images/zakazky/svah-po.jpg"
+      imgPred: "/images/svah-pred.jpg",
+      imgPo: "/images/svah-po.jpg"
     }
   ];
 
