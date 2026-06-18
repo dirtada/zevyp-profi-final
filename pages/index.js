@@ -198,7 +198,7 @@ export default function Home() {
       lokalita: "Josefov",
       imgPred: "/images/parkoviste_pred.jpeg", 
       imgPo: "/images/parkoviste_po.jpeg",
-      popis: "Kompletní realizace nového parkovacího stání a navazujícího chodníku. Práce zahrnovaly hloubkový výkop pro uložení podkladových vrstev, odvoz přebytečné zeminy, přesné srovnání terénu, položení geotextilie a hutnění štěrkového lože naším válcem Ammann. Následně byly usazeny obrubníky a dokončena finální pokládka."
+      popis: "Pro klienta jsme realizovali vybudování nového, zpevněného parkoviště. Nejprve jsme plochu vyčistili od původních náletových dřevin a zanedbané zeleně. Poté jsme kompletně zarovnali terén a navezli několik vrstev štěrku různých frakcí pro zajištění maximální stability podkladu. Součástí dodávky bylo osazení obrubníků a úprava navazujících chodníků. Samotná parkovací plocha byla osazena moderními ekorastry. Jednotlivé parkovací pruhy jsme přesně vytyčili pomocí dlažebních kostek a vysypali drobným štěrkem frakce 4/8."
     },
     {
       id: 2,
@@ -206,7 +206,7 @@ export default function Home() {
       lokalita: "Luh nad Svatavou",
       imgPred: "/images/hriste_pred.jpeg",
       imgPo: "/images/hriste_po.jpeg",
-      popis: "Skrývka ornice a rozsáhlé terénní úpravy pro budoucí sportovní plochu. Minibagrem Hitachi jsme provedli precizní svahování okolního terénu, výkopy pro betonové patky herních prvků a srovnání celé plochy nakladačem. Podklad byl řádně zhutněn a připraven pro finální položení bezpečného povrchu."
+      popis: "V rámci této zakázky jsme zajistili kompletní přestavbu pozemku na funkční hřiště s umělým povrchem. Práce zahrnovaly šetrné vykopání a přesazení stávající zeleně a keřů na nové místo bez jejich likvidace. Následně proběhla úprava a vyrovnání terénu, kompletní skrývka zeminy a zpevnění plochy štěrkovým ložem. Na připravený podklad jsme položili nový umělý trávník. Součástí projektu bylo také osazení a zabetonování sloupků pro ochranné sítě okolo celého hřiště."
     },
   ];
 
