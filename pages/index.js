@@ -275,7 +275,7 @@ export default function Home() {
   };
 
   const jsonLdLocalBusiness = {
-    "@context": "https://schema.org", "@type": "LocalBusiness", "@id": "https://www.zevyp-kp.cz/#company", "name": "Zevyp – Zemní a výkopové práce", "url": "https://www.zevyp-kp.cz/", "telephone": "+420777123456", "image": "https://www.zevyp.cz/images/bagr-hero.png", "priceRange": "$$", "address": { "@type": "PostalAddress", "streetAddress": "Horní Částkov ev. č. 2", "addressLocality": "Habartov", "postalCode": "357 09", "addressCountry": "CZ" }, "areaServed": ["Karlovy Vary", "Karlovarský kraj"], "description": "Profesionální zemní a výkopové práce minibagrem v Karlovarském kraji a okolí.", "geo": { "@type": "GeoCoordinates", "latitude": 50.181, "longitude": 12.634 }
+    "@context": "https://schema.org", "@type": "LocalBusiness", "@id": "https://www.zevyp-kp.cz/#company", "name": "Zevyp – Zemní a výkopové práce", "url": "https://www.zevyp-kp.cz/", "telephone": "+420777123456", "image": "https://www.zevyp.cz/images/bagr-hero.png", "priceRange": "$$", "address": { "@type": "PostalAddress", "streetAddress": "Horní Částkov ev. č. 2", "addressLocality": "Habartov", "postalCode": "357 09", "addressCountry": "CZ" }, "areaServed": ["Karlovy Vary", "Karlovarský kraj"], "description": "Profesionální zemní a výkopové práce minibagrem v Karlovarském kraji and okolí.", "geo": { "@type": "GeoCoordinates", "latitude": 50.181, "longitude": 12.634 }
   };
 
   return (
@@ -456,79 +456,85 @@ export default function Home() {
           )}
         </section>
 
-        {/* --- UPRAVENÁ SEKCE: POSLEDNÍ ZAKÁZKY (DVOU-SLOUPOVÝ LAYOUT + STRUKTUROVANÝ TEXT) --- */}
+        {/* --- UPRAVENÁ SEKCE: POSLEDNÍ ZAKÁZKY (ZVELIČENÉ OBRÁZKY S MOŽNOSTÍ ROZKLIKNUTÍ) --- */}
         <section id="zakazky" className="scroll-mt-24 bg-[#f9c600] text-black py-16">
-          <div className="container mx-auto px-4 max-w-5xl">
+          <div className="container mx-auto px-4 max-w-6xl">
             <div className="text-center mb-12">
               <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[#2f3237] tracking-wide">NAŠE POSLEDNÍ ZAKÁZKY</h2>
-              <p className="text-gray-700 max-w-xl mx-auto">Prohlédněte si detailní výsledky naší práce před zahájením a po úspěšném dokončení projektu.</p>
+              <p className="text-gray-700 max-w-xl mx-auto">Prohlédněte si detailní výsledky naší práce. Kliknutím na obrázek jej otevřete v plné velikosti.</p>
             </div>
             
-            <div className="relative bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-black/5 mx-auto max-w-4xl">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div className="relative bg-white rounded-2xl shadow-xl p-6 md:p-10 border border-black/5 mx-auto max-w-5xl">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 
-                {/* LEVÁ STRANA: Obrázky Před / Po */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* LEVÁ STRANA (7/12 šířky): Obrovské obrázky pod sebou pro maximální přehlednost na PC */}
+                <div className="lg:col-span-7 space-y-6">
                   {/* Obrázek PŘED */}
-                  <div className="relative group overflow-hidden rounded-xl border border-gray-100 aspect-[4/3] shadow-sm">
-                    <div className="absolute top-3 left-3 bg-[#2f3237] text-white text-xs font-black px-2.5 py-1 rounded-md uppercase tracking-wider z-10 shadow-md">
+                  <div className="relative group overflow-hidden rounded-xl border border-gray-100 aspect-[16/9] shadow-md bg-gray-50">
+                    <div className="absolute top-4 left-4 bg-[#2f3237] text-white text-xs font-black px-3 py-1.5 rounded-md uppercase tracking-wider z-10 shadow-md">
                       Před
                     </div>
-                    <Image 
-                      src={zakazkyData[currentZakazkaIndex].imgPred} 
-                      alt={`${zakazkyData[currentZakazkaIndex].jmeno} - stav před`}
-                      fill
-                      sizes="(min-width: 1024px) 200px, (min-width: 640px) 350px, 100vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                    <a href={zakazkyData[currentZakazkaIndex].imgPred} target="_blank" rel="noreferrer" className="block w-full h-full cursor-zoom-in" title="Rozkliknout pro plnou velikost">
+                      <Image 
+                        src={zakazkyData[currentZakazkaIndex].imgPred} 
+                        alt={`${zakazkyData[currentZakazkaIndex].jmeno} - stav před`}
+                        fill
+                        priority
+                        sizes="(min-width: 1024px) 600px, 100vw"
+                        className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                      />
+                    </a>
                   </div>
 
                   {/* Obrázek PO */}
-                  <div className="relative group overflow-hidden rounded-xl border border-gray-100 aspect-[4/3] shadow-sm">
-                    <div className="absolute top-3 left-3 bg-[#f9c600] text-[#2f3237] text-xs font-black px-2.5 py-1 rounded-md uppercase tracking-wider z-10 shadow-md">
+                  <div className="relative group overflow-hidden rounded-xl border border-gray-100 aspect-[16/9] shadow-md bg-gray-50">
+                    <div className="absolute top-4 left-4 bg-[#f9c600] text-[#2f3237] text-xs font-black px-3 py-1.5 rounded-md uppercase tracking-wider z-10 shadow-md">
                       Po
                     </div>
-                    <Image 
-                      src={zakazkyData[currentZakazkaIndex].imgPo} 
-                      alt={`${zakazkyData[currentZakazkaIndex].jmeno} - stav po`}
-                      fill
-                      sizes="(min-width: 1024px) 200px, (min-width: 640px) 350px, 100vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                    <a href={zakazkyData[currentZakazkaIndex].imgPo} target="_blank" rel="noreferrer" className="block w-full h-full cursor-zoom-in" title="Rozkliknout pro plnou velikost">
+                      <Image 
+                        src={zakazkyData[currentZakazkaIndex].imgPo} 
+                        alt={`${zakazkyData[currentZakazkaIndex].jmeno} - stav po`}
+                        fill
+                        priority
+                        sizes="(min-width: 1024px) 600px, 100vw"
+                        className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                      />
+                    </a>
                   </div>
                 </div>
 
-                {/* PRAVÁ STRANA: Popisný text vázaný na konkrétní slide */}
-                <div className="flex flex-col h-full justify-between lg:pl-4">
+                {/* PRAVÁ STRANA (5/12 šířky): Popisný text zakázky a ovládání */}
+                <div className="lg:col-span-5 flex flex-col justify-between h-full lg:min-h-[450px] lg:pl-6 pt-2">
                   <div>
-                    <span className="inline-flex items-center gap-1 text-xs font-bold text-[#f9c600] bg-yellow-50 px-2.5 py-1 rounded-full uppercase tracking-wider mb-3">
-                      <MapPinIcon className="w-3.5 h-3.5" />
+                    <span className="inline-flex items-center gap-1 text-xs font-bold text-[#f9c600] bg-yellow-50 px-3 py-1 rounded-full uppercase tracking-wider mb-4">
+                      <MapPinIcon className="w-4 h-4" />
                       {zakazkyData[currentZakazkaIndex].lokalita}
                     </span>
-                    <h3 className="text-xl md:text-2xl font-black text-[#2f3237] leading-tight mb-4">
+                    <h3 className="text-xl md:text-3xl font-black text-[#2f3237] leading-tight mb-5">
                       {zakazkyData[currentZakazkaIndex].jmeno}
                     </h3>
-                    <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+                    <p className="text-gray-600 text-sm md:text-base leading-relaxed whitespace-pre-line">
                       {zakazkyData[currentZakazkaIndex].popis}
                     </p>
                   </div>
 
-                  {/* Ovládací šipky pod textem */}
-                  <div className="flex justify-between items-center mt-8 pt-4 border-t border-gray-100">
+                  {/* Ovládací lišta */}
+                  <div className="flex justify-between items-center mt-10 pt-5 border-t border-gray-100">
                     <button 
                       onClick={prevZakazka}
-                      className="flex items-center justify-center bg-[#2f3237] text-white p-2.5 rounded-full hover:bg-black active:scale-95 transition-all shadow-md"
+                      className="flex items-center justify-center bg-[#2f3237] text-white p-3 rounded-full hover:bg-black active:scale-95 transition-all shadow-md"
                       aria-label="Předchozí zakázka"
                     >
                       <ChevronLeftIcon className="w-5 h-5 stroke-[3]" />
                     </button>
 
-                    <div className="flex gap-1.5">
+                    <div className="flex gap-2">
                       {zakazkyData.map((_, idx) => (
                         <button
                           key={idx}
                           onClick={() => setCurrentZakazkaIndex(idx)}
-                          className={`h-2.5 rounded-full transition-all duration-300 ${idx === currentZakazkaIndex ? "bg-[#2f3237] w-6" : "bg-gray-300 w-2.5"}`}
+                          className={`h-2.5 rounded-full transition-all duration-300 ${idx === currentZakazkaIndex ? "bg-[#2f3237] w-7" : "bg-gray-300 w-2.5"}`}
                           aria-label={`Přejít na zakázku ${idx + 1}`}
                         />
                       ))}
@@ -536,7 +542,7 @@ export default function Home() {
 
                     <button 
                       onClick={nextZakazka}
-                      className="flex items-center justify-center bg-[#2f3237] text-white p-2.5 rounded-full hover:bg-black active:scale-95 transition-all shadow-md"
+                      className="flex items-center justify-center bg-[#2f3237] text-white p-3 rounded-full hover:bg-black active:scale-95 transition-all shadow-md"
                       aria-label="Následující zakázka"
                     >
                       <ChevronRightIcon className="w-5 h-5 stroke-[3]" />
