@@ -190,23 +190,24 @@ export default function Home() {
   /* --- STAV PRO SLIDER ZAKÁZEK --- */
   const [currentZakazkaIndex, setCurrentZakazkaIndex] = useState(0);
 
-  /* --- MANUÁLNÍ DATABÁZE ZAKÁZEK (Sem můžeš snadno dopisovat další) --- */
+  /* --- MANUÁLNÍ DATABÁZE ZAKÁZEK (Zde si uprav k nim texty) --- */
   const zakazkyData = [
     {
       id: 1,
       jmeno: "Výstavba parkoviště a chodníku",
       lokalita: "Josefov",
-      imgPred: "/images/parkoviste_pred.jpeg", // Změň na své reálné cesty k obrázkům
-      imgPo: "/images/parkoviste_po.jpeg"
+      imgPred: "/images/parkoviste_pred.jpeg", 
+      imgPo: "/images/parkoviste_po.jpeg",
+      popis: "Kompletní realizace nového parkovacího stání a navazujícího chodníku. Práce zahrnovaly hloubkový výkop pro uložení podkladových vrstev, odvoz přebytečné zeminy, přesné srovnání terénu, položení geotextilie a hutnění štěrkového lože naším válcem Ammann. Následně byly usazeny obrubníky a dokončena finální pokládka."
     },
     {
       id: 2,
       jmeno: "Výstavba hřiště",
       lokalita: "Luh nad Svatavou",
       imgPred: "/images/hriste_pred.jpeg",
-      imgPo: "/images/hriste_po.jpeg"
+      imgPo: "/images/hriste_po.jpeg",
+      popis: "Skrývka ornice a rozsáhlé terénní úpravy pro budoucí sportovní plochu. Minibagrem Hitachi jsme provedli precizní svahování okolního terénu, výkopy pro betonové patky herních prvků a srovnání celé plochy nakladačem. Podklad byl řádně zhutněn a připraven pro finální položení bezpečného povrchu."
     },
-    
   ];
 
   const nextZakazka = () => {
@@ -455,81 +456,95 @@ export default function Home() {
           )}
         </section>
 
-        {/* --- NOVÁ SEKCE: POSLEDNÍ ZAKÁZKY (SLIDER PŘED / PO) --- */}
+        {/* --- UPRAVENÁ SEKCE: POSLEDNÍ ZAKÁZKY (DVOU-SLOUPOVÝ LAYOUT + STRUKTUROVANÝ TEXT) --- */}
         <section id="zakazky" className="scroll-mt-24 bg-[#f9c600] text-black py-16">
-          <div className="container mx-auto px-4 max-w-4xl text-center">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[#2f3237] tracking-wide">NAŠE POSLEDNÍ ZAKÁZKY</h2>
-            <p className="text-gray-700 mb-10 max-w-xl mx-auto">Prohlédněte si výsledky naší práce před zahájením a po úspěšném dokončení projektu.</p>
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="text-center mb-12">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[#2f3237] tracking-wide">NAŠE POSLEDNÍ ZAKÁZKY</h2>
+              <p className="text-gray-700 max-w-xl mx-auto">Prohlédněte si detailní výsledky naší práce před zahájením a po úspěšném dokončení projektu.</p>
+            </div>
             
-            <div className="relative bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-black/5 mx-auto max-w-2xl">
-              {/* Hlavička karty zakázky */}
-              <div className="mb-6">
-                <h3 className="text-xl md:text-2xl font-black text-[#2f3237] leading-snug">{zakazkyData[currentZakazkaIndex].jmeno}</h3>
-                <p className="text-sm font-semibold text-gray-500 mt-1 flex items-center justify-center gap-1">
-                  <MapPinIcon className="w-4 h-4 text-[#f9c600]" />
-                  {zakazkyData[currentZakazkaIndex].lokalita}
-                </p>
-              </div>
-
-              {/* Boxy s obrázky Před / Po */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Obrázek PŘED */}
-                <div className="relative group overflow-hidden rounded-xl border border-gray-100 aspect-[4/3]">
-                  <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-black px-2.5 py-1 rounded-md uppercase tracking-wider z-10 shadow-md">
-                    Před
-                  </div>
-                  <Image 
-                    src={zakazkyData[currentZakazkaIndex].imgPred} 
-                    alt={`${zakazkyData[currentZakazkaIndex].jmeno} - stav před`}
-                    fill
-                    sizes="(min-width: 640px) 350px, 100vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-
-                {/* Obrázek PO */}
-                <div className="relative group overflow-hidden rounded-xl border border-gray-100 aspect-[4/3]">
-                  <div className="absolute top-3 left-3 bg-green-600 text-white text-xs font-black px-2.5 py-1 rounded-md uppercase tracking-wider z-10 shadow-md">
-                    Po
-                  </div>
-                  <Image 
-                    src={zakazkyData[currentZakazkaIndex].imgPo} 
-                    alt={`${zakazkyData[currentZakazkaIndex].jmeno} - stav po`}
-                    fill
-                    sizes="(min-width: 640px) 350px, 100vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-              </div>
-
-              {/* Ovládací šipky pod kartou */}
-              <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-100">
-                <button 
-                  onClick={prevZakazka}
-                  className="flex items-center justify-center bg-[#2f3237] text-white p-2.5 rounded-full hover:bg-black active:scale-95 transition-all shadow-md"
-                  aria-label="Předchozí zakázka"
-                >
-                  <ChevronLeftIcon className="w-5 h-5 stroke-[3]" />
-                </button>
-
-                <div className="flex gap-1.5">
-                  {zakazkyData.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentZakazkaIndex(idx)}
-                      className={`h-2.5 rounded-full transition-all duration-300 ${idx === currentZakazkaIndex ? "bg-[#2f3237] w-6" : "bg-gray-300 w-2.5"}`}
-                      aria-label={`Přejít na zakázku ${idx + 1}`}
+            <div className="relative bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-black/5 mx-auto max-w-4xl">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                
+                {/* LEVÁ STRANA: Obrázky Před / Po */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Obrázek PŘED */}
+                  <div className="relative group overflow-hidden rounded-xl border border-gray-100 aspect-[4/3] shadow-sm">
+                    <div className="absolute top-3 left-3 bg-[#2f3237] text-white text-xs font-black px-2.5 py-1 rounded-md uppercase tracking-wider z-10 shadow-md">
+                      Před
+                    </div>
+                    <Image 
+                      src={zakazkyData[currentZakazkaIndex].imgPred} 
+                      alt={`${zakazkyData[currentZakazkaIndex].jmeno} - stav před`}
+                      fill
+                      sizes="(min-width: 1024px) 200px, (min-width: 640px) 350px, 100vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                  ))}
+                  </div>
+
+                  {/* Obrázek PO */}
+                  <div className="relative group overflow-hidden rounded-xl border border-gray-100 aspect-[4/3] shadow-sm">
+                    <div className="absolute top-3 left-3 bg-[#f9c600] text-[#2f3237] text-xs font-black px-2.5 py-1 rounded-md uppercase tracking-wider z-10 shadow-md">
+                      Po
+                    </div>
+                    <Image 
+                      src={zakazkyData[currentZakazkaIndex].imgPo} 
+                      alt={`${zakazkyData[currentZakazkaIndex].jmeno} - stav po`}
+                      fill
+                      sizes="(min-width: 1024px) 200px, (min-width: 640px) 350px, 100vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
                 </div>
 
-                <button 
-                  onClick={nextZakazka}
-                  className="flex items-center justify-center bg-[#2f3237] text-white p-2.5 rounded-full hover:bg-black active:scale-95 transition-all shadow-md"
-                  aria-label="Následující zakázka"
-                >
-                  <ChevronRightIcon className="w-5 h-5 stroke-[3]" />
-                </button>
+                {/* PRAVÁ STRANA: Popisný text vázaný na konkrétní slide */}
+                <div className="flex flex-col h-full justify-between lg:pl-4">
+                  <div>
+                    <span className="inline-flex items-center gap-1 text-xs font-bold text-[#f9c600] bg-yellow-50 px-2.5 py-1 rounded-full uppercase tracking-wider mb-3">
+                      <MapPinIcon className="w-3.5 h-3.5" />
+                      {zakazkyData[currentZakazkaIndex].lokalita}
+                    </span>
+                    <h3 className="text-xl md:text-2xl font-black text-[#2f3237] leading-tight mb-4">
+                      {zakazkyData[currentZakazkaIndex].jmeno}
+                    </h3>
+                    <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+                      {zakazkyData[currentZakazkaIndex].popis}
+                    </p>
+                  </div>
+
+                  {/* Ovládací šipky pod textem */}
+                  <div className="flex justify-between items-center mt-8 pt-4 border-t border-gray-100">
+                    <button 
+                      onClick={prevZakazka}
+                      className="flex items-center justify-center bg-[#2f3237] text-white p-2.5 rounded-full hover:bg-black active:scale-95 transition-all shadow-md"
+                      aria-label="Předchozí zakázka"
+                    >
+                      <ChevronLeftIcon className="w-5 h-5 stroke-[3]" />
+                    </button>
+
+                    <div className="flex gap-1.5">
+                      {zakazkyData.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCurrentZakazkaIndex(idx)}
+                          className={`h-2.5 rounded-full transition-all duration-300 ${idx === currentZakazkaIndex ? "bg-[#2f3237] w-6" : "bg-gray-300 w-2.5"}`}
+                          aria-label={`Přejít na zakázku ${idx + 1}`}
+                        />
+                      ))}
+                    </div>
+
+                    <button 
+                      onClick={nextZakazka}
+                      className="flex items-center justify-center bg-[#2f3237] text-white p-2.5 rounded-full hover:bg-black active:scale-95 transition-all shadow-md"
+                      aria-label="Následující zakázka"
+                    >
+                      <ChevronRightIcon className="w-5 h-5 stroke-[3]" />
+                    </button>
+                  </div>
+
+                </div>
+
               </div>
             </div>
           </div>
